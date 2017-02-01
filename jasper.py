@@ -44,26 +44,6 @@ class My(object):
 
 from functools import wraps
 
-
-def feature(func):
-    @wraps(func)
-    def wrapper():
-        wrapper.my = My()
-        return func()
-
-    return wrapper
-
-
-def scenario(func):
-    @wraps(func)
-    def wrapper(my_feature):
-        wrapper.my = My()
-        wrapper.my(**my_feature.elements)
-        return func()
-
-    return wrapper
-
-
 def given(func):
     @wraps(func)
     def wrapper(my):
@@ -76,38 +56,4 @@ def it(func):
     def wrapper(my):
         return func(my)
     return wrapper
-
-
-@feature
-def some_feature():
-
-    @given
-    def foo(my):
-        my(foo='foo')
-        print(f"given foo function: {my}")
-
-    @scenario
-    def some_scenario():
-
-        @given
-        def bar(my):
-            my(bar='bar')
-            print(f"given bar function: {my}")
-
-        @it
-        def combines_foo_and_bar_into_foobar(my):
-            print(f"it combines function: {my}")
-            Expect(my('foo') + my('bar')).to_equal('foobar')
-
-        bar(some_scenario.my)
-        combines_foo_and_bar_into_foobar(some_scenario.my)
-        print(f"some_scenario function: {some_scenario.my}")
-
-    print(locals())
-    foo(some_feature.my)
-    some_scenario(some_feature.my)
-    print(f"some_feature function: {some_feature.my}")
-
-
-some_feature()
 

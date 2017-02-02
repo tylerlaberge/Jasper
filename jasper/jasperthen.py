@@ -1,3 +1,6 @@
+from jasper.exceptions import ExpectationException
+
+
 class JasperThen(object):
 
     def __init__(self, function_name):
@@ -8,7 +11,7 @@ class JasperThen(object):
 
         try:
             self.then_function()
-        except AssertionError:
+        except ExpectationException:
             self.context.success = False
         else:
             self.context.success = True

@@ -1,4 +1,5 @@
 import jasper
+from jasper.exceptions import ExpectationException
 from unittest import TestCase
 
 
@@ -7,10 +8,12 @@ class ThenTestCase(TestCase):
     def setUp(self):
         class Then(jasper.JasperThen):
             def we_will_get_a_negative_number(self):
-                assert self.context.result < 0
+                if not self.context.result < 0:
+                    raise ExpectationException(self.context.result, 0, 'to be less than')
 
             def we_will_get_a_positive_number(self):
-                assert self.context.result > 0
+                if not self.context.result > 0:
+                    raise ExpectationException(self.context.result, 0, 'to be greater than')
 
         self.then = Then
 

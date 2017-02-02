@@ -5,4 +5,10 @@ class JasperThen(object):
 
     def __call__(self, context):
         self.context = context
-        self.then_function()
+
+        try:
+            self.then_function()
+        except AssertionError:
+            self.context.success = False
+        else:
+            self.context.success = True

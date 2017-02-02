@@ -1,4 +1,4 @@
-from jasper import Scenario, JasperGiven, JasperWhen, JasperThen, Expect
+from jasper import Scenario, JasperGiven, JasperWhen, JasperThen, Expect, Context
 from unittest import TestCase
 
 
@@ -56,7 +56,10 @@ class TestFeatureArithmetic(TestCase):
 
     def test_run(self):
         for scenario in self.scenarios:
-            self.assertRaises(AssertionError, scenario.run)
+            scenario.context = Context()
+            scenario.run()
 
+            self.assertTrue(hasattr(scenario, 'context'))
+            self.assertTrue(hasattr(scenario.context, 'success'))
 
-
+            self.assertFalse(scenario.context.success)

@@ -29,14 +29,19 @@ class ThenTestCase(TestCase):
         then_we_will_get_a_negative_number(context)
 
         self.assertTrue(hasattr(then_we_will_get_a_negative_number, 'context'))
+        self.assertTrue(hasattr(then_we_will_get_a_negative_number.context, 'success'))
         self.assertDictEqual(then_we_will_get_a_negative_number.context, context)
+
+        self.assertTrue(then_we_will_get_a_negative_number.context.success)
 
     def test_call_failure(self):
         context = jasper.Context(result=-5)
         then_we_will_get_a_positive_number = self.then('we_will_get_a_positive_number')
 
-        with self.assertRaises(AssertionError):
-            then_we_will_get_a_positive_number(context)
+        then_we_will_get_a_positive_number(context)
 
         self.assertTrue(hasattr(then_we_will_get_a_positive_number, 'context'))
+        self.assertTrue(hasattr(then_we_will_get_a_positive_number.context, 'success'))
         self.assertDictEqual(then_we_will_get_a_positive_number.context, context)
+
+        self.assertFalse(then_we_will_get_a_positive_number.context.success)

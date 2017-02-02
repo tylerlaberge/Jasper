@@ -10,6 +10,9 @@ class FeatureTestCase(TestCase):
             def __init__(self):
                 self.ran = False
 
+            def __call__(self, context):
+                self.context = context
+
             def run(self):
                 self.ran = True
 

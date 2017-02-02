@@ -9,9 +9,11 @@ class ScenarioTestCase(TestCase):
 
             def __init__(self, whatever):
                 self.called = False
+                self.called_with = None
 
             def __call__(self, context):
                 self.called = True
+                self.called_with = context
 
         self.given_mock = Mock('given')
         self.when_mock = Mock('when')
@@ -24,37 +26,20 @@ class ScenarioTestCase(TestCase):
             then=self.then_mock
         )
 
-    def test_prepare_given(self):
+    def test_call(self):
+        self.scenario('foobar')
 
-        self.scenario.prepare_given()
+        self.assertEqual(self.scenario.context, 'foobar')
+
+    def test_run(self):
+        self.scenario.context = {}
+        self.scenario.run()
 
         self.assertTrue(self.given_mock.called)
-        self.assertTrue(self.scenario.prepared_given)
-
-    def test_run_when(self):
-        self.scenario.prepared_given = True
-        self.scenario.run_when()
+        self.assertEqual(self.given_mock.called_with, self.scenario.context)
 
         self.assertTrue(self.when_mock.called)
-        self.assertTrue(self.scenario.ran_when)
-
-    def test_run_then(self):
-        self.scenario.ran_when = True
-        self.scenario.run_then()
+        self.assertEqual(self.when_mock.called_with, self.scenario.context)
 
         self.assertTrue(self.then_mock.called)
-        self.assertTrue(self.scenario.ran_then)
-
-    def test_run_when_out_of_order(self):
-        with self.assertRaises(ValueError):
-            self.scenario.run_when()
-
-        self.assertFalse(self.when_mock.called)
-        self.assertFalse(self.scenario.ran_when)
-
-    def test_run_then_out_of_order(self):
-        with self.assertRaises(ValueError):
-            self.scenario.run_then()
-
-        self.assertFalse(self.then_mock.called)
-        self.assertFalse(self.scenario.ran_then)
+        self.assertEqual(self.then_mock.called_with, self.scenario.context)

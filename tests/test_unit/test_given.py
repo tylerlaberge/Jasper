@@ -6,7 +6,7 @@ class GivenTestCase(TestCase):
 
     def setUp(self):
 
-        class Given(jasper.Given):
+        class Given(jasper.JasperGiven):
 
             def an_adding_function(self, a, b):
                 return a + b

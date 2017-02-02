@@ -6,7 +6,7 @@ class WhenTestCase(TestCase):
 
     def setUp(self):
 
-        class When(jasper.When):
+        class When(jasper.JasperWhen):
             def we_call_it_with_two_negative_numbers(self):
                 return self.context.function(-5, -5)
 

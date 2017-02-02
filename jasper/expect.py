@@ -15,4 +15,7 @@ class Expect(object):
             def less_than(self, expected_data):
                 assert self.actual_data < expected_data
 
+            def greater_than(self, expected_data):
+                assert self.actual_data > expected_data
+
         return ToBe(self.actual_data)

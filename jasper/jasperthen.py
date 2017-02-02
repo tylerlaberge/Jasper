@@ -1,4 +1,4 @@
-class Then(object):
+class JasperThen(object):
 
     def __init__(self, function_name):
         self.then_function = getattr(self, function_name)

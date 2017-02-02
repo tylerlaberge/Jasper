@@ -1,7 +1,7 @@
 from functools import wraps
 
 
-class When(object):
+class JasperWhen(object):
 
     def __init__(self, function_name):
         self.when_function = getattr(self, function_name)

@@ -1,13 +1,15 @@
+from jasper import Context
+
+
 class Scenario(object):
 
     def __init__(self, description, given, when, then):
         self.description = description
-
         self.given = given
         self.when = when
         self.then = then
 
-        self.context = {}
+        self.context = Context()
 
         self.prepared_given = False
         self.ran_when = False

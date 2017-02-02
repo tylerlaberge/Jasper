@@ -25,3 +25,11 @@ class ExpectTestCase(TestCase):
     def test_failure_to_be_less_than(self):
         with self.assertRaises(AssertionError):
             Expect(self.number).to_be.less_than(self.number)
+
+    def test_successful_to_be_greater_than(self):
+        Expect(self.number).to_be.greater_than(self.number - 1)
+
+    def test_failure_to_be_greater_than(self):
+        with self.assertRaises(AssertionError):
+            Expect(self.number).to_be.greater_than(self.number)
+

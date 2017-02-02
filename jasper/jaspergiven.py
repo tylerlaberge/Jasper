@@ -1,7 +1,7 @@
 from jasper import Context
 
 
-class Given(object):
+class JasperGiven(object):
 
     def __init__(self, attribute_name, with_alias=None):
         name = with_alias or attribute_name

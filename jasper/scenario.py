@@ -1,6 +1,8 @@
 class Scenario(object):
 
-    def __init__(self, given, when, then):
+    def __init__(self, description, given, when, then):
+        self.description = description
+
         self.given = given
         self.when = when
         self.then = then

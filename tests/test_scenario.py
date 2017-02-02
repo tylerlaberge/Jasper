@@ -18,6 +18,7 @@ class ScenarioTestCase(TestCase):
         self.then_mock = Mock('then')
 
         self.scenario = Scenario(
+            'mock_scenario',
             given=self.given_mock,
             when=self.when_mock,
             then=self.then_mock

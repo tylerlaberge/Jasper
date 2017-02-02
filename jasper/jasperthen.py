@@ -15,3 +15,6 @@ class JasperThen(object):
             self.context.success = False
         else:
             self.context.success = True
+
+    def __str__(self):
+        return f'Then: {self.then_function.__name__}'

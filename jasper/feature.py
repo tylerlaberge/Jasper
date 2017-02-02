@@ -1,3 +1,4 @@
+from jasper.utility import cyan, red
 from jasper import Context
 
 
@@ -9,6 +10,15 @@ class Feature(object):
 
         self.successes = []
         self.failures = []
+
+    def __str__(self):
+        color = cyan if not self.failures else red
+
+        formatted_string = color(f'Feature: {self.description}\n')
+        for scenario in self.scenarios:
+            formatted_string += str(scenario)
+
+        return formatted_string
 
     def run(self):
         for scenario in self.scenarios:

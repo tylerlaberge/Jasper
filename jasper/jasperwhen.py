@@ -11,6 +11,9 @@ class JasperWhen(object):
         self.__save_result(self.when_function)()
         pass
 
+    def __str__(self):
+        return f'When: {self.when_function.__name__}'
+    
     def __save_result(self, func):
         @wraps(func)
         def wrapper(*args, **kwargs):

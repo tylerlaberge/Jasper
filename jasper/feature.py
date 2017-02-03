@@ -1,4 +1,4 @@
-from jasper.utility import cyan, red
+from jasper.utility import cyan, red, indent
 from jasper import Context
 
 
@@ -16,7 +16,7 @@ class Feature(object):
 
         formatted_string = color(f'Feature: {self.description}\n')
         for scenario in self.scenarios:
-            formatted_string += str(scenario)
+            formatted_string += indent(f'{str(scenario)}\n', 4)
 
         return formatted_string
 

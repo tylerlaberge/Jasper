@@ -1,4 +1,5 @@
 from termcolor import colored
+import textwrap
 
 
 def cyan(text):
@@ -11,3 +12,7 @@ def red(text):
 
 def extract_traceback(exception):
     return exception.__traceback__.tb_frame.f_code.co_filename, exception.__traceback__.tb_lineno
+
+
+def indent(text, amount):
+    return textwrap.indent(text, ' ' * amount)

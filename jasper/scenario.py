@@ -1,4 +1,4 @@
-from jasper.utility import cyan, red
+from jasper.utility import cyan, red, indent
 
 
 class Scenario(object):
@@ -16,11 +16,12 @@ class Scenario(object):
 
     def __str__(self):
         color = cyan if self.context.success else red
-        formatted_string = color(f'    Scenario: {self.description}\n'
-                                 f'        {str(self.given)}\n'
-                                 f'        {str(self.when)}\n')
-        formatted_string += f'        {str(self.then)}\n'
-        return formatted_string
+        scenario_string = color(f'Scenario: {self.description}\n')
+        given_string = color(indent(f'{str(self.given)}\n', 4))
+        when_string = color(indent(f'{str(self.when)}\n', 4))
+        then_string = color(indent(f'{str(self.then)}', 4))
+
+        return scenario_string + given_string + when_string + then_string
 
     def run(self):
         if self.context is not None:

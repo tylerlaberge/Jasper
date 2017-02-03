@@ -38,7 +38,7 @@ feature = Feature(
         'Adding two positive numbers',
         Given('an_adding_function', with_alias='function'),
         When('we_call_it_with_two_positive_numbers'),
-        Then('we_will_get_a_positive_number')
+        Then('we_will_get_a_negative_number')
     ),
     Scenario(
         'Multiplying two negative numbers',

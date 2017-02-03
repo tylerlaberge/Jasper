@@ -1,6 +1,5 @@
 from jasper.exceptions import ExpectationException
-from jasper.utility import cyan, red
-import traceback
+from jasper.utility import cyan, red, indent
 
 
 class JasperThen(object):
@@ -24,7 +23,9 @@ class JasperThen(object):
         if self.context.success:
             return cyan(f'Then: {self.then_function.__name__}')
         else:
-            return red(f'Then: {self.then_function.__name__}\n\n        '
-                       f'{self.exception.msg}\n        '
-                       f'{self.exception.relevant_trace[0]}\n            '
-                       f'{self.exception.relevant_trace[1]}\n')
+            then_string = f'Then: {self.then_function.__name__}\n\n'
+            exception_string = f'{self.exception.msg}\n'
+            trace_location_string = f'{self.exception.relevant_trace[0]}\n'
+            trace_code_string = indent(f'{self.exception.relevant_trace[1]}\n', 4)
+
+            return red(then_string + exception_string + trace_location_string + trace_code_string)

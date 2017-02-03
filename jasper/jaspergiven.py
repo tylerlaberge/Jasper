@@ -9,6 +9,7 @@ class JasperGiven(object):
         self.context = Context({
             self.name: getattr(self, attribute_name)
         })
+        self.passed = True
 
     def __call__(self, context):
         context.update(self.context)

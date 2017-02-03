@@ -8,6 +8,7 @@ class JasperWhen(object):
     def __init__(self, function_name):
         self.when_function = getattr(self, function_name)
         self.context = None
+        self.passed = False
 
     def __call__(self, context):
         self.context = context
@@ -15,15 +16,14 @@ class JasperWhen(object):
         try:
             self.__save_result(self.when_function)()
         except Exception as e:
-            self.context.success = False
             raise WhenException(e)
         else:
-            self.context.success = True
+            self.passed = True
 
     def __str__(self):
         if not self.context:
             color = grey
-        elif self.context.success:
+        elif self.passed:
             color = cyan
         else:
             color = red

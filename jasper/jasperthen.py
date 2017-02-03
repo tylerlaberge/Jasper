@@ -7,6 +7,7 @@ class JasperThen(object):
     def __init__(self, function_name):
         self.then_function = getattr(self, function_name)
         self.context = None
+        self.passed = False
 
     def __call__(self, context):
         self.context = context
@@ -14,15 +15,14 @@ class JasperThen(object):
         try:
             self.then_function()
         except ExpectationException as e:
-            self.context.success = False
             raise ThenException(e)
         else:
-            self.context.success = True
+            self.passed = True
 
     def __str__(self):
         if not self.context:
             color = grey
-        elif self.context.success:
+        elif self.passed:
             color = cyan
         else:
             color = red

@@ -12,12 +12,13 @@ class Scenario(object):
 
         self.context = None
         self.exception = None
+        self.passed = False
 
     def __call__(self, context):
         self.context = context
 
     def __str__(self):
-        color = cyan if self.context.success else red
+        color = cyan if self.passed else red
         scenario_string = color(f'Scenario: {self.description}\n')
         scenario_string += indent(f'{str(self.given)}\n', 4)
         scenario_string += indent(f'{str(self.when)}\n', 4)
@@ -36,5 +37,7 @@ class Scenario(object):
                 self.then(self.context)
             except (WhenException, ThenException) as e:
                 self.exception = e
+            else:
+                self.passed = True
         else:
             raise ValueError

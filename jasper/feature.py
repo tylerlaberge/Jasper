@@ -25,7 +25,7 @@ class Feature(object):
             scenario(Context())
             scenario.run()
 
-            if scenario.context.success:
+            if scenario.passed:
                 self.successes.append(scenario)
             else:
                 self.failures.append(scenario)

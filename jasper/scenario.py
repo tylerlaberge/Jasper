@@ -16,10 +16,11 @@ class Scenario(object):
 
     def __str__(self):
         color = cyan if self.context.success else red
-        return color(f'    Scenario: {self.description}\n'
-                     f'        {str(self.given)}\n'
-                     f'        {str(self.when)}\n'
-                     f'        {str(self.then)}\n')
+        formatted_string = color(f'    Scenario: {self.description}\n'
+                                 f'        {str(self.given)}\n'
+                                 f'        {str(self.when)}\n')
+        formatted_string += f'        {str(self.then)}\n'
+        return formatted_string
 
     def run(self):
         if self.context is not None:

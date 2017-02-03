@@ -8,13 +8,13 @@ class FeatureTestCase(TestCase):
         class MockScenario(object):
 
             def __init__(self):
-                self.ran = False
+                self.passed = False
 
             def __call__(self, context):
                 self.context = context
 
             def run(self):
-                self.ran = True
+                self.passed = True
 
         self.scenarios = [MockScenario() for _ in range(5)]
         self.feature = Feature('Some_feature', *self.scenarios)
@@ -23,4 +23,4 @@ class FeatureTestCase(TestCase):
         self.feature.run()
 
         for scenario in self.scenarios:
-            self.assertTrue(scenario.ran)
+            self.assertTrue(scenario.passed)

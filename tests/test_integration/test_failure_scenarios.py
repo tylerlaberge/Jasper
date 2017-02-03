@@ -59,7 +59,4 @@ class TestFeatureArithmetic(TestCase):
             scenario.context = Context()
             scenario.run()
 
-            self.assertTrue(hasattr(scenario, 'context'))
-            self.assertTrue(hasattr(scenario.context, 'success'))
-
-            self.assertFalse(scenario.context.success)
+            self.assertFalse(scenario.passed)

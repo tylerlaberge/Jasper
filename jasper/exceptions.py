@@ -1,47 +1,50 @@
-import traceback
-from jasper.utility import indent
+from jasper.utility import extract_traceback
 
 
 class JasperException(Exception):
-
-    @property
-    def relevant_trace(self):
-        trace = traceback.format_tb(self.__traceback__)
-        relevant_trace = trace[len(trace) - 2].split('\n')
-        for index, line in enumerate(relevant_trace):
-            relevant_trace[index] = line.strip()
-
-        return relevant_trace
+    pass
 
 
 class ExpectationException(JasperException):
 
     def __init__(self, actual, expected, operator):
         super()
-
         self.actual = actual
         self.expected = expected
         self.operator = operator
-        self.msg = f'FAILURE: Expected {self.actual} {self.operator} {self.expected}'
-
-
-class GivenException(JasperException):
-    pass
-
-
-class WhenException(JasperException):
-    pass
-
-
-class ThenException(JasperException):
-
-    def __init__(self, original_exception):
-        super()
-        self.original_exception = original_exception
 
     def __str__(self):
-        exception_string = f'{self.original_exception.msg}\n'
-        trace_location_string = f'{self.original_exception.relevant_trace[0]}\n'
-        trace_code_string = indent(f'{self.original_exception.relevant_trace[1]}\n', 4)
+        return f'Expected {self.actual} {self.operator} {self.expected}'
 
-        return exception_string + trace_location_string + trace_code_string
+
+class JasperClauseException(JasperException):
+
+    def __init__(self, original_exception):
+        self.original_exception = original_exception
+        super()
+
+    def __str__(self):
+        if str(self.original_exception):
+            exception_string = f'{str(self.original_exception)}\n\n'
+        else:
+            exception_string = f'{self.original_exception.__class__.__name__}\n'
+
+        traceback_string = f'{self.get_traceback()}'
+
+        return exception_string + traceback_string
+
+    def get_traceback(self):
+        return extract_traceback(self.original_exception)
+
+
+class GivenException(JasperClauseException):
+    pass
+
+
+class WhenException(JasperClauseException):
+    pass
+
+
+class ThenException(JasperClauseException):
+    pass
+

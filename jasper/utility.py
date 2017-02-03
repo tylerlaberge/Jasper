@@ -1,5 +1,10 @@
 from termcolor import colored
 import textwrap
+import traceback
+
+
+def yellow(text):
+    return colored(text, 'yellow')
 
 
 def cyan(text):
@@ -15,8 +20,17 @@ def grey(text):
 
 
 def extract_traceback(exception):
-    return exception.__traceback__.tb_frame.f_code.co_filename, exception.__traceback__.tb_lineno
+    return ''.join(traceback.format_tb(exception.__traceback__))
 
 
 def indent(text, amount):
     return textwrap.indent(text, ' ' * amount)
+
+
+def relevant_trace(exception):
+    trace = traceback.format_tb(exception.__traceback__)
+    relevant_traceback = trace[len(trace) - 2].split('\n')
+    for index, line in enumerate(relevant_traceback):
+        relevant_traceback[index] = line.strip()
+
+    return relevant_traceback

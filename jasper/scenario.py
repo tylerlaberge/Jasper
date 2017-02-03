@@ -1,5 +1,5 @@
-from jasper.utility import cyan, red, indent
-from jasper.exceptions import ThenException
+from jasper.utility import cyan, red, yellow, indent
+from jasper.exceptions import WhenException, ThenException
 
 
 class Scenario(object):
@@ -19,12 +19,12 @@ class Scenario(object):
     def __str__(self):
         color = cyan if self.context.success else red
         scenario_string = color(f'Scenario: {self.description}\n')
-        scenario_string += color(indent(f'{str(self.given)}\n', 4))
-        scenario_string += color(indent(f'{str(self.when)}\n', 4))
-        scenario_string += color(indent(f'{str(self.then)}\n', 4))
+        scenario_string += indent(f'{str(self.given)}\n', 4)
+        scenario_string += indent(f'{str(self.when)}\n', 4)
+        scenario_string += indent(f'{str(self.then)}', 4)
 
         if self.exception:
-            scenario_string += color(indent(f'\n{str(self.exception)}', 4))
+            scenario_string += yellow(indent(f'\n\n{str(self.exception)}', 4))
 
         return scenario_string
 
@@ -34,7 +34,7 @@ class Scenario(object):
                 self.given(self.context)
                 self.when(self.context)
                 self.then(self.context)
-            except ThenException as e:
+            except (WhenException, ThenException) as e:
                 self.exception = e
         else:
             raise ValueError

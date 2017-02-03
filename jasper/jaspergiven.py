@@ -1,4 +1,5 @@
 from jasper import Context
+from jasper.utility import cyan
 
 
 class JasperGiven(object):
@@ -13,4 +14,4 @@ class JasperGiven(object):
         context.update(self.context)
 
     def __str__(self):
-        return f"Given: {self.context[self.name].__name__}"
+        return cyan(f"Given: {self.context[self.name].__name__}")

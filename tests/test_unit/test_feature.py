@@ -33,12 +33,3 @@ class FeatureTestCase(TestCase):
         self.assertTrue(self.feature.passed)
         self.assertEqual(self.feature.successes, self.scenarios)
         self.assertEqual(self.feature.failures, [])
-
-    def test_str(self):
-        self.feature.run()
-
-        formatted_string = cyan(f'Feature: Some_feature\n')
-        for scenario in self.scenarios:
-            formatted_string += indent(f'{scenario}\n', 4)
-
-        self.assertEqual(str(self.feature), formatted_string)

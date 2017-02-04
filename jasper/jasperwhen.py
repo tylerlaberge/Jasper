@@ -29,10 +29,3 @@ class JasperWhen(object):
             color = red
 
         return color(f'When: {self.when_function.__name__}')
-    
-    def __save_result(self, func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            self.context.result = func(*args, **kwargs)
-
-        return wrapper

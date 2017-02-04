@@ -1,5 +1,5 @@
 from jasper import Context
-from jasper.utility import cyan, red
+from jasper.utility import blue, red
 from jasper.exceptions import GivenException
 
 
@@ -20,6 +20,6 @@ class JasperGiven(object):
             context.update(self.context)
 
     def __str__(self):
-        color = cyan if self.passed else red
+        color = blue if self.passed else red
 
         return color(f"Given: {self.given_function.__name__}")

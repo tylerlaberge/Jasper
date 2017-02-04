@@ -1,5 +1,5 @@
 from jasper.exceptions import ExpectationException, ThenException
-from jasper.utility import cyan, red, grey
+from jasper.utility import blue, red, grey
 
 
 class JasperThen(object):
@@ -23,7 +23,7 @@ class JasperThen(object):
         if not self.context:
             color = grey
         elif self.passed:
-            color = cyan
+            color = blue
         else:
             color = red
 

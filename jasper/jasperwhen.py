@@ -1,4 +1,4 @@
-from jasper.utility import cyan, red, grey
+from jasper.utility import blue, red, grey
 from jasper.exceptions import WhenException
 
 
@@ -23,7 +23,7 @@ class JasperWhen(object):
         if not self.context:
             color = grey
         elif self.passed:
-            color = cyan
+            color = blue
         else:
             color = red
 

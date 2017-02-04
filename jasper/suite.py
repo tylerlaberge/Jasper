@@ -1,4 +1,4 @@
-from jasper.utility import cyan, red
+from jasper.utility import blue, red
 
 
 class Suite(object):
@@ -26,13 +26,13 @@ class Suite(object):
         return sum([feature.num_scenarios_failed for feature in self.features])
 
     def __str__(self):
-        feature_color = cyan if self.passed else red
+        feature_color = blue if self.passed else red
         formatted_string = feature_color('='*150 + '\n')
 
         for feature in self.successes:
-            formatted_string += cyan('='*150 + '\n')
+            formatted_string += blue('='*150 + '\n')
             formatted_string += f'{feature}\n'
-            formatted_string += cyan('=' * 150 + '\n')
+            formatted_string += blue('=' * 150 + '\n')
 
         for feature in self.failures:
             formatted_string += red('=' * 150 + '\n')

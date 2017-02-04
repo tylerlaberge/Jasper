@@ -8,10 +8,10 @@ class WhenTestCase(TestCase):
 
         class When(jasper.JasperWhen):
             def we_call_it_with_two_negative_numbers(self):
-                return self.context.function(-5, -5)
+                self.context.result = self.context.function(-5, -5)
 
             def we_call_it_with_two_positive_numbers(self):
-                return self.context.function(5, 5)
+                self.context.result = self.context.function(5, 5)
 
         self.when = When
 

@@ -15,7 +15,7 @@ class Context(dict):
                 self[k] = v
 
     def __getattr__(self, attr):
-        return self.get(attr)
+        return self[attr]
 
     def __setattr__(self, key, value):
         self.__setitem__(key, value)
@@ -30,3 +30,4 @@ class Context(dict):
     def __delitem__(self, key):
         super().__delitem__(key)
         del self.__dict__[key]
+

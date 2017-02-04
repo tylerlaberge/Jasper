@@ -1,5 +1,5 @@
 from jasper.utility import cyan, red, yellow, indent
-from jasper.exceptions import WhenException, ThenException
+from jasper.exceptions import GivenException, WhenException, ThenException
 
 
 class Scenario(object):
@@ -35,7 +35,7 @@ class Scenario(object):
                 self.given(self.context)
                 self.when(self.context)
                 self.then(self.context)
-            except (WhenException, ThenException) as e:
+            except (GivenException, WhenException, ThenException) as e:
                 self.exception = e
             else:
                 self.passed = True

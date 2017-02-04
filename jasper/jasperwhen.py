@@ -14,7 +14,7 @@ class JasperWhen(object):
         self.context = context
 
         try:
-            self.__save_result(self.when_function)()
+            self.when_function()
         except Exception as e:
             raise WhenException(e)
         else:

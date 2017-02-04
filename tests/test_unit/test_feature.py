@@ -1,5 +1,4 @@
 from jasper import Feature
-from jasper.utility import cyan, indent
 from unittest import TestCase
 
 
@@ -33,3 +32,13 @@ class FeatureTestCase(TestCase):
         self.assertTrue(self.feature.passed)
         self.assertEqual(self.feature.successes, self.scenarios)
         self.assertEqual(self.feature.failures, [])
+
+    def test_num_scenarios_passed(self):
+        self.feature.successes = ['foo', 'bar']
+
+        self.assertEqual(self.feature.num_scenarios_passed, 2)
+
+    def test_num_scenarios_failed(self):
+        self.feature.failures = ['foo', 'bar']
+
+        self.assertEqual(self.feature.num_scenarios_failed, 2)

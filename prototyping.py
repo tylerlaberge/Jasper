@@ -1,4 +1,4 @@
-from jasper import Feature, Scenario, JasperGiven, JasperWhen, JasperThen, Expect
+from jasper import Suite, Feature, Scenario, JasperGiven, JasperWhen, JasperThen, Expect
 
 
 class Given(JasperGiven):
@@ -48,41 +48,109 @@ class Then(JasperThen):
     def a_typeerror_will_occur(self):
         Expect(self.context.result.__class__).to_be(TypeError)
 
-feature = Feature(
-    'Arithmetic',
-    Scenario(
-        'Adding two negative numbers',
-        Given('an_adding_function'),
-        When('we_call_it_with_two_negative_numbers'),
-        Then('we_will_get_a_negative_number')
+suite = Suite(
+    Feature(
+        'Arithmetic',
+        Scenario(
+            'Adding two negative numbers',
+            Given('an_adding_function'),
+            When('we_call_it_with_two_negative_numbers'),
+            Then('we_will_get_a_negative_number')
+        ),
+        Scenario(
+            'Adding two positive numbers',
+            Given('an_adding_function'),
+            When('we_call_it_with_two_positive_numbers'),
+            Then('we_will_get_a_positive_number')
+        ),
+        Scenario(
+            'Multiplying two strings',
+            Given('a_multiplication_function'),
+            When('we_call_it_with_two_strings'),
+            Then('a_typeerror_will_occur')
+        ),
+        Scenario(
+            'Multiplying two positive numbers',
+            Given('a_multiplication_function'),
+            When('we_call_it_with_two_positive_numbers'),
+            Then('we_will_get_a_positive_number')
+        ),
+        Scenario(
+            'Multiplying two negative numbers',
+            Given('a_multiplication_function'),
+            When('we_call_it_with_two_negative_numbers'),
+            Then('we_will_get_a_positive_number')
+        )
     ),
-    Scenario(
-        'Adding two positive numbers',
-        Given('an_adding_function'),
-        When('we_call_it_with_two_positive_numbers'),
-        Then('we_will_get_a_negative_number')
+    Feature(
+        'Arithmetic Two',
+        Scenario(
+            'Adding two negative numbers',
+            Given('an_adding_function'),
+            When('we_call_it_with_two_negative_numbers'),
+            Then('we_will_get_a_negative_number')
+        ),
+        Scenario(
+            'Adding two positive numbers',
+            Given('an_adding_function'),
+            When('we_call_it_with_two_positive_numbers'),
+            Then('we_will_get_a_negative_number')
+        ),
+        Scenario(
+            'Multiplying two strings',
+            Given('a_multiplication_function'),
+            When('we_call_it_with_two_strings'),
+            Then('a_typeerror_will_occur')
+        ),
+        Scenario(
+            'Multiplying two positive numbers',
+            Given('a_multiplication_function'),
+            When('we_raise_an_exception'),
+            Then('we_will_get_a_positive_number')
+        ),
+        Scenario(
+            'An exception is raised',
+            Given('an_exception'),
+            When('we_call_it_with_two_positive_numbers'),
+            Then('we_will_get_a_positive_number')
+        )
     ),
-    Scenario(
-        'Multiplying two strings',
-        Given('a_multiplication_function'),
-        When('we_call_it_with_two_strings'),
-        Then('a_typeerror_will_occur')
-    ),
-    Scenario(
-        'Multiplying two positive numbers',
-        Given('a_multiplication_function'),
-        When('we_raise_an_exception'),
-        Then('we_will_get_a_positive_number')
-    ),
-    Scenario(
-        'An exception is raised',
-        Given('an_exception'),
-        When('we_call_it_with_two_positive_numbers'),
-        Then('we_will_get_a_positive_number')
+    Feature(
+        'Arithmetic Three',
+        Scenario(
+            'Adding two negative numbers',
+            Given('an_adding_function'),
+            When('we_call_it_with_two_negative_numbers'),
+            Then('we_will_get_a_negative_number')
+        ),
+        Scenario(
+            'Adding two positive numbers',
+            Given('an_adding_function'),
+            When('we_call_it_with_two_positive_numbers'),
+            Then('we_will_get_a_positive_number')
+        ),
+        Scenario(
+            'Multiplying two strings',
+            Given('a_multiplication_function'),
+            When('we_call_it_with_two_strings'),
+            Then('a_typeerror_will_occur')
+        ),
+        Scenario(
+            'Multiplying two positive numbers',
+            Given('a_multiplication_function'),
+            When('we_call_it_with_two_positive_numbers'),
+            Then('we_will_get_a_positive_number')
+        ),
+        Scenario(
+            'Multiplying two negative numbers',
+            Given('a_multiplication_function'),
+            When('we_call_it_with_two_negative_numbers'),
+            Then('we_will_get_a_positive_number')
+        )
     )
 )
-feature.run()
-print(feature)
+suite.run()
+print(suite)
 
 
 

@@ -27,7 +27,7 @@ class JasperClauseException(JasperException):
         if str(self.original_exception):
             exception_string = f'{str(self.original_exception)}\n\n'
         else:
-            exception_string = f'{self.original_exception.__class__.__name__}\n'
+            exception_string = f'{self.original_exception.__class__.__name__}\n\n'
 
         traceback_string = f'{self.get_traceback()}'
 

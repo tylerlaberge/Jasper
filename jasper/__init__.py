@@ -5,3 +5,4 @@ from jasper.jasperwhen import JasperWhen
 from jasper.jasperthen import JasperThen
 from jasper.scenario import Scenario
 from jasper.feature import Feature
+from jasper.suite import Suite

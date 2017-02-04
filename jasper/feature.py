@@ -10,6 +10,7 @@ class Feature(object):
 
         self.successes = []
         self.failures = []
+        self.passed = True
 
     def __str__(self):
         color = cyan if not self.failures else red
@@ -29,3 +30,4 @@ class Feature(object):
                 self.successes.append(scenario)
             else:
                 self.failures.append(scenario)
+                self.passed = False

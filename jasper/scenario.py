@@ -25,7 +25,7 @@ class Scenario(object):
         scenario_string += indent(f'{str(self.then)}', 4)
 
         if self.exception:
-            scenario_string += yellow(indent(f'\n\n{str(self.exception)}', 4))
+            scenario_string += indent(f'\n{str(self.exception)}', 4)
 
         return scenario_string
 

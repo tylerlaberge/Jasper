@@ -12,6 +12,14 @@ class Feature(object):
         self.failures = []
         self.passed = True
 
+    @property
+    def num_scenarios_passed(self):
+        return len(self.successes)
+
+    @property
+    def num_scenarios_failed(self):
+        return len(self.failures)
+
     def __str__(self):
         color = cyan if not self.failures else red
 
@@ -19,6 +27,7 @@ class Feature(object):
         for scenario in self.scenarios:
             formatted_string += indent(f'{str(scenario)}\n', 4)
 
+        formatted_string += color(f'\n{self.num_scenarios_passed} Scenarios passed, {self.num_scenarios_failed} failed.')
         return formatted_string
 
     def run(self):

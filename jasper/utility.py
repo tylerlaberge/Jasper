@@ -3,6 +3,14 @@ import textwrap
 import traceback
 
 
+def blue(text):
+    return colored(text, 'blue')
+
+
+def magenta(text):
+    return colored(text, 'magenta')
+
+
 def yellow(text):
     return colored(text, 'yellow')
 
@@ -25,12 +33,3 @@ def extract_traceback(exception):
 
 def indent(text, amount):
     return textwrap.indent(text, ' ' * amount)
-
-
-def relevant_trace(exception):
-    trace = traceback.format_tb(exception.__traceback__)
-    relevant_traceback = trace[len(trace) - 2].split('\n')
-    for index, line in enumerate(relevant_traceback):
-        relevant_traceback[index] = line.strip()
-
-    return relevant_traceback

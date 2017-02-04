@@ -1,4 +1,4 @@
-from jasper.utility import extract_traceback
+from jasper.utility import extract_traceback, yellow
 
 
 class JasperException(Exception):
@@ -25,13 +25,13 @@ class JasperClauseException(JasperException):
 
     def __str__(self):
         if str(self.original_exception):
-            exception_string = f'{str(self.original_exception)}\n\n'
+            exception_string = f'{str(self.original_exception)}\n'
         else:
-            exception_string = f'{self.original_exception.__class__.__name__}\n\n'
+            exception_string = f'{self.original_exception.__class__.__name__}\n'
 
         traceback_string = f'{self.get_traceback()}'
 
-        return exception_string + traceback_string
+        return yellow((exception_string + traceback_string).rstrip())
 
     def get_traceback(self):
         return extract_traceback(self.original_exception)

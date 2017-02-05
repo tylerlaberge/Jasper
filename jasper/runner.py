@@ -28,9 +28,9 @@ class Runner(object):
 
 @click.command()
 @click.argument('test_directory', type=click.Path(exists=True, file_okay=False, dir_okay=True, resolve_path=True))
-def hello(test_directory):
+def jasper(test_directory):
     runner = Runner(test_directory)
     runner.run()
 
 if __name__ == '__main__':
-    hello()
+    jasper()

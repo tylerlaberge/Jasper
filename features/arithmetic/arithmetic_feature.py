@@ -47,5 +47,3 @@ feature = Feature(
         other_steps.Then('we_will_get_foobar')
     )
 )
-feature.run()
-print(feature)

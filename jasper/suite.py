@@ -3,8 +3,8 @@ from jasper.utility import blue, red
 
 class Suite(object):
 
-    def __init__(self, *features):
-        self.features = features
+    def __init__(self):
+        self.features = []
         self.successes = []
         self.failures = []
         self.passed = True
@@ -24,6 +24,9 @@ class Suite(object):
     @property
     def num_scenarios_failed(self):
         return sum([feature.num_scenarios_failed for feature in self.features])
+
+    def add_feature(self, feature):
+        self.features.append(feature)
 
     def __str__(self):
         feature_color = blue if self.passed else red
@@ -56,3 +59,5 @@ class Suite(object):
             else:
                 self.failures.append(feature)
                 self.passed = False
+
+        print(self)

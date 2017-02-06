@@ -3,16 +3,16 @@ from jasper.utility import blue, red
 from jasper.exceptions import GivenException
 
 
-class JasperGiven(object):
+class Given(object):
 
-    def __init__(self, function_name):
-        self.given_function = getattr(self, function_name)
+    def __init__(self, function):
+        self.given_function = function
         self.context = Context()
         self.passed = False
 
     def __call__(self, context):
         try:
-            self.given_function()
+            self.given_function(context)
         except Exception as e:
             raise GivenException(e)
         else:

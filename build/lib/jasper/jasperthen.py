@@ -2,10 +2,10 @@ from jasper.exceptions import ExpectationException, ThenException
 from jasper.utility import blue, red, grey
 
 
-class JasperThen(object):
+class Then(object):
 
-    def __init__(self, function_name):
-        self.then_function = getattr(self, function_name)
+    def __init__(self, function):
+        self.then_function = function
         self.context = None
         self.passed = False
 
@@ -13,7 +13,7 @@ class JasperThen(object):
         self.context = context
 
         try:
-            self.then_function()
+            self.then_function(self.context)
         except ExpectationException as e:
             raise ThenException(e)
         else:

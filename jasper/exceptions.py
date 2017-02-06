@@ -14,7 +14,7 @@ class ExpectationException(JasperException):
         self.operator = operator
 
     def __str__(self):
-        return f'Expected {self.actual} {self.operator} {self.expected}'
+        return f'FAILURE: Expected {self.actual} {self.operator} {self.expected}'
 
 
 class JasperClauseException(JasperException):
@@ -48,3 +48,6 @@ class WhenException(JasperClauseException):
 class ThenException(JasperClauseException):
     pass
 
+
+class ScenarioException(JasperException):
+    pass

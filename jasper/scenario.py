@@ -1,11 +1,20 @@
 from jasper.utility import blue, red, indent
+from jasper import Given, When, Then
 from jasper.exceptions import GivenException, WhenException, ThenException
 
 
 class Scenario(object):
 
-    def __init__(self, description, given, when, then):
+    def __init__(self, description, given: Given, when: When, then: Then):
         self.description = description
+
+        if type(given) is not Given:
+            raise ValueError('"given" function must be decorated with jasper.given.')
+        if type(when) is not When:
+            raise ValueError('"when" function must be decorated with jasper.when.')
+        if type(then) is not Then:
+            raise ValueError('"then" function must be decorated with jasper.then.')
+
         self.given = given
         self.when = when
         self.then = then

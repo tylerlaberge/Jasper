@@ -1,4 +1,3 @@
-import click
 import os
 import importlib.util
 from jasper import Suite, Feature
@@ -32,13 +31,3 @@ class Runner(object):
                 obj = getattr(module, name)
                 if isinstance(obj, Feature):
                     self.suite.add_feature(obj)
-
-
-@click.command()
-@click.argument('test_directory', type=click.Path(exists=True, file_okay=False, dir_okay=True, resolve_path=True))
-def jasper(test_directory):
-    runner = Runner(test_directory)
-    runner.run()
-
-if __name__ == '__main__':
-    jasper()

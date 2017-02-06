@@ -45,7 +45,10 @@ class SuiteTestCase(TestCase):
                 return 3
 
         self.features = [MockFeatureSuccess(), MockFeatureFailure(), MockFeatureSuccess(), MockFeatureFailure()]
-        self.suite = Suite(*self.features)
+        self.suite = Suite()
+
+        for feature in self.features:
+            self.suite.add_feature(feature)
 
     def test_run(self):
         self.suite.run()

@@ -6,40 +6,30 @@ from unittest import TestCase
 class ThenTestCase(TestCase):
 
     def setUp(self):
-        class Then(jasper.JasperThen):
-            def we_will_get_a_negative_number(self):
-                if not self.context.result < 0:
-                    raise ExpectationException(self.context.result, 0, 'to be less than')
 
-            def we_will_get_a_positive_number(self):
-                if not self.context.result > 0:
-                    raise ExpectationException(self.context.result, 0, 'to be greater than')
+        @jasper.then
+        def we_will_get_a_negative_number(context):
+            if not context['result'] < 0:
+                raise ExpectationException(context['result'], 0, 'to be less than')
 
-        self.then = Then
+        self.then = we_will_get_a_negative_number
 
     def test_initialize(self):
-        then_we_will_get_a_negative_number = self.then('we_will_get_a_negative_number')
-
-        self.assertEqual(
-            then_we_will_get_a_negative_number.then_function,
-            then_we_will_get_a_negative_number.we_will_get_a_negative_number
-        )
+        self.assertEqual(type(self.then), jasper.Then)
 
     def test_call_success(self):
-        context = jasper.Context(result=-5)
-        then_we_will_get_a_negative_number = self.then('we_will_get_a_negative_number')
-        then_we_will_get_a_negative_number(context)
+        context = dict(result=-5)
 
-        self.assertDictEqual(then_we_will_get_a_negative_number.context, context)
+        self.assertFalse(self.then.passed)
 
-        self.assertTrue(then_we_will_get_a_negative_number.passed)
+        self.then(context)
+
+        self.assertTrue(self.then.passed)
 
     def test_call_failure(self):
-        context = jasper.Context(result=-5)
-        then_we_will_get_a_positive_number = self.then('we_will_get_a_positive_number')
+        context = dict(result=5)
 
         with self.assertRaises(ThenException):
-            then_we_will_get_a_positive_number(context)
+            self.then(context)
 
-        self.assertDictEqual(then_we_will_get_a_positive_number.context, context)
-        self.assertFalse(then_we_will_get_a_positive_number.passed)
+        self.assertFalse(self.then.passed)

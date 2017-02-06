@@ -1,11 +1,12 @@
-from jasper import Scenario
+from jasper import Scenario, Given, When, Then
 from unittest import TestCase
 
 
 class ScenarioTestCase(TestCase):
 
     def setUp(self):
-        class Mock(object):
+
+        class GivenMock(Given):
 
             def __init__(self, whatever):
                 self.called = False
@@ -15,9 +16,38 @@ class ScenarioTestCase(TestCase):
                 self.called = True
                 self.called_with = context
 
-        self.given_mock = Mock('given')
-        self.when_mock = Mock('when')
-        self.then_mock = Mock('then')
+            def __str__(self):
+                return 'Given mock'
+
+        class WhenMock(When):
+
+            def __init__(self, whatever):
+                self.called = False
+                self.called_with = None
+
+            def __call__(self, context):
+                self.called = True
+                self.called_with = context
+
+            def __str__(self):
+                return 'When mock'
+
+        class ThenMock(Then):
+
+            def __init__(self, whatever):
+                self.called = False
+                self.called_with = None
+
+            def __call__(self, context):
+                self.called = True
+                self.called_with = context
+
+            def __str__(self):
+                return 'Then mock'
+
+        self.given_mock = GivenMock('foo')
+        self.when_mock = WhenMock('bar')
+        self.then_mock = ThenMock('baz')
 
         self.scenario = Scenario(
             'mock_scenario',

@@ -59,5 +59,3 @@ class Suite(object):
             else:
                 self.failures.append(feature)
                 self.passed = False
-
-        print(self)

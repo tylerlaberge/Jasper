@@ -15,6 +15,7 @@ class Runner(object):
         self.discover()
         self.build_suite()
         self.suite.run()
+        print(self.suite)
 
     def discover(self):
         for dir_path, dir_names, files in os.walk(self.test_directory):

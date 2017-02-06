@@ -1,83 +1,111 @@
-from jasper import Suite, Feature, Scenario, JasperGiven, JasperWhen, JasperThen, Expect
+from jasper import Suite, Feature, Scenario, given, when, then, Expect
 from unittest import TestCase
 
 
 class TestFeatureArithmetic(TestCase):
-
     def setUp(self):
+        @given
+        def an_adding_function(context):
+            context['function'] = lambda a, b: a + b
+            context['called_given'] = True
 
-        class Given(JasperGiven):
-            def an_adding_function(self):
-                self.context.function = lambda a, b: a + b
+        @given
+        def a_multiplication_function(context):
+            context['function'] = lambda a, b: a * b
+            context['called_given'] = True
 
-            def a_multiplication_function(self):
-                self.context.function = lambda a, b: a * b
+        @when
+        def we_call_it_with_two_negative_numbers(context):
+            context['result'] = context['function'](-5, -5)
+            context['called_when'] = True
 
-        class When(JasperWhen):
-            def we_call_it_with_two_negative_numbers(self):
-                self.context.result = self.context.function(-5, -5)
+        @when
+        def we_call_it_with_two_positive_numbers(context):
+            context['result'] = context['function'](5, 5)
+            context['called_when'] = True
 
-            def we_call_it_with_two_positive_numbers(self):
-                self.context.result = self.context.function(5, 5)
+        @then
+        def we_will_get_a_negative_number(context):
+            Expect(context['result']).to_be.less_than(0)
+            context['called_then'] = True
 
-        class Then(JasperThen):
-            def we_will_get_a_negative_number(self):
-                Expect(self.context.result).to_be.less_than(0)
+        @then
+        def we_will_get_a_positive_number(context):
+            Expect(context['result']).to_be.greater_than(0)
+            context['called_then'] = True
 
-            def we_will_get_a_positive_number(self):
-                Expect(self.context.result).to_be.greater_than(0)
-
+        self.adding_two_negative_numbers_scenario = Scenario(
+            'Adding two negative numbers',
+            given=an_adding_function,
+            when=we_call_it_with_two_negative_numbers,
+            then=we_will_get_a_negative_number
+        )
+        self.adding_two_positive_numbers_scenario = Scenario(
+            'Adding two positive numbers',
+            given=an_adding_function,
+            when=we_call_it_with_two_positive_numbers,
+            then=we_will_get_a_positive_number
+        )
+        self.multiplying_two_negative_numbers_scenario = Scenario(
+            'Multiplying two negative numbers',
+            given=a_multiplication_function,
+            when=we_call_it_with_two_negative_numbers,
+            then=we_will_get_a_positive_number
+        )
+        self.multiplying_two_positive_numbers_scenario = Scenario(
+            'Multiplying two positive numbers',
+            given=a_multiplication_function,
+            when=we_call_it_with_two_positive_numbers,
+            then=we_will_get_a_positive_number
+        )
         self.feature_one = Feature(
-            'Arithmetic',
-            Scenario(
-                'Adding two negative numbers',
-                Given('an_adding_function'),
-                When('we_call_it_with_two_negative_numbers'),
-                Then('we_will_get_a_negative_number')
-            ),
-            Scenario(
-                'Adding two positive numbers',
-                Given('an_adding_function'),
-                When('we_call_it_with_two_positive_numbers'),
-                Then('we_will_get_a_positive_number')
-            ),
-            Scenario(
-                'Multiplying two positive numbers',
-                Given('a_multiplication_function'),
-                When('we_call_it_with_two_positive_numbers'),
-                Then('we_will_get_a_positive_number')
-            ),
-            Scenario(
-                'Multiplying two negative numbers',
-                Given('a_multiplication_function'),
-                When('we_call_it_with_two_negative_numbers'),
-                Then('we_will_get_a_positive_number')
-            )
+            'Addition',
+            self.adding_two_negative_numbers_scenario,
+            self.adding_two_positive_numbers_scenario
         )
         self.feature_two = Feature(
-            'Arithmetic Two',
-            Scenario(
-                'Adding two negative numbers',
-                Given('an_adding_function'),
-                When('we_call_it_with_two_negative_numbers'),
-                Then('we_will_get_a_negative_number')
-            ),
-            Scenario(
-                'Adding two positive numbers',
-                Given('an_adding_function'),
-                When('we_call_it_with_two_positive_numbers'),
-                Then('we_will_get_a_positive_number')
-            )
+            'Multiplication',
+            self.multiplying_two_negative_numbers_scenario,
+            self.multiplying_two_positive_numbers_scenario
         )
-        self.suite = Suite(self.feature_one, self.feature_two)
+        self.suite = Suite()
+        self.suite.add_feature(self.feature_one)
+        self.suite.add_feature(self.feature_two)
 
     def test_run(self):
         self.suite.run()
 
+        for feature in self.suite.features:
+            for scenario in feature.scenarios:
+                self.assertTrue(scenario.context['called_given'])
+                self.assertTrue(scenario.context['called_when'])
+                self.assertTrue(scenario.context['called_then'])
+                self.assertTrue(scenario.passed)
+
+            self.assertTrue(feature.passed)
+            self.assertEqual(len(feature.successes), 2)
+            self.assertEqual(len(feature.failures), 0)
+            self.assertEqual(set(feature.failures), set())
+            self.assertEqual(feature.num_scenarios_passed, 2)
+            self.assertEqual(feature.num_scenarios_failed, 0)
+
+        self.assertEqual(set(self.suite.features[0].successes), {
+            self.adding_two_negative_numbers_scenario,
+            self.adding_two_positive_numbers_scenario
+        })
+        self.assertEqual(set(self.suite.features[1].successes), {
+            self.multiplying_two_negative_numbers_scenario,
+            self.multiplying_two_positive_numbers_scenario
+        })
+
+        self.assertEqual(len(self.suite.successes), 2)
+        self.assertEqual(set(self.suite.successes), {
+            self.feature_one, self.feature_two
+        })
+        self.assertEqual(len(self.suite.failures), 0)
+        self.assertEqual(set(self.suite.failures), set())
         self.assertTrue(self.suite.passed)
-        self.assertEqual(self.suite.successes, [self.feature_one, self.feature_two])
-        self.assertEqual(self.suite.failures, [])
         self.assertEqual(self.suite.num_features_passed, 2)
         self.assertEqual(self.suite.num_features_failed, 0)
-        self.assertEqual(self.suite.num_scenarios_passed, 6)
+        self.assertEqual(self.suite.num_scenarios_passed, 4)
         self.assertEqual(self.suite.num_scenarios_failed, 0)

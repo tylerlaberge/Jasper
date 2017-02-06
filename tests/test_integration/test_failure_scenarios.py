@@ -1,4 +1,4 @@
-from jasper import Scenario, JasperGiven, JasperWhen, JasperThen, Expect, Context
+from jasper import Scenario, given, when, then, Expect
 from unittest import TestCase
 
 
@@ -6,57 +6,72 @@ class TestFeatureArithmetic(TestCase):
 
     def setUp(self):
 
-        class Given(JasperGiven):
-            def an_adding_function(self):
-                self.context.function = lambda a, b: a + b
+        @given
+        def an_adding_function(context):
+            context['function'] = lambda a, b: a + b
+            context['called_given'] = True
 
-            def a_multiplication_function(self):
-                self.context.function = lambda a, b: a * b
+        @given
+        def a_multiplication_function(context):
+            context['function'] = lambda a, b: a * b
+            context['called_given'] = True
 
-        class When(JasperWhen):
-            def we_call_it_with_two_negative_numbers(self):
-                self.context.result = self.context.function(-5, -5)
+        @when
+        def we_call_it_with_two_negative_numbers(context):
+            context['called_when'] = True
+            context['result'] = context['function'](-5, -5)
 
-            def we_call_it_with_two_positive_numbers(self):
-                self.context.result = self.context.function(5, 5)
+        @when
+        def we_call_it_with_two_positive_numbers(context):
+            context['result'] = context['function'](5, 5)
+            context['called_when'] = True
 
-        class Then(JasperThen):
-            def we_will_get_a_negative_number(self):
-                Expect(self.context.result).to_be.less_than(0)
+        @then
+        def we_will_get_a_negative_number(context):
+            context['called_then'] = True
+            Expect(context['result']).to_be.less_than(0)
 
-            def we_will_get_a_positive_number(self):
-                Expect(self.context.result).to_be.greater_than(0)
+        @then
+        def we_will_get_a_positive_number(context):
+            context['called_then'] = True
+            Expect(context['result']).to_be.greater_than(0)
 
         self.scenarios = [
             Scenario(
                 'Adding two negative numbers',
-                Given('a_multiplication_function'),
-                When('we_call_it_with_two_negative_numbers'),
-                Then('we_will_get_a_negative_number')
+                given=an_adding_function,
+                when=we_call_it_with_two_negative_numbers,
+                then=we_will_get_a_positive_number
             ),
             Scenario(
                 'Adding two positive numbers',
-                Given('an_adding_function'),
-                When('we_call_it_with_two_negative_numbers'),
-                Then('we_will_get_a_positive_number')
+                given=an_adding_function,
+                when=we_call_it_with_two_positive_numbers,
+                then=we_will_get_a_negative_number
             ),
             Scenario(
                 'Multiplying two negative numbers',
-                Given('a_multiplication_function'),
-                When('we_call_it_with_two_negative_numbers'),
-                Then('we_will_get_a_negative_number')
+                given=a_multiplication_function,
+                when=we_call_it_with_two_negative_numbers,
+                then=we_will_get_a_negative_number
             ),
             Scenario(
                 'Multiplying two positive numbers',
-                Given('an_adding_function'),
-                When('we_call_it_with_two_positive_numbers'),
-                Then('we_will_get_a_negative_number')
+                given=a_multiplication_function,
+                when=we_call_it_with_two_positive_numbers,
+                then=we_will_get_a_negative_number
             )
         ]
 
     def test_run(self):
         for scenario in self.scenarios:
-            scenario.context = Context()
+            self.assertFalse(scenario.passed)
+
+            scenario.context = {}
             scenario.run()
+
+            self.assertTrue(scenario.context['called_given'])
+            self.assertTrue(scenario.context['called_when'])
+            self.assertTrue(scenario.context['called_then'])
 
             self.assertFalse(scenario.passed)

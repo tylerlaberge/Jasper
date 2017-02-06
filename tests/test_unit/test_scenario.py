@@ -1,5 +1,6 @@
 from jasper import Scenario, Given, When, Then
 from unittest import TestCase
+from collections import namedtuple
 
 
 class ScenarioTestCase(TestCase):
@@ -19,6 +20,14 @@ class ScenarioTestCase(TestCase):
             def __str__(self):
                 return 'Given mock'
 
+            @staticmethod
+            def cls(foo):
+                return GivenMock(foo)
+
+            @staticmethod
+            def function():
+                return 'foo'
+
         class WhenMock(When):
 
             def __init__(self, whatever):
@@ -32,6 +41,14 @@ class ScenarioTestCase(TestCase):
             def __str__(self):
                 return 'When mock'
 
+            @staticmethod
+            def cls(foo):
+                return WhenMock(foo)
+
+            @staticmethod
+            def function():
+                return 'foo'
+
         class ThenMock(Then):
 
             def __init__(self, whatever):
@@ -44,6 +61,14 @@ class ScenarioTestCase(TestCase):
 
             def __str__(self):
                 return 'Then mock'
+
+            @staticmethod
+            def cls(foo):
+                return ThenMock(foo)
+
+            @staticmethod
+            def function():
+                return 'foo'
 
         self.given_mock = GivenMock('foo')
         self.when_mock = WhenMock('bar')
@@ -65,11 +90,11 @@ class ScenarioTestCase(TestCase):
         self.scenario.context = {}
         self.scenario.run()
 
-        self.assertTrue(self.given_mock.called)
-        self.assertEqual(self.given_mock.called_with, self.scenario.context)
+        self.assertTrue(self.scenario.given.called)
+        self.assertEqual(self.scenario.given.called_with, self.scenario.context)
 
-        self.assertTrue(self.when_mock.called)
-        self.assertEqual(self.when_mock.called_with, self.scenario.context)
+        self.assertTrue(self.scenario.when.called)
+        self.assertEqual(self.scenario.when.called_with, self.scenario.context)
 
-        self.assertTrue(self.then_mock.called)
-        self.assertEqual(self.then_mock.called_with, self.scenario.context)
+        self.assertTrue(self.scenario.then.called)
+        self.assertEqual(self.scenario.then.called_with, self.scenario.context)

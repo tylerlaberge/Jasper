@@ -1,6 +1,7 @@
 from jasper.utility import blue, red
 from jasper.exceptions import GivenException
 from functools import wraps
+from collections import namedtuple
 
 
 class Given(object):
@@ -28,4 +29,6 @@ def given(func):
     def wrapper(context):
         func(context)
 
-    return Given(wrapper)
+    step = namedtuple('Step', ['cls', 'function'])
+    return step(cls=Given, function=wrapper)
+

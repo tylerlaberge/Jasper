@@ -10,7 +10,7 @@ class WhenTestCase(TestCase):
         def we_call_it_with_two_negative_numbers(context):
             context['result'] = context['function'](-5, -5)
 
-        self.when = we_call_it_with_two_negative_numbers
+        self.when = we_call_it_with_two_negative_numbers.cls(we_call_it_with_two_negative_numbers.function)
 
     def test_initialize(self):
         self.assertEqual(type(self.when), jasper.When)

@@ -1,16 +1,15 @@
 from jasper.utility import blue, red, indent
-from jasper import Given, When, Then
 from jasper.exceptions import GivenException, WhenException, ThenException
 
 
 class Scenario(object):
 
-    def __init__(self, description, given: Given, when: When, then: Then):
+    def __init__(self, description, given, when, then):
         self.description = description
 
-        self.given = given
-        self.when = when
-        self.then = then
+        self.given = given.cls(given.function)
+        self.when = when.cls(when.function)
+        self.then = then.cls(then.function)
 
         self.context = None
         self.exception = None

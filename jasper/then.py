@@ -1,6 +1,7 @@
 from jasper.exceptions import ThenException
 from jasper.utility import blue, red, grey
 from functools import wraps
+from collections import namedtuple
 
 
 class Then(object):
@@ -35,4 +36,5 @@ def then(func):
     def wrapper(context):
         func(context)
 
-    return Then(wrapper)
+    step = namedtuple('Step', ['cls', 'function'])
+    return step(Then, wrapper)

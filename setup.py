@@ -3,7 +3,9 @@ setup(
     name="Jasper",
     version="0.1",
     packages=['jasper',
-              'features', 'features.arithmetic', 'features.arithmetic.steps'],
+              'features',
+              'features.arithmetic', 'features.arithmetic.steps',
+              'features.objects', 'features.objects.steps'],
     entry_points={
         'console_scripts': [
             'jasper = jasper.entrypoints:jasper'

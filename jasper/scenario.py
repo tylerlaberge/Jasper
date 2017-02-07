@@ -49,5 +49,3 @@ class Scenario(object):
             finally:
                 self.context.unlock()
                 self.context.rollback(memento)
-        else:
-            raise ValueError

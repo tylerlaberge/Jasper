@@ -9,7 +9,7 @@ def dict_to_namedtuple(name, dictionary):
 
 
 def blue(text):
-    return colored(text, 'blue')
+    return colored(text, 'cyan')
 
 
 def magenta(text):

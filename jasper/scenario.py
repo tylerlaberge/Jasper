@@ -37,6 +37,7 @@ class Scenario(object):
 
     def run(self):
         if self.context is not None:
+            memento = self.context.commit()
             try:
                 self.given(self.context)
                 self.when(self.context)
@@ -45,5 +46,8 @@ class Scenario(object):
                 self.exception = e
             else:
                 self.passed = True
+            finally:
+                self.context.unlock()
+                self.context.rollback(memento)
         else:
             raise ValueError

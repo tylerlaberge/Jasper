@@ -11,12 +11,15 @@ class Given(object):
         self.passed = False
 
     def __call__(self, context):
+        context.unlock()
         try:
             self.given_function(context)
         except Exception as e:
             raise GivenException(e)
         else:
             self.passed = True
+        finally:
+            context.lock()
 
     def __str__(self):
         color = blue if self.passed else red

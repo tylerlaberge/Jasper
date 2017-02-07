@@ -9,8 +9,8 @@ feature = Feature(
     Scenario(
         'Adding two negative numbers',
         given=an_adding_function,
-        when=we_call_it_with_two_negative_numbers,
-        then=we_will_get_a_negative_number
+        when=we_call_it_with_two_positive_numbers,
+        then=we_will_get_a_positive_number
     ),
     Scenario(
         'Multiplying two negative numbers',

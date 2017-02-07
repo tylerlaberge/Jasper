@@ -8,20 +8,25 @@ class When(object):
 
     def __init__(self, function):
         self.when_function = function
-        self.context = None
+        self.ran = False
         self.passed = False
 
     def __call__(self, context):
-        self.context = context
+        context.lock()
         try:
-            self.when_function(self.context)
+            result = self.when_function(context)
         except Exception as e:
             raise WhenException(e)
         else:
+            context.unlock()
+            context.result = result
             self.passed = True
+        finally:
+            context.lock()
+            self.ran = True
 
     def __str__(self):
-        if not self.context:
+        if not self.ran:
             color = grey
         elif self.passed:
             color = blue
@@ -34,7 +39,7 @@ class When(object):
 def when(func):
     @wraps(func)
     def wrapper(context):
-        func(context)
+        return func(context)
 
     step = namedtuple('Step', ['cls', 'function'])
     return step(cls=When, function=wrapper)

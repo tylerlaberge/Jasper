@@ -1,6 +1,11 @@
 from termcolor import colored
 import textwrap
 import traceback
+from collections import namedtuple
+
+
+def dict_to_namedtuple(name, dictionary):
+    return namedtuple(name, dictionary.keys())(**dictionary)
 
 
 def blue(text):

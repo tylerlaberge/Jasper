@@ -51,3 +51,7 @@ class ThenException(JasperClauseException):
 
 class ScenarioException(JasperException):
     pass
+
+
+class ContextException(JasperException):
+    pass

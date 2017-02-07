@@ -1,4 +1,5 @@
 from jasper.utility import blue, red, indent
+from jasper.context import Context
 
 
 class Feature(object):
@@ -31,7 +32,7 @@ class Feature(object):
 
     def run(self):
         for scenario in self.scenarios:
-            scenario({})
+            scenario(Context())
             scenario.run()
 
             if scenario.passed:

@@ -19,12 +19,18 @@ class TestFeatureArithmetic(TestCase):
         @when
         def we_call_it_with_two_negative_numbers(context):
             context['called_when'] = True
-            context['result'] = context['function'](-5, -5)
+            return {
+                'called_when': True,
+                'return_val': context.function(-5, -5)
+            }
 
         @when
         def we_call_it_with_two_positive_numbers(context):
-            context['result'] = context['function'](5, 5)
             context['called_when'] = True
+            return {
+                'called_when': True,
+                'return_val': context.function(5, 5)
+            }
 
         @then
         def we_will_get_a_negative_number(context):

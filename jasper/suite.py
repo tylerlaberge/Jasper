@@ -52,6 +52,8 @@ class Suite(object):
         return formatted_string
 
     async def run(self):
+        print(f'Running {len(self.features)} features '
+              f'and {sum([len(feature.scenarios) for feature in self.features])} scenarios.....')
         await asyncio.wait([self.__run_feature(feature) for feature in self.features])
 
     async def __run_feature(self, feature):

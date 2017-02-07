@@ -9,7 +9,7 @@ class ThenTestCase(TestCase):
 
         @jasper.then
         def we_will_get_a_negative_number(context):
-            if not context['result'] < 0:
+            if not context.result < 0:
                 raise ExpectationException(context['result'], 0, 'to be less than')
 
         self.then = we_will_get_a_negative_number.cls(we_will_get_a_negative_number.function)
@@ -18,7 +18,7 @@ class ThenTestCase(TestCase):
         self.assertEqual(type(self.then), jasper.Then)
 
     def test_call_success(self):
-        context = dict(result=-5)
+        context = jasper.Context(result=-5)
 
         self.assertFalse(self.then.passed)
 
@@ -27,7 +27,7 @@ class ThenTestCase(TestCase):
         self.assertTrue(self.then.passed)
 
     def test_call_failure(self):
-        context = dict(result=5)
+        context = jasper.Context(result=5)
 
         with self.assertRaises(ThenException):
             self.then(context)

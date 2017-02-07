@@ -8,7 +8,7 @@ class WhenTestCase(TestCase):
 
         @jasper.when
         def we_call_it_with_two_negative_numbers(context):
-            context['result'] = context['function'](-5, -5)
+            return context.function(-5, -5)
 
         self.when = we_call_it_with_two_negative_numbers.cls(we_call_it_with_two_negative_numbers.function)
 
@@ -16,8 +16,8 @@ class WhenTestCase(TestCase):
         self.assertEqual(type(self.when), jasper.When)
 
     def test_call(self):
-        context = {'function': lambda a, b: a*b}
+        context = jasper.Context(function=lambda a, b: a*b)
         self.when(context)
 
-        self.assertIn('result', context)
-        self.assertEqual(context['result'], 25)
+        self.assertIn('result', context._items)
+        self.assertEqual(context.result, 25)

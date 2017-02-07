@@ -1,6 +1,5 @@
-from jasper import Scenario, Given, When, Then
+from jasper import Scenario, Given, When, Then, Context
 from unittest import TestCase
-from collections import namedtuple
 
 
 class ScenarioTestCase(TestCase):
@@ -87,7 +86,7 @@ class ScenarioTestCase(TestCase):
         self.assertEqual(self.scenario.context, 'foobar')
 
     def test_run(self):
-        self.scenario.context = {}
+        self.scenario.context = Context()
         self.scenario.run()
 
         self.assertTrue(self.scenario.given.called)

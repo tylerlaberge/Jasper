@@ -4,35 +4,40 @@ from unittest import TestCase
 
 class TestFeatureArithmetic(TestCase):
     def setUp(self):
+
         @given
         def an_adding_function(context):
-            context['function'] = lambda a, b: a + b
-            context['called_given'] = True
+            context.function = lambda a, b: a + b
+            context.called_given = True
 
         @given
         def a_multiplication_function(context):
-            context['function'] = lambda a, b: a * b
-            context['called_given'] = True
+            context.function = lambda a, b: a * b
+            context.called_given = True
 
         @when
         def we_call_it_with_two_negative_numbers(context):
-            context['result'] = context['function'](-5, -5)
-            context['called_when'] = True
+            return {
+                'called_when': True,
+                'return_val': context.function(-5, -5)
+            }
 
         @when
         def we_call_it_with_two_positive_numbers(context):
-            context['result'] = context['function'](5, 5)
-            context['called_when'] = True
+            return {
+                'called_when': True,
+                'return_val': context.function(5, 5)
+            }
 
         @then
         def we_will_get_a_negative_number(context):
-            context['called_then'] = True
-            Expect(context['result']).to_be.less_than(0)
+            context.result['called_then'] = True
+            Expect(context.result['return_val']).to_be.less_than(0)
 
         @then
         def we_will_get_a_positive_number(context):
-            context['called_then'] = True
-            Expect(context['result']).to_be.greater_than(0)
+            context.result['called_then'] = True
+            Expect(context.result['return_val']).to_be.greater_than(0)
 
         self.adding_two_negative_numbers_scenario = Scenario(
             'Adding two negative numbers',
@@ -77,9 +82,9 @@ class TestFeatureArithmetic(TestCase):
 
         for feature in self.suite.features:
             for scenario in feature.scenarios:
-                self.assertTrue(scenario.context['called_given'])
-                self.assertTrue(scenario.context['called_when'])
-                self.assertTrue(scenario.context['called_then'])
+                self.assertTrue(scenario.context.called_given)
+                self.assertTrue(scenario.context.result['called_when'])
+                self.assertTrue(scenario.context.result['called_then'])
 
                 if scenario == self.multiplying_two_negative_numbers_scenario:
                     self.assertFalse(scenario.passed)

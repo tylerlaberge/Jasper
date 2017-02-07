@@ -6,13 +6,13 @@ class TestFeatureArithmetic(TestCase):
     def setUp(self):
         @given
         def an_adding_function(context):
-            context['function'] = lambda a, b: a + b
-            context['called_given'] = True
+            context.function = lambda a, b: a + b
+            context.called_given = True
 
         @given
         def a_multiplication_function(context):
-            context['function'] = lambda a, b: a * b
-            context['called_given'] = True
+            context.function = lambda a, b: a * b
+            context.called_given = True
 
         @when
         def we_call_it_with_two_negative_numbers(context):
@@ -78,9 +78,9 @@ class TestFeatureArithmetic(TestCase):
                 self.assertFalse(scenario.passed)
             else:
                 self.assertTrue(scenario.passed)
-                self.assertTrue(scenario.context['called_given'])
-                self.assertTrue(scenario.context['result']['called_when'])
-                self.assertTrue(scenario.context['result']['called_then'])
+                self.assertTrue(scenario.context.called_given)
+                self.assertTrue(scenario.context.result['called_when'])
+                self.assertTrue(scenario.context.result['called_then'])
 
         self.assertFalse(self.feature.passed)
         self.assertEqual(len(self.feature.successes), 3)

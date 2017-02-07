@@ -1,5 +1,6 @@
 from jasper import Feature
 from unittest import TestCase
+import asyncio
 
 
 class FeatureTestCase(TestCase):
@@ -16,21 +17,22 @@ class FeatureTestCase(TestCase):
             def __str__(self):
                 return 'foobar'
 
-            def run(self):
+            async def run(self):
                 self.passed = True
 
         self.scenarios = [MockScenario() for _ in range(5)]
         self.feature = Feature('Some_feature', *self.scenarios)
 
     def test_run(self):
-        self.feature.run()
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(self.feature.run())
 
         for scenario in self.scenarios:
             self.assertTrue(scenario.passed)
             self.assertIsNotNone(scenario.context)
 
         self.assertTrue(self.feature.passed)
-        self.assertEqual(self.feature.successes, self.scenarios)
+        self.assertEqual(len(self.feature.successes), len(self.scenarios))
         self.assertEqual(self.feature.failures, [])
 
     def test_num_scenarios_passed(self):

@@ -44,7 +44,7 @@ class Scenario(object):
             try:
                 await self.given(self.context)
                 await self.when(self.context)
-                self.then(self.context)
+                await self.then(self.context)
             except (GivenException, WhenException, ThenException) as e:
                 self.exception = e
             else:

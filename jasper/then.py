@@ -2,6 +2,7 @@ from jasper.exceptions import ThenException
 from jasper.utility import blue, red, grey
 from functools import wraps
 from collections import namedtuple
+import asyncio
 
 
 class Then(object):
@@ -11,10 +12,13 @@ class Then(object):
         self.ran = False
         self.passed = False
 
-    def __call__(self, context):
+    async def __call__(self, context):
         context.lock()
         try:
-            self.then_function(context)
+            if asyncio.iscoroutinefunction(self.then_function):
+                await self.then_function(context)
+            else:
+                self.then_function(context)
         except Exception as e:
             raise ThenException(e)
         else:
@@ -34,9 +38,15 @@ class Then(object):
 
 
 def then(func):
-    @wraps(func)
-    def wrapper(context):
-        func(context)
+    if asyncio.iscoroutinefunction(func):
+        @wraps(func)
+        async def wrapper(context):
+            await func(context)
+    else:
+        @wraps(func)
+        def wrapper(context):
+            func(context)
 
     step = namedtuple('Step', ['cls', 'function'])
     return step(Then, wrapper)
+

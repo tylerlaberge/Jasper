@@ -1,5 +1,6 @@
 from jasper import Feature, Scenario, given, when, then, Expect
 from unittest import TestCase
+import asyncio
 
 
 class TestFeatureArithmetic(TestCase):
@@ -72,7 +73,8 @@ class TestFeatureArithmetic(TestCase):
         )
 
     def test_run(self):
-        self.feature.run()
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(self.feature.run())
 
         for scenario in self.feature.scenarios:
             self.assertTrue(scenario.context.called_given)

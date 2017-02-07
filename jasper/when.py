@@ -2,6 +2,7 @@ from jasper.utility import blue, red, grey
 from jasper.exceptions import WhenException
 from functools import wraps
 from collections import namedtuple
+import asyncio
 
 
 class When(object):
@@ -14,7 +15,10 @@ class When(object):
     async def __call__(self, context):
         context.lock()
         try:
-            result = await self.when_function(context)
+            if asyncio.iscoroutinefunction(self.when_function):
+                result = await self.when_function(context)
+            else:
+                result = self.when_function(context)
         except Exception as e:
             raise WhenException(e)
         else:
@@ -37,10 +41,15 @@ class When(object):
 
 
 def when(func):
-    @wraps(func)
-    async def wrapper(context):
-        return_val = await func(context)
-        return return_val
+    if asyncio.iscoroutinefunction(func):
+        @wraps(func)
+        async def wrapper(context):
+            return_val = await func(context)
+            return return_val
+    else:
+        @wraps(func)
+        def wrapper(context):
+            return func(context)
 
     step = namedtuple('Step', ['cls', 'function'])
     return step(cls=When, function=wrapper)

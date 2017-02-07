@@ -1,6 +1,6 @@
 from jasper import Scenario, given, when, then, Expect, Context
 from unittest import TestCase
-
+import asyncio
 
 class TestFeatureArithmetic(TestCase):
 
@@ -67,11 +67,12 @@ class TestFeatureArithmetic(TestCase):
         ]
 
     def test_run(self):
+        loop = asyncio.get_event_loop()
         for scenario in self.scenarios:
             self.assertFalse(scenario.passed)
 
             scenario.context = Context()
-            scenario.run()
+            loop.run_until_complete(scenario.run())
 
             self.assertTrue(scenario.context.called_given)
             self.assertTrue(scenario.context.result['called_when'])

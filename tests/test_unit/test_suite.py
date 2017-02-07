@@ -1,5 +1,6 @@
 from jasper import Suite
 from unittest import TestCase
+import asyncio
 
 
 class SuiteTestCase(TestCase):
@@ -15,7 +16,7 @@ class SuiteTestCase(TestCase):
             def __str__(self):
                 return 'foobar\n'
 
-            def run(self):
+            async def run(self):
                 self.passed = True
 
             @property
@@ -33,7 +34,7 @@ class SuiteTestCase(TestCase):
             def __str__(self):
                 return 'foobar\n'
 
-            def run(self):
+            async def run(self):
                 self.passed = False
 
             @property
@@ -51,10 +52,11 @@ class SuiteTestCase(TestCase):
             self.suite.add_feature(feature)
 
     def test_run(self):
-        self.suite.run()
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(self.suite.run())
 
-        self.assertEqual(self.suite.successes, [self.features[0], self.features[2]])
-        self.assertEqual(self.suite.failures, [self.features[1], self.features[3]])
+        self.assertEqual(len(self.suite.successes), 2)
+        self.assertEqual(len(self.suite.failures), 2)
 
     def test_num_features_passed(self):
         self.suite.successes = ['foo', 'bar']

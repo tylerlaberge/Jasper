@@ -1,5 +1,6 @@
 from jasper import Scenario, Given, When, Then, Context
 from unittest import TestCase
+import asyncio
 
 
 class ScenarioTestCase(TestCase):
@@ -12,7 +13,7 @@ class ScenarioTestCase(TestCase):
                 self.called = False
                 self.called_with = None
 
-            def __call__(self, context):
+            async def __call__(self, context):
                 self.called = True
                 self.called_with = context
 
@@ -33,7 +34,7 @@ class ScenarioTestCase(TestCase):
                 self.called = False
                 self.called_with = None
 
-            def __call__(self, context):
+            async def __call__(self, context):
                 self.called = True
                 self.called_with = context
 
@@ -54,7 +55,7 @@ class ScenarioTestCase(TestCase):
                 self.called = False
                 self.called_with = None
 
-            def __call__(self, context):
+            async def __call__(self, context):
                 self.called = True
                 self.called_with = context
 
@@ -87,7 +88,8 @@ class ScenarioTestCase(TestCase):
 
     def test_run(self):
         self.scenario.context = Context()
-        self.scenario.run()
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(self.scenario.run())
 
         self.assertTrue(self.scenario.given.called)
         self.assertEqual(self.scenario.given.called_with, self.scenario.context)

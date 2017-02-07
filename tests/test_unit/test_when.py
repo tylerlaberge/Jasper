@@ -1,5 +1,6 @@
 import jasper
 from unittest import TestCase
+import asyncio
 
 
 class WhenTestCase(TestCase):
@@ -17,7 +18,8 @@ class WhenTestCase(TestCase):
 
     def test_call(self):
         context = jasper.Context(function=lambda a, b: a*b)
-        self.when(context)
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(self.when(context))
 
         self.assertIn('result', context._items)
         self.assertEqual(context.result, 25)

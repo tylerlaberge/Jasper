@@ -2,6 +2,7 @@ from jasper.utility import blue, red
 from jasper.exceptions import GivenException
 from functools import wraps
 from collections import namedtuple
+import asyncio
 
 
 class Given(object):
@@ -13,7 +14,10 @@ class Given(object):
     async def __call__(self, context):
         context.unlock()
         try:
-            await self.given_function(context)
+            if asyncio.iscoroutinefunction(self.given_function):
+                await self.given_function(context)
+            else:
+                self.given_function(context)
         except Exception as e:
             raise GivenException(e)
         else:
@@ -28,10 +32,16 @@ class Given(object):
 
 
 def given(func):
-    @wraps(func)
-    async def wrapper(context):
-        await func(context)
+    if asyncio.iscoroutinefunction(func):
+        @wraps(func)
+        async def wrapper(context):
+            await func(context)
+    else:
+        @wraps(func)
+        def wrapper(context):
+            func(context)
 
     step = namedtuple('Step', ['cls', 'function'])
     return step(cls=Given, function=wrapper)
+
 

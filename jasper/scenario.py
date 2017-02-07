@@ -35,12 +35,15 @@ class Scenario(object):
 
         return scenario_string
 
-    def run(self):
+    async def run(self):
+        await self.__run_steps()
+
+    async def __run_steps(self):
         if self.context is not None:
             memento = self.context.commit()
             try:
-                self.given(self.context)
-                self.when(self.context)
+                await self.given(self.context)
+                await self.when(self.context)
                 self.then(self.context)
             except (GivenException, WhenException, ThenException) as e:
                 self.exception = e

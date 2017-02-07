@@ -1,5 +1,6 @@
 from jasper.utility import blue, red, indent
 from jasper.context import Context
+import asyncio
 
 
 class Feature(object):
@@ -30,13 +31,15 @@ class Feature(object):
         formatted_string += color(f'\n{self.num_scenarios_passed} Scenarios passed, {self.num_scenarios_failed} failed.')
         return formatted_string
 
-    def run(self):
-        for scenario in self.scenarios:
-            scenario(Context())
-            scenario.run()
+    async def run(self):
+        await asyncio.wait([self.__run_scenario(scenario) for scenario in self.scenarios])
 
-            if scenario.passed:
-                self.successes.append(scenario)
-            else:
-                self.failures.append(scenario)
-                self.passed = False
+    async def __run_scenario(self, scenario):
+        scenario(Context())
+        await scenario.run()
+
+        if scenario.passed:
+            self.successes.append(scenario)
+        else:
+            self.failures.append(scenario)
+            self.passed = False

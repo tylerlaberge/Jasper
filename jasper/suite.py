@@ -1,3 +1,4 @@
+import asyncio
 from jasper.utility import blue, red
 
 
@@ -50,12 +51,13 @@ class Suite(object):
 
         return formatted_string
 
-    def run(self):
-        for feature in self.features:
-            feature.run()
+    async def run(self):
+        await asyncio.wait([self.__run_feature(feature) for feature in self.features])
 
-            if feature.passed:
-                self.successes.append(feature)
-            else:
-                self.failures.append(feature)
-                self.passed = False
+    async def __run_feature(self, feature):
+        await feature.run()
+        if feature.passed:
+            self.successes.append(feature)
+        else:
+            self.failures.append(feature)
+            self.passed = False

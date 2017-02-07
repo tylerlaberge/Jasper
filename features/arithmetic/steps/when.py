@@ -27,6 +27,6 @@ def we_raise_an_exception(context):
 
 
 @when
-def we_call_it_with_some_number(context):
-    context.sleep(3)
+async def we_call_it_with_the_number_5(context):
+    await context.sleep(5)
     return {'slept': True}

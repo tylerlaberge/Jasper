@@ -10,10 +10,10 @@ class Given(object):
         self.given_function = function
         self.passed = False
 
-    def __call__(self, context):
+    async def __call__(self, context):
         context.unlock()
         try:
-            self.given_function(context)
+            await self.given_function(context)
         except Exception as e:
             raise GivenException(e)
         else:
@@ -29,8 +29,8 @@ class Given(object):
 
 def given(func):
     @wraps(func)
-    def wrapper(context):
-        func(context)
+    async def wrapper(context):
+        await func(context)
 
     step = namedtuple('Step', ['cls', 'function'])
     return step(cls=Given, function=wrapper)

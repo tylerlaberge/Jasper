@@ -1,5 +1,6 @@
 import time
 from jasper import given
+import asyncio
 
 
 @given
@@ -8,11 +9,11 @@ def an_exception(context):
 
 
 @given
-def a_slow_function(context):
-    def sleep(amount):
-        time.sleep(amount)
+async def a_slow_function(context):
+    async def sleep(amount):
+        await asyncio.sleep(amount)
 
-    context['sleep'] = sleep
+    context.sleep = sleep
 
 
 @given

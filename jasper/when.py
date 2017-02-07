@@ -11,10 +11,10 @@ class When(object):
         self.ran = False
         self.passed = False
 
-    def __call__(self, context):
+    async def __call__(self, context):
         context.lock()
         try:
-            result = self.when_function(context)
+            result = await self.when_function(context)
         except Exception as e:
             raise WhenException(e)
         else:
@@ -38,8 +38,9 @@ class When(object):
 
 def when(func):
     @wraps(func)
-    def wrapper(context):
-        return func(context)
+    async def wrapper(context):
+        return_val = await func(context)
+        return return_val
 
     step = namedtuple('Step', ['cls', 'function'])
     return step(cls=When, function=wrapper)

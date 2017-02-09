@@ -1,4 +1,5 @@
 from jasper import when
+import time
 
 
 @when
@@ -27,6 +28,8 @@ def we_raise_an_exception(context):
 
 
 @when
-async def we_call_it_with_the_number_5(context):
-    await context.sleep(5)
-    return {'slept': True}
+async def we_call_it_with(context, seconds):
+    start_time = time.time()
+    await context.sleep(seconds)
+    end_time = time.time()
+    return {'sleep_time': int(end_time - start_time)}

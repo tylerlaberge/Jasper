@@ -42,9 +42,9 @@ class Scenario(object):
         if self.context is not None:
             memento = self.context.commit()
             try:
-                await self.given(self.context)
-                await self.when(self.context)
-                await self.then(self.context)
+                await self.given.run(self.context)
+                await self.when.run(self.context)
+                await self.then.run(self.context)
             except (GivenException, WhenException, ThenException) as e:
                 self.exception = e
             else:

@@ -42,27 +42,27 @@ class TestFeatureArithmetic(TestCase):
 
         self.adding_two_negative_numbers_scenario = Scenario(
             'Adding two negative numbers',
-            given=an_adding_function,
-            when=we_call_it_with_two_negative_numbers,
-            then=we_will_get_a_negative_number
+            given=an_adding_function(),
+            when=we_call_it_with_two_negative_numbers(),
+            then=we_will_get_a_negative_number()
         )
         self.adding_two_positive_numbers_scenario = Scenario(
             'Adding two positive numbers',
-            given=an_adding_function,
-            when=we_call_it_with_two_positive_numbers,
-            then=we_will_get_a_positive_number
+            given=an_adding_function(),
+            when=we_call_it_with_two_positive_numbers(),
+            then=we_will_get_a_positive_number()
         )
         self.multiplying_two_negative_numbers_scenario = Scenario(
             'Multiplying two negative numbers',
-            given=a_multiplication_function,
-            when=we_call_it_with_two_negative_numbers,
-            then=we_will_get_a_negative_number
+            given=a_multiplication_function(),
+            when=we_call_it_with_two_negative_numbers(),
+            then=we_will_get_a_negative_number()
         )
         self.multiplying_two_positive_numbers_scenario = Scenario(
             'Multiplying two positive numbers',
-            given=a_multiplication_function,
-            when=we_call_it_with_two_positive_numbers,
-            then=we_will_get_a_positive_number
+            given=a_multiplication_function(),
+            when=we_call_it_with_two_positive_numbers(),
+            then=we_will_get_a_positive_number()
         )
         self.feature_one = Feature(
             'Addition',

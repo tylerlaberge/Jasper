@@ -13,7 +13,7 @@ class ThenTestCase(TestCase):
             if not context.result < 0:
                 raise ExpectationException(context['result'], 0, 'to be less than')
 
-        self.then = we_will_get_a_negative_number
+        self.then = we_will_get_a_negative_number()
 
     def test_initialize(self):
         self.assertEqual(type(self.then), jasper.Then)
@@ -24,7 +24,7 @@ class ThenTestCase(TestCase):
         self.assertFalse(self.then.passed)
 
         loop = asyncio.get_event_loop()
-        loop.run_until_complete(self.then(context))
+        loop.run_until_complete(self.then.run(context))
 
         self.assertTrue(self.then.passed)
 
@@ -32,6 +32,6 @@ class ThenTestCase(TestCase):
         context = jasper.Context(result=5)
         loop = asyncio.get_event_loop()
         with self.assertRaises(ThenException):
-            loop.run_until_complete(self.then(context))
+            loop.run_until_complete(self.then.run(context))
 
         self.assertFalse(self.then.passed)

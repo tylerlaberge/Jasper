@@ -2,6 +2,7 @@ from jasper import Scenario, given, when, then, Expect, Context
 from unittest import TestCase
 import asyncio
 
+
 class TestFeatureArithmetic(TestCase):
 
     def setUp(self):
@@ -42,27 +43,27 @@ class TestFeatureArithmetic(TestCase):
         self.scenarios = [
             Scenario(
                 'Adding two negative numbers',
-                given=an_adding_function,
-                when=we_call_it_with_two_negative_numbers,
-                then=we_will_get_a_negative_number
+                given=an_adding_function(),
+                when=we_call_it_with_two_negative_numbers(),
+                then=we_will_get_a_negative_number()
             ),
             Scenario(
                 'Adding two positive numbers',
-                given=an_adding_function,
-                when=we_call_it_with_two_positive_numbers,
-                then=we_will_get_a_positive_number
+                given=an_adding_function(),
+                when=we_call_it_with_two_positive_numbers(),
+                then=we_will_get_a_positive_number()
             ),
             Scenario(
                 'Multiplying two negative numbers',
-                given=a_multiplication_function,
-                when=we_call_it_with_two_negative_numbers,
-                then=we_will_get_a_positive_number
+                given=a_multiplication_function(),
+                when=we_call_it_with_two_negative_numbers(),
+                then=we_will_get_a_positive_number()
             ),
             Scenario(
                 'Multiplying two positive numbers',
-                given=a_multiplication_function,
-                when=we_call_it_with_two_positive_numbers,
-                then=we_will_get_a_positive_number
+                given=a_multiplication_function(),
+                when=we_call_it_with_two_positive_numbers(),
+                then=we_will_get_a_positive_number()
             )
         ]
 

@@ -6,18 +6,29 @@ import asyncio
 
 class When(object):
 
-    def __init__(self, function):
+    def __init__(self, function, **kwargs):
         self.when_function = function
+        self.kwargs = kwargs
         self.ran = False
         self.passed = False
 
-    async def __call__(self, context):
+    def __str__(self):
+        if not self.ran:
+            color = grey
+        elif self.passed:
+            color = blue
+        else:
+            color = red
+
+        return color(f'When: {self.when_function.__name__} {self.kwargs if self.kwargs else ""}')
+
+    async def run(self, context):
         context.lock()
         try:
             if asyncio.iscoroutinefunction(self.when_function):
-                result = await self.when_function(context)
+                result = await self.when_function(context, **self.kwargs)
             else:
-                result = self.when_function(context)
+                result = self.when_function(context, **self.kwargs)
         except Exception as e:
             raise WhenException(e)
         else:
@@ -28,28 +39,12 @@ class When(object):
             context.lock()
             self.ran = True
 
-    def __str__(self):
-        if not self.ran:
-            color = grey
-        elif self.passed:
-            color = blue
-        else:
-            color = red
-
-        return color(f'When: {self.when_function.__name__}')
-
 
 def when(func):
-    if asyncio.iscoroutinefunction(func):
-        @wraps(func)
-        async def wrapper(context):
-            return_val = await func(context)
-            return return_val
-    else:
-        @wraps(func)
-        def wrapper(context):
-            return func(context)
+    @wraps(func)
+    def wrapper(**kwargs):
+        return When(func, **kwargs)
 
-    return When(wrapper)
+    return wrapper
 
 

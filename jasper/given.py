@@ -6,17 +6,23 @@ import asyncio
 
 class Given(object):
 
-    def __init__(self, function):
+    def __init__(self, function, **kwargs):
         self.given_function = function
+        self.kwargs = kwargs
         self.passed = False
 
-    async def __call__(self, context):
+    def __str__(self):
+        color = blue if self.passed else red
+
+        return color(f"Given: {self.given_function.__name__} {self.kwargs if self.kwargs else ''}")
+
+    async def run(self, context):
         context.unlock()
         try:
             if asyncio.iscoroutinefunction(self.given_function):
-                await self.given_function(context)
+                await self.given_function(context, **self.kwargs)
             else:
-                self.given_function(context)
+                self.given_function(context, **self.kwargs)
         except Exception as e:
             raise GivenException(e)
         else:
@@ -24,23 +30,14 @@ class Given(object):
         finally:
             context.lock()
 
-    def __str__(self):
-        color = blue if self.passed else red
-
-        return color(f"Given: {self.given_function.__name__}")
-
 
 def given(func):
-    if asyncio.iscoroutinefunction(func):
-        @wraps(func)
-        async def wrapper(context):
-            await func(context)
-    else:
-        @wraps(func)
-        def wrapper(context):
-            func(context)
+    @wraps(func)
+    def wrapper(**kwargs):
+        return Given(func, **kwargs)
 
-    return Given(wrapper)
+    return wrapper
+
 
 
 

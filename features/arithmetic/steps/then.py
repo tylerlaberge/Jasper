@@ -17,5 +17,5 @@ def a_typeerror_will_occur(context):
 
 
 @then
-def we_will_have_slept(context):
-    Expect(context.result['slept']).to_be(True)
+def we_will_have_slept_for(context, seconds):
+    Expect(context.result['sleep_time']).to_be(int(seconds))

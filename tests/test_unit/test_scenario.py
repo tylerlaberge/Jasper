@@ -13,7 +13,7 @@ class ScenarioTestCase(TestCase):
                 self.called = False
                 self.called_with = None
 
-            async def __call__(self, context):
+            async def run(self, context):
                 self.called = True
                 self.called_with = context
 
@@ -34,7 +34,7 @@ class ScenarioTestCase(TestCase):
                 self.called = False
                 self.called_with = None
 
-            async def __call__(self, context):
+            async def run(self, context):
                 self.called = True
                 self.called_with = context
 
@@ -55,7 +55,7 @@ class ScenarioTestCase(TestCase):
                 self.called = False
                 self.called_with = None
 
-            async def __call__(self, context):
+            async def run(self, context):
                 self.called = True
                 self.called_with = context
 

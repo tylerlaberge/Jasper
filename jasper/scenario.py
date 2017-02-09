@@ -7,9 +7,9 @@ class Scenario(object):
     def __init__(self, description, given, when, then):
         self.description = description
 
-        self.given = given.cls(given.function)
-        self.when = when.cls(when.function)
-        self.then = then.cls(then.function)
+        self.given = given
+        self.when = when
+        self.then = then
 
         self.context = None
         self.exception = None

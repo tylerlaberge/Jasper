@@ -1,7 +1,6 @@
 from jasper.utility import blue, red
 from jasper.exceptions import GivenException
 from functools import wraps
-from collections import namedtuple
 import asyncio
 
 
@@ -41,7 +40,7 @@ def given(func):
         def wrapper(context):
             func(context)
 
-    step = namedtuple('Step', ['cls', 'function'])
-    return step(cls=Given, function=wrapper)
+    return Given(wrapper)
+
 
 

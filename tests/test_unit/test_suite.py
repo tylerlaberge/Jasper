@@ -12,6 +12,7 @@ class SuiteTestCase(TestCase):
 
             def __init__(self):
                 self.passed = False
+                self.scenarios = ['foo_1', 'foo_2', 'foo_3', 'foo_4', 'foo_5', 'bar_1', 'bar_2', 'bar_3']
 
             def __str__(self):
                 return 'foobar\n'
@@ -30,6 +31,7 @@ class SuiteTestCase(TestCase):
         class MockFeatureFailure(object):
             def __init__(self):
                 self.passed = False
+                self.scenarios = ['foo_1', 'foo_2', 'foo_3', 'foo_4', 'foo_5', 'bar_1', 'bar_2', 'bar_3']
 
             def __str__(self):
                 return 'foobar\n'

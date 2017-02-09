@@ -1,7 +1,6 @@
 from jasper.exceptions import ThenException
 from jasper.utility import blue, red, grey
 from functools import wraps
-from collections import namedtuple
 import asyncio
 
 
@@ -47,6 +46,6 @@ def then(func):
         def wrapper(context):
             func(context)
 
-    step = namedtuple('Step', ['cls', 'function'])
-    return step(Then, wrapper)
+    return Then(wrapper)
+
 

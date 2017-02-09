@@ -13,7 +13,7 @@ class ThenTestCase(TestCase):
             if not context.result < 0:
                 raise ExpectationException(context['result'], 0, 'to be less than')
 
-        self.then = we_will_get_a_negative_number.cls(we_will_get_a_negative_number.function)
+        self.then = we_will_get_a_negative_number
 
     def test_initialize(self):
         self.assertEqual(type(self.then), jasper.Then)

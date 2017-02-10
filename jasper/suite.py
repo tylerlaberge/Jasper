@@ -1,5 +1,6 @@
 import asyncio
 from jasper.utility import blue, red
+import tqdm
 
 
 class Suite(object):
@@ -52,14 +53,25 @@ class Suite(object):
         return formatted_string
 
     async def run(self):
-        print(f'Running {len(self.features)} features '
-              f'and {sum([len(feature.scenarios) for feature in self.features])} scenarios.....')
-        await asyncio.wait([self.__run_feature(feature) for feature in self.features])
+        await self.wait_with_progress([self.__run_feature(feature) for feature in self.features])
 
     async def __run_feature(self, feature):
-        await feature.run()
+        feature = await feature.run()
         if feature.passed:
             self.successes.append(feature)
         else:
             self.failures.append(feature)
             self.passed = False
+
+        return feature
+
+    async def wait_with_progress(self, coros):
+        with tqdm.tqdm(
+                total=sum([len(feature.scenarios) for feature in self.features]),
+                desc=f'Running {len(self.features)} features and '
+                     f'{sum([len(feature.scenarios) for feature in self.features])} scenarios',
+                ncols=100, bar_format='{desc}{percentage:3.0f}%|{bar}|'
+        ) as progress_bar:
+            for future in asyncio.as_completed(coros):
+                completed_feature = await future
+                progress_bar.update(len(completed_feature.scenarios))

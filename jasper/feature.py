@@ -1,6 +1,7 @@
 from jasper.utility import blue, red, indent
 from jasper.context import Context
 import asyncio
+import tqdm
 
 
 class Feature(object):
@@ -33,6 +34,7 @@ class Feature(object):
 
     async def run(self):
         await asyncio.wait([self.__run_scenario(scenario) for scenario in self.scenarios])
+        return self
 
     async def __run_scenario(self, scenario):
         scenario(Context())

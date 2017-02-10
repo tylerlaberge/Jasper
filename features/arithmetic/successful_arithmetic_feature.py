@@ -9,14 +9,14 @@ feature = Feature(
     Scenario(
         'Slow Scenario',
         given=a_slow_function(),
-        when=we_call_it_with(seconds=3),
-        then=we_will_have_slept_for(seconds=3)
+        when=we_call_it_with(seconds=1),
+        then=we_will_have_slept_for(seconds=1)
     ),
     Scenario(
         'Slow Scenario Two',
         given=a_slow_function(),
-        when=we_call_it_with(seconds=5),
-        then=we_will_have_slept_for(seconds=5)
+        when=we_call_it_with(seconds=3),
+        then=we_will_have_slept_for(seconds=3)
     )
 )
 feature_two = Feature(
@@ -24,14 +24,14 @@ feature_two = Feature(
     Scenario(
         'Slow Scenario Three',
         given=a_slow_function(),
-        when=we_call_it_with(seconds=6),
-        then=we_will_have_slept_for(seconds=6)
+        when=we_call_it_with(seconds=5),
+        then=we_will_have_slept_for(seconds=5)
     ),
     Scenario(
         'Slow Scenario Four',
         given=a_slow_function(),
-        when=we_call_it_with(seconds=3),
-        then=we_will_have_slept_for(seconds=3)
+        when=we_call_it_with(seconds=7),
+        then=we_will_have_slept_for(seconds=7)
     )
 )
 feature_three = Feature(

@@ -19,6 +19,7 @@ class SuiteTestCase(TestCase):
 
             async def run(self):
                 self.passed = True
+                return self
 
             @property
             def num_scenarios_passed(self):
@@ -38,6 +39,7 @@ class SuiteTestCase(TestCase):
 
             async def run(self):
                 self.passed = False
+                return self
 
             @property
             def num_scenarios_passed(self):

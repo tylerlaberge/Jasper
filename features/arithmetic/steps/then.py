@@ -19,3 +19,8 @@ def a_typeerror_will_occur(context):
 @then
 def we_will_have_slept_for(context, seconds):
     Expect(context.result['sleep_time']).to_be(int(seconds))
+
+
+@then
+def we_will_not_get_a_negative_number(context):
+    Expect(context.result).not_.to_be.less_than(0)

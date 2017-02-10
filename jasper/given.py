@@ -1,4 +1,4 @@
-from jasper.utility import blue, red
+from jasper.utility import cyan, red
 from jasper.exceptions import GivenException
 from functools import wraps
 import asyncio
@@ -12,7 +12,7 @@ class Given(object):
         self.passed = False
 
     def __str__(self):
-        color = blue if self.passed else red
+        color = cyan if self.passed else red
 
         return color(f"Given: {self.given_function.__name__} {self.kwargs if self.kwargs else ''}")
 

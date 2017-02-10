@@ -1,5 +1,5 @@
 from jasper.exceptions import ThenException
-from jasper.utility import blue, red, grey
+from jasper.utility import cyan, red, grey
 from functools import wraps
 import asyncio
 
@@ -16,7 +16,7 @@ class Then(object):
         if not self.ran:
             color = grey
         elif self.passed:
-            color = blue
+            color = cyan
         else:
             color = red
 

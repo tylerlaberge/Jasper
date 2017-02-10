@@ -1,4 +1,4 @@
-from jasper.utility import blue, red, grey
+from jasper.utility import cyan, red, grey
 from jasper.exceptions import WhenException
 from functools import wraps
 import asyncio
@@ -16,7 +16,7 @@ class When(object):
         if not self.ran:
             color = grey
         elif self.passed:
-            color = blue
+            color = cyan
         else:
             color = red
 

@@ -1,4 +1,4 @@
-from jasper.utility import blue, red, indent
+from jasper.utility import cyan, red, indent
 from jasper.exceptions import GivenException, WhenException, ThenException
 
 
@@ -19,7 +19,7 @@ class Scenario(object):
         self.context = context
 
     def __str__(self):
-        color = blue if self.passed else red
+        color = cyan if self.passed else red
         scenario_string = color(f'Scenario: {self.description}\n')
         scenario_string += indent(f'{str(self.given)}\n', 4)
         if type(self.exception) is GivenException:

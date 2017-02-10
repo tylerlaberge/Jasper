@@ -1,5 +1,5 @@
 import asyncio
-from jasper.utility import blue, red
+from jasper.utility import cyan, red
 import tqdm
 
 
@@ -31,13 +31,13 @@ class Suite(object):
         self.features.append(feature)
 
     def __str__(self):
-        feature_color = blue if self.passed else red
+        feature_color = cyan if self.passed else red
         formatted_string = feature_color('='*150 + '\n')
 
         for feature in self.successes:
-            formatted_string += blue('='*150 + '\n')
+            formatted_string += cyan('=' * 150 + '\n')
             formatted_string += f'{feature}\n'
-            formatted_string += blue('=' * 150 + '\n')
+            formatted_string += cyan('=' * 150 + '\n')
 
         for feature in self.failures:
             formatted_string += red('=' * 150 + '\n')

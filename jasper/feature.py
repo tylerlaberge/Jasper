@@ -1,7 +1,6 @@
-from jasper.utility import blue, red, indent
+from jasper.utility import cyan, red, indent
 from jasper.context import Context
 import asyncio
-import tqdm
 
 
 class Feature(object):
@@ -23,7 +22,7 @@ class Feature(object):
         return len(self.failures)
 
     def __str__(self):
-        color = blue if not self.failures else red
+        color = cyan if not self.failures else red
 
         formatted_string = color(f'Feature: {self.description}\n')
         for scenario in self.scenarios:

@@ -7,4 +7,5 @@ def a_dictionary_of_data(context):
         'foo': 'bar',
         'foobar': {
             'bar': 'foo',
-        }}
+        }
+    }

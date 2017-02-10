@@ -15,6 +15,12 @@ class Expect(object):
             elif not self.negate and self.actual_data is not expected_data:
                 raise ExpectationException(self.actual_data, expected_data, 'to_be')
 
+        elif self.operator == 'to_equal':
+            if self.negate and self.actual_data == expected_data:
+                raise ExpectationException(self.actual_data, expected_data, 'not_to_equal')
+            elif not self.negate and self.actual_data != expected_data:
+                raise ExpectationException(self.actual_data, expected_data, 'to_equal')
+
         return self
 
     @property
@@ -25,6 +31,11 @@ class Expect(object):
     @property
     def to_be(self):
         self.operator = 'to_be'
+        return self
+
+    @property
+    def to_equal(self):
+        self.operator = 'to_equal'
         return self
 
     def less_than(self, expected_data):

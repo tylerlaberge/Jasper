@@ -11,5 +11,11 @@ feature = Feature(
         given=a_dictionary_of_data(),
         when=we_do_nothing(),
         then=this_will_fail_and_we_should_see_the_object()
+    ),
+    Scenario(
+        'Copy',
+        given=a_dictionary_of_data(),
+        when=we_copy_it(),
+        then=the_two_unique_objects_will_have_identical_contents()
     )
 )

@@ -3,11 +3,15 @@ import asyncio
 
 
 @given
-def some_function_and_kwargs(context, kwargs={}):
+def some_function(context):
     def some_function(**some_function_kwargs):
         pass
 
     context.function = some_function
+
+
+@given
+def some_kwargs(context, kwargs={}):
     context.kwargs = kwargs
 
 

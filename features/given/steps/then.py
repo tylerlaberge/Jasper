@@ -1,4 +1,4 @@
-from jasper import then, Expect, GivenException
+from jasper import then, Expect, GivenException, Given
 from jasper.utility import cyan, red
 
 
@@ -42,4 +42,8 @@ def it_should_be_colored_cyan_and_display_its_attributes(context, given_function
 def it_should_be_colored_red_and_display_its_attributes(context, given_function_kwargs={}):
     Expect(context.given_object_string).to_equal(red(f'Given: some_function {given_function_kwargs}'))
 
+
+@then
+def the_decorated_function_should_return_a_given_object(context):
+    Expect(type(context.function_call_result)).to_be(Given)
 

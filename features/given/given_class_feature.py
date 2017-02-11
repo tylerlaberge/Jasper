@@ -8,7 +8,10 @@ feature = Feature(
     'Given Class Feature',
     Scenario(
         'Initialization',
-        given=some_function_and_kwargs(kwargs={'foo': 'bar'}),
+        given=[
+            some_function(),
+            some_kwargs(kwargs={'foo': 'bar'})
+        ],
         when=we_initialize_a_given_object_with_it(),
         then=[
             the_given_object_should_use_the_given_function(),

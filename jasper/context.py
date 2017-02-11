@@ -15,9 +15,7 @@ class Context(Originator):
             raise AttributeError(f'{item} not in Context.')
 
     def __setattr__(self, key, value):
-        if key in self._items:
-            raise ContextException("Can't set the same attribute more than once.")
-        elif not self.__dict__['_locked']:
+        if not self.__dict__['_locked']:
             self._items[key] = value
         else:
             raise ContextException("Can't set attributes on a locked Context.")

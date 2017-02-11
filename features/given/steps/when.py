@@ -29,5 +29,10 @@ def we_get_a_string_representation_of_the_given_object(context):
 
 
 @when
-def we_wrap_the_function_with_the_given_decorator_and_call_it_with_those_kwargs(context):
-    context.given_object = given(context.function)(**context.kwargs)
+def we_wrap_the_function_with_the_given_decorator(context):
+    context.function = given(context.function)
+
+
+@when
+def we_call_the_given_function_with_the_given_kwargs(context):
+    context.function_call_result = context.function(**context.kwargs)

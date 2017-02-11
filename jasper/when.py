@@ -23,17 +23,15 @@ class When(object):
         return color(f'When: {self.when_function.__name__} {self.kwargs if self.kwargs else ""}')
 
     async def run(self, context):
-        context.lock()
+        context.unlock()
         try:
             if asyncio.iscoroutinefunction(self.when_function):
-                result = await self.when_function(context, **self.kwargs)
+                await self.when_function(context, **self.kwargs)
             else:
-                result = self.when_function(context, **self.kwargs)
+                self.when_function(context, **self.kwargs)
         except Exception as e:
             raise WhenException(e)
         else:
-            context.unlock()
-            context.result = result
             self.passed = True
         finally:
             context.lock()

@@ -9,7 +9,7 @@ class WhenTestCase(TestCase):
 
         @jasper.when
         def we_call_it_with_two_negative_numbers(context):
-            return context.function(-5, -5)
+            context.result = context.function(-5, -5)
 
         self.when = we_call_it_with_two_negative_numbers()
 

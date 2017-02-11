@@ -7,9 +7,9 @@ class Scenario(object):
     def __init__(self, description, given, when, then):
         self.description = description
 
-        self.given = given
-        self.when = when
-        self.then = then
+        self.given = given if type(given) == list else [given]
+        self.when = when if type(when) == list else [when]
+        self.then = then if type(then) == list else [then]
 
         self.context = None
         self.exception = None
@@ -21,17 +21,17 @@ class Scenario(object):
     def __str__(self):
         color = cyan if self.passed else red
         scenario_string = color(f'Scenario: {self.description}\n')
-        scenario_string += indent(f'{str(self.given)}\n', 4)
-        if type(self.exception) is GivenException:
-            scenario_string += indent(f'{str(self.exception)}\n', 4)
+        for given in self.given:
+            scenario_string += indent(f'{str(given)}\n', 4)
 
-        scenario_string += indent(f'{str(self.when)}\n', 4)
-        if type(self.exception) is WhenException:
-            scenario_string += indent(f'{str(self.exception)}\n', 4)
+        for when in self.when:
+            scenario_string += indent(f'{str(when)}\n', 4)
 
-        scenario_string += indent(f'{str(self.then)}', 4)
-        if type(self.exception) is ThenException:
-            scenario_string += indent(f'\n{str(self.exception)}', 4)
+        for then in self.then:
+            scenario_string += indent(f'{str(then)}\n', 4)
+
+        if self.exception is not None:
+            scenario_string += indent(f'\n{str(self.exception)}\n', 4)
 
         return scenario_string
 
@@ -42,9 +42,12 @@ class Scenario(object):
         if self.context is not None:
             memento = self.context.commit()
             try:
-                await self.given.run(self.context)
-                await self.when.run(self.context)
-                await self.then.run(self.context)
+                for given in self.given:
+                    await given.run(self.context)
+                for when in self.when:
+                    await when.run(self.context)
+                for then in self.then:
+                    await then.run(self.context)
             except (GivenException, WhenException, ThenException) as e:
                 self.exception = e
             else:

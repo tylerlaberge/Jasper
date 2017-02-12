@@ -5,7 +5,7 @@ import asyncio
 class Then(object):
 
     def __init__(self, function, **kwargs):
-        self.then_function = function
+        self.function = function
         self.kwargs = kwargs
         self.ran = False
         self.passed = False
@@ -13,10 +13,10 @@ class Then(object):
     async def run(self, context):
         context.lock()
         try:
-            if asyncio.iscoroutinefunction(self.then_function):
-                await self.then_function(context, **self.kwargs)
+            if asyncio.iscoroutinefunction(self.function):
+                await self.function(context, **self.kwargs)
             else:
-                self.then_function(context, **self.kwargs)
+                self.function(context, **self.kwargs)
         except Exception as e:
             raise e
         else:

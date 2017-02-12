@@ -3,7 +3,7 @@ from jasper import then, Expect, Given
 
 @then
 def the_given_object_should_use_the_given_function(context):
-    Expect(context.given_object.given_function).to_be(context.function)
+    Expect(context.given_object.function).to_be(context.function)
 
 
 @then

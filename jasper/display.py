@@ -58,7 +58,7 @@ class Display(object):
         self.indentation_level += 4
         if feature.before_each is not None:
             for before_each in feature.before_each:
-                self.prepare_before_each(before_each)
+                self.prepare_step(before_each, 'BeforeEach')
         for scenario in feature.scenarios:
             self.prepare_scenario(scenario)
         if feature.exception is not None:
@@ -77,57 +77,25 @@ class Display(object):
 
         self.__push_to_display(color(f'Scenario: {scenario.description}'))
         self.indentation_level += 4
-        for given in scenario.given:
-            self.prepare_given(given)
-        for when in scenario.when:
-            self.prepare_when(when)
-        for then in scenario.then:
-            self.prepare_then(then)
+        for index, given in enumerate(scenario.given):
+            self.prepare_step(given, 'Given') if index == 0 else self.prepare_step(given, 'And')
+        for index, when in enumerate(scenario.when):
+            self.prepare_step(when, 'When') if index == 0 else self.prepare_step(when, 'And')
+        for index, then in enumerate(scenario.then):
+            self.prepare_step(then, 'Then') if index == 0 else self.prepare_step(then, 'And')
         if scenario.exception is not None:
             self.prepare_exception(scenario.exception)
         self.indentation_level -= 4
 
-    def prepare_before_each(self, before_each):
-        if not before_each.ran:
+    def prepare_step(self, step, step_name):
+        if not step.ran:
             color = self.grey
-        elif before_each.passed:
+        elif step.passed:
             color = self.cyan
         else:
             color = self.red
 
-        self.__push_to_display(
-            color(f"BeforeEach: {before_each.function.__name__} {before_each.kwargs if before_each.kwargs else ''}")
-        )
-
-    def prepare_given(self, given):
-        if not given.ran:
-            color = self.grey
-        elif given.passed:
-            color = self.cyan
-        else:
-            color = self.red
-
-        self.__push_to_display(color(f"Given: {given.given_function.__name__} {given.kwargs if given.kwargs else ''}"))
-
-    def prepare_when(self, when):
-        if not when.ran:
-            color = self.grey
-        elif when.passed:
-            color = self.cyan
-        else:
-            color = self.red
-
-        self.__push_to_display(color(f"When: {when.when_function.__name__} {when.kwargs if when.kwargs else ''}"))
-
-    def prepare_then(self, then):
-        if not then.ran:
-            color = self.grey
-        elif then.passed:
-            color = self.cyan
-        else:
-            color = self.red
-
-        self.__push_to_display(color(f"Then: {then.then_function.__name__} {then.kwargs if then.kwargs else ''}"))
+        self.__push_to_display(color(f"{step_name}: {step.function.__name__} {step.kwargs if step.kwargs else ''}"))
 
     def prepare_exception(self, exception):
         if str(exception):

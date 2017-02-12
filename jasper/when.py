@@ -5,7 +5,7 @@ import asyncio
 class When(object):
 
     def __init__(self, function, **kwargs):
-        self.when_function = function
+        self.function = function
         self.kwargs = kwargs
         self.ran = False
         self.passed = False
@@ -13,10 +13,10 @@ class When(object):
     async def run(self, context):
         context.unlock()
         try:
-            if asyncio.iscoroutinefunction(self.when_function):
-                await self.when_function(context, **self.kwargs)
+            if asyncio.iscoroutinefunction(self.function):
+                await self.function(context, **self.kwargs)
             else:
-                self.when_function(context, **self.kwargs)
+                self.function(context, **self.kwargs)
         except Exception as e:
             raise e
         else:

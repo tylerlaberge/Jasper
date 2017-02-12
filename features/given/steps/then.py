@@ -1,5 +1,4 @@
 from jasper import then, Expect, Given
-from jasper.utility import cyan, red
 
 
 @then

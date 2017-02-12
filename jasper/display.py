@@ -1,36 +1,45 @@
 from jasper.utility import extract_traceback
 from termcolor import colored
 import textwrap
+import colorama
+import sys
 
 
 class Display(object):
 
-    def __init__(self):
+    def __init__(self, force_ansi=True):
         self.display_string = ''
         self.indentation_level = 0
+        self.colored = True
+        self.force_ansi = force_ansi
+        colorama.deinit()
+
+    def disable_color(self):
+        self.colored = False
+
+    def enable_color(self):
+        self.colored = True
 
     def display(self):
+        if sys.platform == 'win32' and not self.force_ansi:
+            colorama.init()
         print(self.display_string)
+        colorama.deinit()
 
-    @staticmethod
-    def cyan(text):
-        return colored(text, 'cyan')
+    def cyan(self, text):
+        return colored(text, 'cyan') if self.colored else text
 
-    @staticmethod
-    def magenta(text):
-        return colored(text, 'magenta')
+    def magenta(self, text):
+        return colored(text, 'magenta') if self.colored else text
 
-    @staticmethod
-    def yellow(text):
-        return colored(text, 'yellow')
+    def yellow(self, text):
+        return colored(text, 'yellow') if self.colored else text
 
-    @staticmethod
-    def red(text):
-        return colored(text, 'red')
+    def red(self, text):
+        return colored(text, 'red') if self.colored else text
 
-    @staticmethod
-    def grey(text):
-        return colored(text, 'white')
+    def grey(self, text):
+        return colored(text, 'white') if self.colored else text
 
     @staticmethod
     def indent(text, amount):

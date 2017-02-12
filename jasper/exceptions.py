@@ -55,3 +55,7 @@ class ScenarioException(JasperException):
 
 class ContextException(JasperException):
     pass
+
+
+class BeforeException(JasperClauseException):
+    pass

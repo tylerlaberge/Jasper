@@ -3,6 +3,11 @@ import asyncio
 
 
 @given
+def nothing(context):
+    pass
+
+
+@given
 def some_function(context):
     def some_function(**some_function_kwargs):
         pass
@@ -16,7 +21,7 @@ def some_kwargs(context, kwargs={}):
 
 
 @given
-def an_initialized_given_object(context, passed=False, given_function_kwargs={}):
+def an_initialized_given_object(context, ran=False, passed=False, given_function_kwargs={}):
 
     def some_function(given_function_context, **kwargs):
         context.given_function_called = True
@@ -24,10 +29,11 @@ def an_initialized_given_object(context, passed=False, given_function_kwargs={})
 
     context.given_object = Given(some_function, **given_function_kwargs)
     context.given_object.passed = passed
+    context.given_object.ran = ran
 
 
 @given
-def an_initialized_given_object_with_an_async_function(context, passed=False, given_function_kwargs={}):
+def an_initialized_given_object_with_an_async_function(context, ran=False, passed=False, given_function_kwargs={}):
 
     async def some_function(given_function_context, **kwargs):
         await asyncio.sleep(1)
@@ -36,7 +42,7 @@ def an_initialized_given_object_with_an_async_function(context, passed=False, gi
 
     context.given_object = Given(some_function, **given_function_kwargs)
     context.given_object.passed = passed
-
+    context.given_object.ran = ran
 
 @given
 def an_initialized_given_object_with_a_function_that_will_fail(context):

@@ -5,5 +5,6 @@ from jasper.then import Then, then
 from jasper.scenario import Scenario
 from jasper.feature import Feature
 from jasper.suite import Suite
+from jasper.before_each import before_each
 from jasper.context import Context
 from jasper.exceptions import ExpectationException, GivenException

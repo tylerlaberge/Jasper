@@ -1,17 +1,22 @@
 from jasper.utility import cyan, red, indent
 from jasper.context import Context
+from jasper.exceptions import BeforeException
 import asyncio
 
 
 class Feature(object):
 
-    def __init__(self, description, *scenarios):
+    def __init__(self, description, *scenarios, before_each=None):
         self.description = description
         self.scenarios = scenarios
-
+        if before_each is not None:
+            self.before_each = before_each if type(before_each) == list else [before_each]
+        else:
+            self.before_each = before_each
         self.successes = []
         self.failures = []
         self.passed = True
+        self.exception = None
 
     @property
     def num_scenarios_passed(self):
@@ -22,11 +27,18 @@ class Feature(object):
         return len(self.failures)
 
     def __str__(self):
-        color = cyan if not self.failures else red
+        color = cyan if self.passed else red
 
         formatted_string = color(f'Feature: {self.description}\n')
+        if self.before_each is not None:
+            for before in self.before_each:
+                formatted_string += indent(f'{str(before)}\n', 4)
+
         for scenario in self.scenarios:
             formatted_string += indent(f'{str(scenario)}\n', 4)
+
+        if self.exception is not None:
+            formatted_string += indent(f'{str(self.exception)}\n', 4)
 
         formatted_string += color(f'\n{self.num_scenarios_passed} Scenarios passed, {self.num_scenarios_failed} failed.')
         return formatted_string
@@ -36,7 +48,16 @@ class Feature(object):
         return self
 
     async def __run_scenario(self, scenario):
-        scenario(Context())
+        context = Context()
+        if self.before_each is not None:
+            try:
+                await asyncio.wait([before.run(context) for before in self.before_each])
+            except BeforeException as e:
+                self.exception = e
+                self.passed = False
+                return
+
+        scenario(context)
         await scenario.run()
 
         if scenario.passed:

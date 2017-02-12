@@ -47,3 +47,7 @@ def it_should_be_colored_red_and_display_its_attributes(context, given_function_
 def the_decorated_function_should_return_a_given_object(context):
     Expect(type(context.function_call_result)).to_be(Given)
 
+
+@then
+def there_should_be_foo_data(context):
+    Expect(context.foo).to_be('foo')

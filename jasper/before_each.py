@@ -1,13 +1,13 @@
-from jasper.utility import cyan, red, grey
-from jasper.exceptions import GivenException
-from functools import wraps
 import asyncio
+from functools import wraps
+from jasper.exceptions import BeforeException
+from jasper.utility import grey, cyan, red
 
 
-class Given(object):
+class BeforeEach(object):
 
     def __init__(self, function, **kwargs):
-        self.given_function = function
+        self.function = function
         self.kwargs = kwargs
         self.ran = False
         self.passed = False
@@ -20,17 +20,17 @@ class Given(object):
         else:
             color = red
 
-        return color(f"Given: {self.given_function.__name__} {self.kwargs if self.kwargs else ''}")
+        return color(f'BeforeEach: {self.function.__name__} {self.kwargs if self.kwargs else ""}')
 
     async def run(self, context):
         context.unlock()
         try:
-            if asyncio.iscoroutinefunction(self.given_function):
-                await self.given_function(context, **self.kwargs)
+            if asyncio.iscoroutinefunction(self.function):
+                await self.function(context, **self.kwargs)
             else:
-                self.given_function(context, **self.kwargs)
+                self.function(context, **self.kwargs)
         except Exception as e:
-            raise GivenException(e)
+            raise BeforeException(e)
         else:
             self.passed = True
         finally:
@@ -38,13 +38,9 @@ class Given(object):
             context.lock()
 
 
-def given(func):
+def before_each(func):
     @wraps(func)
     def wrapper(**kwargs):
-        return Given(func, **kwargs)
+        return BeforeEach(func, **kwargs)
 
     return wrapper
-
-
-
-

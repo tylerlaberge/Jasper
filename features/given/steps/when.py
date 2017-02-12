@@ -3,6 +3,11 @@ from unittest import mock
 
 
 @when
+def we_do_nothing(context):
+    pass
+
+
+@when
 def we_initialize_a_given_object_with_it(context):
     context.given_object = Given(context.function, **context.kwargs)
 

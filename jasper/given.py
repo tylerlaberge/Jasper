@@ -1,5 +1,4 @@
 from jasper.utility import cyan, red, grey
-from jasper.exceptions import GivenException
 from functools import wraps
 import asyncio
 
@@ -30,7 +29,7 @@ class Given(object):
             else:
                 self.given_function(context, **self.kwargs)
         except Exception as e:
-            raise GivenException(e)
+            raise e
         else:
             self.passed = True
         finally:

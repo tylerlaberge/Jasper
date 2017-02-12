@@ -1,7 +1,7 @@
 import asyncio
 import os
 import importlib.util
-from jasper import Suite, Feature
+from jasper import Suite, Feature, Display
 
 
 class Runner(object):
@@ -10,6 +10,7 @@ class Runner(object):
         self.test_directory = test_directory
         self.test_file_paths = []
         self.suite = Suite()
+        self.display = Display()
 
     def run(self):
         self.discover()
@@ -17,7 +18,8 @@ class Runner(object):
         loop = asyncio.get_event_loop()
         loop.run_until_complete(self.suite.run())
         loop.close()
-        print(self.suite)
+        self.display.prepare_suite(self.suite)
+        self.display.display()
 
     def discover(self):
         for dir_path, dir_names, files in os.walk(self.test_directory):

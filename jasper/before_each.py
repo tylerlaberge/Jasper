@@ -1,6 +1,5 @@
 import asyncio
 from functools import wraps
-from jasper.exceptions import BeforeException
 from jasper.utility import grey, cyan, red
 
 
@@ -30,7 +29,7 @@ class BeforeEach(object):
             else:
                 self.function(context, **self.kwargs)
         except Exception as e:
-            raise BeforeException(e)
+            raise e
         else:
             self.passed = True
         finally:

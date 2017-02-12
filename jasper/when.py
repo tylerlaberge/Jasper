@@ -1,5 +1,4 @@
 from jasper.utility import cyan, red, grey
-from jasper.exceptions import WhenException
 from functools import wraps
 import asyncio
 
@@ -30,7 +29,7 @@ class When(object):
             else:
                 self.when_function(context, **self.kwargs)
         except Exception as e:
-            raise WhenException(e)
+            raise e
         else:
             self.passed = True
         finally:

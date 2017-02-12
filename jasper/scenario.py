@@ -1,6 +1,6 @@
 from jasper.utility import cyan, red, grey, indent
-from jasper.exceptions import GivenException, WhenException, ThenException
 import asyncio
+
 
 class Scenario(object):
 
@@ -50,10 +50,13 @@ class Scenario(object):
         if self.context is not None:
             memento = self.context.commit()
             try:
-                await asyncio.wait([given.run(self.context) for given in self.given])
-                await asyncio.wait([when.run(self.context) for when in self.when])
-                await asyncio.wait([then.run(self.context) for then in self.then])
-            except (GivenException, WhenException, ThenException) as e:
+                for given in self.given:
+                    await given.run(self.context)
+                for when in self.when:
+                    await when.run(self.context)
+                for then in self.then:
+                    await then.run(self.context)
+            except Exception as e:
                 self.exception = e
             else:
                 self.passed = True

@@ -52,3 +52,7 @@ def an_initialized_given_object_with_a_function_that_will_fail(context):
 
     context.given_object = Given(some_function)
 
+
+@given
+def an_exception(context):
+    raise Exception

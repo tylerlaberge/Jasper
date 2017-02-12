@@ -1,6 +1,5 @@
 from jasper.utility import cyan, red, indent
 from jasper.context import Context
-from jasper.exceptions import BeforeException
 import asyncio
 
 
@@ -51,8 +50,9 @@ class Feature(object):
         context = Context()
         if self.before_each is not None:
             try:
-                await asyncio.wait([before.run(context) for before in self.before_each])
-            except BeforeException as e:
+                for before in self.before_each:
+                    await before.run(context)
+            except Exception as e:
                 self.exception = e
                 self.passed = False
                 return

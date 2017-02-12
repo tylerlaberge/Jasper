@@ -1,4 +1,4 @@
-from jasper import then, Expect, GivenException, Given
+from jasper import then, Expect, Given
 from jasper.utility import cyan, red
 
 
@@ -19,8 +19,8 @@ def the_given_function_should_have_been_called_with(context, given_function_kwar
 
 
 @then
-def a_given_exception_should_have_been_raised(context):
-    Expect(type(context.exception)).to_be(GivenException)
+def an_exception_should_have_been_raised(context):
+    Expect(type(context.exception)).to_be(Exception)
 
 
 @then
@@ -51,3 +51,8 @@ def the_decorated_function_should_return_a_given_object(context):
 @then
 def there_should_be_foo_data(context):
     Expect(context.foo).to_be('foo')
+
+
+@then
+def an_exception_is_raised(context):
+    raise Exception

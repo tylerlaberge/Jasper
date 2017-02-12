@@ -33,7 +33,7 @@ feature = Feature(
         given=an_initialized_given_object_with_a_function_that_will_fail(),
         when=we_run_it_and_are_prepared_for_an_exception(),
         then=[
-            a_given_exception_should_have_been_raised(),
+            an_exception_should_have_been_raised(),
             the_given_step_should_have_failed()
         ]
     ),

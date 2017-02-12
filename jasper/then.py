@@ -1,4 +1,4 @@
-from jasper.exceptions import ThenException
+
 from jasper.utility import cyan, red, grey
 from functools import wraps
 import asyncio
@@ -30,7 +30,7 @@ class Then(object):
             else:
                 self.then_function(context, **self.kwargs)
         except Exception as e:
-            raise ThenException(e)
+            raise e
         else:
             self.passed = True
         finally:

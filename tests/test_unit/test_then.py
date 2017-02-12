@@ -1,5 +1,5 @@
 import jasper
-from jasper.exceptions import ExpectationException, ThenException
+from jasper.exceptions import ExpectationException
 from unittest import TestCase
 import asyncio
 
@@ -11,7 +11,7 @@ class ThenTestCase(TestCase):
         @jasper.then
         def we_will_get_a_negative_number(context):
             if not context.result < 0:
-                raise ExpectationException(context['result'], 0, 'to be less than')
+                raise ExpectationException(context.result, 0, 'to be less than')
 
         self.then = we_will_get_a_negative_number()
 
@@ -31,7 +31,7 @@ class ThenTestCase(TestCase):
     def test_call_failure(self):
         context = jasper.Context(result=5)
         loop = asyncio.get_event_loop()
-        with self.assertRaises(ThenException):
+        with self.assertRaises(ExpectationException):
             loop.run_until_complete(self.then.run(context))
 
         self.assertFalse(self.then.passed)

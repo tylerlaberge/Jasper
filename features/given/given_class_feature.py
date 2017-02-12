@@ -47,18 +47,6 @@ feature = Feature(
         ]
     ),
     Scenario(
-        'Passing String Representation',
-        given=an_initialized_given_object(ran=True, passed=True, given_function_kwargs={'foo': 'bar'}),
-        when=we_get_a_string_representation_of_the_given_object(),
-        then=it_should_be_colored_cyan_and_display_its_attributes(given_function_kwargs={'foo': 'bar'})
-    ),
-    Scenario(
-        'Failing String Representation',
-        given=an_initialized_given_object(ran=True, passed=False, given_function_kwargs={'bar': 'foo'}),
-        when=we_get_a_string_representation_of_the_given_object(),
-        then=it_should_be_colored_red_and_display_its_attributes(given_function_kwargs={'bar': 'foo'})
-    ),
-    Scenario(
         'Before Each',
         given=nothing(),
         when=we_do_nothing(),

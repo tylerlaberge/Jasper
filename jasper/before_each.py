@@ -1,6 +1,5 @@
 import asyncio
 from functools import wraps
-from jasper.utility import grey, cyan, red
 
 
 class BeforeEach(object):
@@ -10,16 +9,6 @@ class BeforeEach(object):
         self.kwargs = kwargs
         self.ran = False
         self.passed = False
-
-    def __str__(self):
-        if not self.ran:
-            color = grey
-        elif self.passed:
-            color = cyan
-        else:
-            color = red
-
-        return color(f'BeforeEach: {self.function.__name__} {self.kwargs if self.kwargs else ""}')
 
     async def run(self, context):
         context.unlock()

@@ -1,4 +1,3 @@
-from jasper.utility import cyan, red, grey
 from functools import wraps
 import asyncio
 
@@ -10,16 +9,6 @@ class When(object):
         self.kwargs = kwargs
         self.ran = False
         self.passed = False
-
-    def __str__(self):
-        if not self.ran:
-            color = grey
-        elif self.passed:
-            color = cyan
-        else:
-            color = red
-
-        return color(f'When: {self.when_function.__name__} {self.kwargs if self.kwargs else ""}')
 
     async def run(self, context):
         context.unlock()

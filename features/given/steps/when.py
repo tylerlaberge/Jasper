@@ -29,11 +29,6 @@ async def we_run_it_and_are_prepared_for_an_exception(context):
 
 
 @when
-def we_get_a_string_representation_of_the_given_object(context):
-    context.given_object_string = str(context.given_object)
-
-
-@when
 def we_wrap_the_function_with_the_given_decorator(context):
     context.function = given(context.function)
 

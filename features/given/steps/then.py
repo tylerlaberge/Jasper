@@ -34,16 +34,6 @@ def the_given_step_should_have_failed(context):
 
 
 @then
-def it_should_be_colored_cyan_and_display_its_attributes(context, given_function_kwargs={}):
-    Expect(context.given_object_string).to_equal(cyan(f'Given: some_function {given_function_kwargs}'))
-
-
-@then
-def it_should_be_colored_red_and_display_its_attributes(context, given_function_kwargs={}):
-    Expect(context.given_object_string).to_equal(red(f'Given: some_function {given_function_kwargs}'))
-
-
-@then
 def the_decorated_function_should_return_a_given_object(context):
     Expect(type(context.function_call_result)).to_be(Given)
 

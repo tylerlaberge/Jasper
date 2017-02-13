@@ -14,7 +14,8 @@ class WhenTestCase(TestCase):
         self.when = we_call_it_with_two_negative_numbers()
 
     def test_initialize(self):
-        self.assertEqual(type(self.when), jasper.When)
+        self.assertEqual(type(self.when), jasper.Step)
+        self.assertEqual(self.when.step_type, 'When')
 
     def test_call(self):
         context = jasper.Context(function=lambda a, b: a*b)

@@ -1,4 +1,4 @@
-from jasper import Scenario, Given, When, Then, Context
+from jasper import Scenario, Step, Context
 from unittest import TestCase
 import asyncio
 
@@ -9,11 +9,12 @@ class ScenarioTestCase(TestCase):
 
         run_order = []
 
-        class GivenMock(Given):
+        class GivenMock(Step):
 
             def __init__(self, whatever):
                 self.called = False
                 self.called_with = None
+                self.step_type = 'Given'
 
             async def run(self, context):
                 self.called = True
@@ -31,11 +32,12 @@ class ScenarioTestCase(TestCase):
             def function():
                 return 'foo'
 
-        class WhenMock(When):
+        class WhenMock(Step):
 
             def __init__(self, whatever):
                 self.called = False
                 self.called_with = None
+                self.step_type = 'When'
 
             async def run(self, context):
                 self.called = True
@@ -53,11 +55,12 @@ class ScenarioTestCase(TestCase):
             def function():
                 return 'foo'
 
-        class ThenMock(Then):
+        class ThenMock(Step):
 
             def __init__(self, whatever):
                 self.called = False
                 self.called_with = None
+                self.step_type = 'Then'
 
             async def run(self, context):
                 self.called = True

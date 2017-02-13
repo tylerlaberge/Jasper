@@ -15,8 +15,11 @@ class GivenTestCase(TestCase):
         self.given_an_adding_function_two = an_adding_function()
 
     def test_initialize(self):
-        self.assertEqual(type(self.given_an_adding_function_one), jasper.Given)
-        self.assertEqual(type(self.given_an_adding_function_two), jasper.Given)
+        self.assertEqual(type(self.given_an_adding_function_one), jasper.Step)
+        self.assertEqual(type(self.given_an_adding_function_two), jasper.Step)
+
+        self.assertEqual(self.given_an_adding_function_one.step_type, 'Given')
+        self.assertEqual(self.given_an_adding_function_two.step_type, 'Given')
 
         self.assertNotEqual(id(self.given_an_adding_function_one), id(self.given_an_adding_function_two))
 

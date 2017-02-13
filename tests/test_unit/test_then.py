@@ -16,7 +16,8 @@ class ThenTestCase(TestCase):
         self.then = we_will_get_a_negative_number()
 
     def test_initialize(self):
-        self.assertEqual(type(self.then), jasper.Then)
+        self.assertEqual(type(self.then), jasper.Step)
+        self.assertEqual(self.then.step_type, 'Then')
 
     def test_call_success(self):
         context = jasper.Context(result=-5)

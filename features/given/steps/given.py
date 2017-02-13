@@ -1,4 +1,4 @@
-from jasper import given, Given
+from jasper import given, Step
 import asyncio
 
 
@@ -27,7 +27,7 @@ def an_initialized_given_object(context, ran=False, passed=False, given_function
         context.given_function_called = True
         context.given_function_called_with = kwargs
 
-    context.given_object = Given(some_function, **given_function_kwargs)
+    context.given_object = Step('Given', some_function, **given_function_kwargs)
     context.given_object.passed = passed
     context.given_object.ran = ran
 
@@ -40,9 +40,10 @@ def an_initialized_given_object_with_an_async_function(context, ran=False, passe
         context.given_function_called = True
         context.given_function_called_with = kwargs
 
-    context.given_object = Given(some_function, **given_function_kwargs)
+    context.given_object = Step('Given', some_function, **given_function_kwargs)
     context.given_object.passed = passed
     context.given_object.ran = ran
+
 
 @given
 def an_initialized_given_object_with_a_function_that_will_fail(context):
@@ -50,7 +51,7 @@ def an_initialized_given_object_with_a_function_that_will_fail(context):
     def some_function(given_function_context, **kwargs):
         raise Exception
 
-    context.given_object = Given(some_function)
+    context.given_object = Step('Given', some_function)
 
 
 @given

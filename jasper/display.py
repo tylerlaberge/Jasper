@@ -67,7 +67,7 @@ class Display(object):
         self.indentation_level += 4
         if feature.before_each is not None:
             for before_each in feature.before_each:
-                self.prepare_step(before_each, 'BeforeEach')
+                self.prepare_step(before_each, before_each.step_type)
         for scenario in feature.scenarios:
             self.prepare_scenario(scenario)
         if feature.exception is not None:
@@ -87,11 +87,11 @@ class Display(object):
         self.__push_to_display(color(f'Scenario: {scenario.description}'))
         self.indentation_level += 4
         for index, given in enumerate(scenario.given):
-            self.prepare_step(given, 'Given') if index == 0 else self.prepare_step(given, 'And')
+            self.prepare_step(given, given.step_type) if index == 0 else self.prepare_step(given, 'And')
         for index, when in enumerate(scenario.when):
-            self.prepare_step(when, 'When') if index == 0 else self.prepare_step(when, 'And')
+            self.prepare_step(when, when.step_type) if index == 0 else self.prepare_step(when, 'And')
         for index, then in enumerate(scenario.then):
-            self.prepare_step(then, 'Then') if index == 0 else self.prepare_step(then, 'And')
+            self.prepare_step(then, then.step_type) if index == 0 else self.prepare_step(then, 'And')
         if scenario.exception is not None:
             self.prepare_exception(scenario.exception)
         self.indentation_level -= 4

@@ -12,8 +12,30 @@ class Scenario(object):
         self.ran = False
         self.passed = False
 
+        self.__validate()
+
     def __call__(self, context):
         self.context = context
+
+    def __validate(self):
+        for given in self.given:
+            if given.step_type != 'Given':
+                raise ValueError(
+                    f'Scenario \'{self.description}\': '
+                    f'\'{given.function.__name__}\' step is of type \'{given.step_type}\', should be of type \'Given\''
+                )
+        for when in self.when:
+            if when.step_type != 'When':
+                raise ValueError(
+                    f'Scenario \'{self.description}\': '
+                    f'\'{when.function.__name__}\' step is of type \'{when.step_type}\', should be of type \'When\''
+                )
+        for then in self.then:
+            if then.step_type != 'Then':
+                raise ValueError(
+                    f'Scenario \'{self.description}\': '
+                    f'\'{then.function.__name__}\' step is of type \'{then.step_type}\', should be of type \'Then\''
+                )
 
     async def run(self):
         await self.__run_steps()
@@ -34,5 +56,4 @@ class Scenario(object):
                 self.passed = True
             finally:
                 self.ran = True
-                self.context.unlock()
                 self.context.rollback(memento)

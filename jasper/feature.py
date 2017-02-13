@@ -15,6 +15,17 @@ class Feature(object):
         self.failures = []
         self.passed = True
         self.exception = None
+        self.__validate()
+
+    def __validate(self):
+        if self.before_each is not None:
+            for before in self.before_each:
+                if before.step_type != 'BeforeEach':
+                    raise ValueError(
+                        f'Feature \'{self.description}\': '
+                        f'\'{before.function.__name__}\' step is of type \'{before.step_type}\', '
+                        f'should be of type \'BeforeEach\''
+                    )
 
     @property
     def num_scenarios_passed(self):

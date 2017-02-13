@@ -1,4 +1,4 @@
-from jasper import Given, given, when, Context
+from jasper import Step, given, when, Context
 from unittest import mock
 
 
@@ -9,7 +9,7 @@ def we_do_nothing(context):
 
 @when
 def we_initialize_a_given_object_with_it(context):
-    context.given_object = Given(context.function, **context.kwargs)
+    context.given_object = Step('Given', context.function, **context.kwargs)
 
 
 @when

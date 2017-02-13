@@ -1,4 +1,4 @@
-from jasper import then, Expect, Given
+from jasper import then, Expect, Step
 
 
 @then
@@ -34,7 +34,8 @@ def the_given_step_should_have_failed(context):
 
 @then
 def the_decorated_function_should_return_a_given_object(context):
-    Expect(type(context.function_call_result)).to_be(Given)
+    Expect(type(context.function_call_result)).to_be(Step)
+    Expect(context.function_call_result.step_type).to_be('Given')
 
 
 @then

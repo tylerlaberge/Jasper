@@ -8,7 +8,3 @@ class ExpectationException(Exception):
 
     def __str__(self):
         return f'FAILURE: Expected {self.actual} {self.operator} {self.expected}'
-
-
-class ContextException(Exception):
-    pass

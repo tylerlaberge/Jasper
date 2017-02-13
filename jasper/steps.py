@@ -57,4 +57,13 @@ def before_each(func):
     return wrapper
 
 
+def after_each(func):
+    @wraps(func)
+    def wrapper(**kwargs):
+        return Step('AfterEach', func, **kwargs)
+
+    return wrapper
+
+
+
 

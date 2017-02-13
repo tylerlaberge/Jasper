@@ -1,4 +1,4 @@
-from jasper.steps import given, when, then, before_each, Step
+from jasper.steps import given, when, then, before_each, after_each, Step
 from jasper.expect import Expect
 from jasper.scenario import Scenario
 from jasper.feature import Feature

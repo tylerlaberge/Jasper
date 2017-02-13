@@ -3,6 +3,7 @@ from features.given.steps.given import *
 from features.given.steps.when import *
 from features.given.steps.then import *
 from features.given.steps.before_each import *
+from features.given.steps.after_each import *
 
 
 feature = Feature(
@@ -52,5 +53,6 @@ feature = Feature(
         when=we_do_nothing(),
         then=there_should_be_foo_data()
     ),
-    before_each=prepare_some_foo_data()
+    before_each=setup_some_foo_data(),
+    after_each=teardown_some_foo_data()
 )

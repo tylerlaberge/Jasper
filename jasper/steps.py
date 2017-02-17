@@ -4,8 +4,7 @@ import asyncio
 
 class Step(object):
 
-    def __init__(self, step_type, function, **kwargs):
-        self.step_type = step_type
+    def __init__(self, function, **kwargs):
         self.function = function
         self.kwargs = kwargs
         self.ran = False
@@ -25,10 +24,30 @@ class Step(object):
             self.ran = True
 
 
+class Given(Step):
+    pass
+
+
+class When(Step):
+    pass
+
+
+class Then(Step):
+    pass
+
+
+class BeforeEach(Step):
+    pass
+
+
+class AfterEach(Step):
+    pass
+
+
 def given(func):
     @wraps(func)
     def wrapper(**kwargs):
-        return Step('Given', func, **kwargs)
+        return Given(func, **kwargs)
 
     return wrapper
 
@@ -36,7 +55,7 @@ def given(func):
 def when(func):
     @wraps(func)
     def wrapper(**kwargs):
-        return Step('When', func, **kwargs)
+        return When(func, **kwargs)
 
     return wrapper
 
@@ -44,7 +63,7 @@ def when(func):
 def then(func):
     @wraps(func)
     def wrapper(**kwargs):
-        return Step('Then', func, **kwargs)
+        return Then(func, **kwargs)
 
     return wrapper
 
@@ -52,7 +71,7 @@ def then(func):
 def before_each(func):
     @wraps(func)
     def wrapper(**kwargs):
-        return Step('BeforeEach', func, **kwargs)
+        return BeforeEach(func, **kwargs)
 
     return wrapper
 
@@ -60,7 +79,7 @@ def before_each(func):
 def after_each(func):
     @wraps(func)
     def wrapper(**kwargs):
-        return Step('AfterEach', func, **kwargs)
+        return AfterEach(func, **kwargs)
 
     return wrapper
 

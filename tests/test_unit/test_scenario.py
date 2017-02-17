@@ -1,5 +1,5 @@
-from jasper import Scenario, Step, Context
-from unittest import TestCase
+from jasper import Scenario, Given, When, Then, Context
+from unittest import TestCase, mock
 import asyncio
 
 
@@ -9,7 +9,7 @@ class ScenarioTestCase(TestCase):
 
         run_order = []
 
-        class GivenMock(Step):
+        class GivenMock(Given):
 
             def __init__(self, whatever):
                 self.called = False
@@ -32,7 +32,7 @@ class ScenarioTestCase(TestCase):
             def function():
                 return 'foo'
 
-        class WhenMock(Step):
+        class WhenMock(When):
 
             def __init__(self, whatever):
                 self.called = False
@@ -55,7 +55,7 @@ class ScenarioTestCase(TestCase):
             def function():
                 return 'foo'
 
-        class ThenMock(Step):
+        class ThenMock(Then):
 
             def __init__(self, whatever):
                 self.called = False
@@ -91,10 +91,10 @@ class ScenarioTestCase(TestCase):
 
     def test_call(self):
         self.scenario('foobar')
-
         self.assertEqual(self.scenario.context, 'foobar')
 
-    def test_run_single_steps(self):
+    @mock.patch('jasper.Context')
+    def test_run_single_steps(self, mock_context):
         given_mock = self.given_mock('foo')
         when_mock = self.when_mock('foo')
         then_mock = self.then_mock('foo')
@@ -104,7 +104,7 @@ class ScenarioTestCase(TestCase):
             when=when_mock,
             then=then_mock
         )
-        scenario.context = Context()
+        scenario.context = mock_context
         loop = asyncio.get_event_loop()
         loop.run_until_complete(scenario.run())
 
@@ -119,7 +119,8 @@ class ScenarioTestCase(TestCase):
 
         self.assertEqual(self.run_order, [given_mock, when_mock, then_mock])
 
-    def test_run_multiple_steps(self):
+    @mock.patch('jasper.Context')
+    def test_run_multiple_steps(self, mock_context):
         given_mock_one = self.given_mock('foo')
         given_mock_two = self.given_mock('foo')
         when_mock_one = self.when_mock('foo')
@@ -132,7 +133,7 @@ class ScenarioTestCase(TestCase):
             when=[when_mock_one, when_mock_two],
             then=[then_mock_one, then_mock_two]
         )
-        scenario.context = Context()
+        scenario.context = mock_context
         loop = asyncio.get_event_loop()
         loop.run_until_complete(scenario.run())
 

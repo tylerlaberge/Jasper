@@ -67,7 +67,7 @@ class Display(object):
         self.indentation_level += 4
         if feature.before_each is not None:
             for before_each in feature.before_each:
-                self.prepare_step(before_each, before_each.step_type)
+                self.prepare_step(before_each)
         for scenario in feature.scenarios:
             self.prepare_scenario(scenario)
         if feature.exception is not None:
@@ -87,16 +87,16 @@ class Display(object):
         self.__push_to_display(color(f'Scenario: {scenario.description}'))
         self.indentation_level += 4
         for index, given in enumerate(scenario.given):
-            self.prepare_step(given, given.step_type) if index == 0 else self.prepare_step(given, 'And')
+            self.prepare_step(given) if index == 0 else self.prepare_step(given, alias='And')
         for index, when in enumerate(scenario.when):
-            self.prepare_step(when, when.step_type) if index == 0 else self.prepare_step(when, 'And')
+            self.prepare_step(when) if index == 0 else self.prepare_step(when, alias='And')
         for index, then in enumerate(scenario.then):
-            self.prepare_step(then, then.step_type) if index == 0 else self.prepare_step(then, 'And')
+            self.prepare_step(then) if index == 0 else self.prepare_step(then, alias='And')
         if scenario.exception is not None:
             self.prepare_exception(scenario.exception)
         self.indentation_level -= 4
 
-    def prepare_step(self, step, step_name):
+    def prepare_step(self, step, alias=None):
         if not step.ran:
             color = self.grey
         elif step.passed:
@@ -104,7 +104,8 @@ class Display(object):
         else:
             color = self.red
 
-        self.__push_to_display(color(f"{step_name}: {step.function.__name__} {step.kwargs if step.kwargs else ''}"))
+        self.__push_to_display(color(f"{step.__class__.__name__ if not alias else alias}: "
+                                     f"{step.function.__name__} {step.kwargs if step.kwargs else ''}"))
 
     def prepare_exception(self, exception):
         if str(exception):

@@ -1,3 +1,4 @@
+from jasper.steps import BeforeEach, AfterEach
 from jasper.context import Context
 import asyncio
 
@@ -25,19 +26,19 @@ class Feature(object):
     def __validate(self):
         if self.before_each is not None:
             for before in self.before_each:
-                if before.step_type != 'BeforeEach':
+                if not isinstance(before, BeforeEach):
                     raise ValueError(
                         f'Feature \'{self.description}\': '
-                        f'\'{before.function.__name__}\' step is of type \'{before.step_type}\', '
-                        f'should be of type \'BeforeEach\''
+                        f'\'{before.function.__name__}\' step is of type {type(before)}, '
+                        f'should be of type {BeforeEach}'
                     )
         if self.after_each is not None:
             for after in self.after_each:
-                if after.step_type != 'AfterEach':
+                if not isinstance(after, AfterEach):
                     raise ValueError(
                         f'Feature \'{self.description}\': '
-                        f'\'{after.function.__name__}\' step is of type \'{after.step_type}\', '
-                        f'should be of type \'AfterEach\''
+                        f'\'{after.function.__name__}\' step is of type {type(after)}, '
+                        f'should be of type {AfterEach}'
                     )
 
     @property

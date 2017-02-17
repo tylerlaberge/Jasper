@@ -1,4 +1,4 @@
-from jasper import then, Expect, Step
+from jasper import then, Expect, Given
 
 
 @then
@@ -12,7 +12,7 @@ def the_given_object_should_use_the_given_kwargs(context):
 
 
 @then
-def the_given_function_should_have_been_called_with(context, given_function_kwargs={}):
+def the_given_function_should_have_been_called_with(context, **given_function_kwargs):
     Expect(context.given_function_called).to_be(True)
     Expect(context.given_function_called_with).to_equal(given_function_kwargs)
 
@@ -34,8 +34,7 @@ def the_given_step_should_have_failed(context):
 
 @then
 def the_decorated_function_should_return_a_given_object(context):
-    Expect(type(context.function_call_result)).to_be(Step)
-    Expect(context.function_call_result.step_type).to_be('Given')
+    Expect(type(context.function_call_result)).to_be(Given)
 
 
 @then

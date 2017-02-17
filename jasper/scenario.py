@@ -1,3 +1,6 @@
+from jasper.steps import Given, When, Then
+
+
 class Scenario(object):
 
     def __init__(self, description, given, when, then):
@@ -19,22 +22,22 @@ class Scenario(object):
 
     def __validate(self):
         for given in self.given:
-            if given.step_type != 'Given':
+            if not isinstance(given, Given):
                 raise ValueError(
                     f'Scenario \'{self.description}\': '
-                    f'\'{given.function.__name__}\' step is of type \'{given.step_type}\', should be of type \'Given\''
+                    f'\'{given.function.__name__}\' step is of type {type(given)}, should be of type {Given}'
                 )
         for when in self.when:
-            if when.step_type != 'When':
+            if not isinstance(when, When):
                 raise ValueError(
                     f'Scenario \'{self.description}\': '
-                    f'\'{when.function.__name__}\' step is of type \'{when.step_type}\', should be of type \'When\''
+                    f'\'{when.function.__name__}\' step is of type {type(when)}, should be of type {When}'
                 )
         for then in self.then:
-            if then.step_type != 'Then':
+            if not isinstance(then, Then):
                 raise ValueError(
                     f'Scenario \'{self.description}\': '
-                    f'\'{then.function.__name__}\' step is of type \'{then.step_type}\', should be of type \'Then\''
+                    f'\'{then.function.__name__}\' step is of type {type(then)}, should be of type {Then}'
                 )
 
     async def run(self):

@@ -24,86 +24,9 @@ class Step(object):
             self.ran = True
 
 
-class Given(Step):
-    pass
-
-
-class When(Step):
-    pass
-
-
-class Then(Step):
-    pass
-
-
-class BeforeEach(Step):
-    pass
-
-
-class AfterEach(Step):
-    pass
-
-
-class BeforeAll(Step):
-    pass
-
-
-class AfterAll(Step):
-    pass
-
-
-def given(func):
+def step(func):
     @wraps(func)
     def wrapper(**kwargs):
-        return Given(func, **kwargs)
+        return Step(func, **kwargs)
 
     return wrapper
-
-
-def when(func):
-    @wraps(func)
-    def wrapper(**kwargs):
-        return When(func, **kwargs)
-
-    return wrapper
-
-
-def then(func):
-    @wraps(func)
-    def wrapper(**kwargs):
-        return Then(func, **kwargs)
-
-    return wrapper
-
-
-def before_each(func):
-    @wraps(func)
-    def wrapper(**kwargs):
-        return BeforeEach(func, **kwargs)
-
-    return wrapper
-
-
-def after_each(func):
-    @wraps(func)
-    def wrapper(**kwargs):
-        return AfterEach(func, **kwargs)
-
-    return wrapper
-
-
-def before_all(func):
-    @wraps(func)
-    def wrapper(**kwargs):
-        return BeforeAll(func, **kwargs)
-
-    return wrapper
-
-
-def after_all(func):
-    @wraps(func)
-    def wrapper(**kwargs):
-        return AfterAll(func, **kwargs)
-
-    return wrapper
-

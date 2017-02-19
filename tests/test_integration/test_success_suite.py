@@ -1,4 +1,4 @@
-from jasper import Suite, Feature, Scenario, given, when, then, Expect
+from jasper import Suite, Feature, Scenario, step, Expect
 from unittest import TestCase
 import asyncio
 
@@ -6,27 +6,27 @@ import asyncio
 class TestFeatureArithmetic(TestCase):
     def setUp(self):
 
-        @given
+        @step
         def an_adding_function(context):
             context.function = lambda a, b: a + b
 
-        @given
+        @step
         def a_multiplication_function(context):
             context.function = lambda a, b: a * b
 
-        @when
+        @step
         def we_call_it_with_two_negative_numbers(context):
             context.result = context.function(-5, -5)
 
-        @when
+        @step
         def we_call_it_with_two_positive_numbers(context):
             context.result = context.function(5, 5)
 
-        @then
+        @step
         def we_will_get_a_negative_number(context):
             Expect(context.result).to_be.less_than(0)
 
-        @then
+        @step
         def we_will_get_a_positive_number(context):
             Expect(context.result).to_be.greater_than(0)
 

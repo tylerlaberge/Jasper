@@ -66,13 +66,13 @@ class Display(object):
 
         self.indentation_level += 4
         for before in feature.before_all:
-            self.prepare_step(before)
+            self.prepare_step(before, 'BeforeAll')
         for after in feature.after_all:
-            self.prepare_step(after)
+            self.prepare_step(after, 'AfterAll')
         for before in feature.before_each:
-            self.prepare_step(before)
+            self.prepare_step(before, 'BeforeEach')
         for after in feature.after_each:
-            self.prepare_step(after)
+            self.prepare_step(after, 'AfterEach')
         for scenario in feature.scenarios:
             self.prepare_scenario(scenario)
         if feature.exception is not None:
@@ -92,20 +92,20 @@ class Display(object):
         self.__push_to_display(color(f'Scenario: {scenario.description}'))
         self.indentation_level += 4
         for before in scenario.before_each:
-            self.prepare_step(before)
+            self.prepare_step(before, 'BeforeEach')
         for after in scenario.after_each:
-            self.prepare_step(after)
+            self.prepare_step(after, 'AfterEach')
         for index, given in enumerate(scenario.given):
-            self.prepare_step(given) if index == 0 else self.prepare_step(given, alias='And')
+            self.prepare_step(given, 'Given') if index == 0 else self.prepare_step(given, 'And')
         for index, when in enumerate(scenario.when):
-            self.prepare_step(when) if index == 0 else self.prepare_step(when, alias='And')
+            self.prepare_step(when, 'When') if index == 0 else self.prepare_step(when, 'And')
         for index, then in enumerate(scenario.then):
-            self.prepare_step(then) if index == 0 else self.prepare_step(then, alias='And')
+            self.prepare_step(then, 'Then') if index == 0 else self.prepare_step(then, 'And')
         if scenario.exception is not None:
             self.prepare_exception(scenario.exception)
         self.indentation_level -= 4
 
-    def prepare_step(self, step, alias=None):
+    def prepare_step(self, step, step_name):
         if not step.ran:
             color = self.grey
         elif step.passed:
@@ -113,7 +113,7 @@ class Display(object):
         else:
             color = self.red
 
-        self.__push_to_display(color(f"{step.__class__.__name__ if not alias else alias}: "
+        self.__push_to_display(color(f"{step_name}: "
                                      f"{step.function.__name__} {step.kwargs if step.kwargs else ''}"))
 
     def prepare_exception(self, exception):

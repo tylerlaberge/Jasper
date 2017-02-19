@@ -14,3 +14,9 @@ class Context(Originator):
 
     def __setattr__(self, key, value):
         self._items[key] = value
+
+    def __str__(self):
+        return f"{self.__dict__['_items']}"
+
+    def copy(self):
+        return Context(**self.__dict__['_items'])

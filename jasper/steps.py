@@ -44,6 +44,14 @@ class AfterEach(Step):
     pass
 
 
+class BeforeAll(Step):
+    pass
+
+
+class AfterAll(Step):
+    pass
+
+
 def given(func):
     @wraps(func)
     def wrapper(**kwargs):
@@ -84,5 +92,18 @@ def after_each(func):
     return wrapper
 
 
+def before_all(func):
+    @wraps(func)
+    def wrapper(**kwargs):
+        return BeforeAll(func, **kwargs)
 
+    return wrapper
+
+
+def after_all(func):
+    @wraps(func)
+    def wrapper(**kwargs):
+        return AfterAll(func, **kwargs)
+
+    return wrapper
 

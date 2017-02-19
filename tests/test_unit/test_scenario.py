@@ -89,10 +89,6 @@ class ScenarioTestCase(TestCase):
             then=self.then_mock('foo')
         )
 
-    def test_call(self):
-        self.scenario('foobar')
-        self.assertEqual(self.scenario.context, 'foobar')
-
     @mock.patch('jasper.Context')
     def test_run_single_steps(self, mock_context):
         given_mock = self.given_mock('foo')
@@ -104,18 +100,17 @@ class ScenarioTestCase(TestCase):
             when=when_mock,
             then=then_mock
         )
-        scenario.context = mock_context
         loop = asyncio.get_event_loop()
-        loop.run_until_complete(scenario.run())
+        loop.run_until_complete(scenario.run(mock_context))
 
         self.assertTrue(given_mock.called)
-        self.assertEqual(given_mock.called_with, scenario.context)
+        self.assertEqual(given_mock.called_with, mock_context)
 
         self.assertTrue(when_mock.called)
-        self.assertEqual(when_mock.called_with, scenario.context)
+        self.assertEqual(when_mock.called_with, mock_context)
 
         self.assertTrue(then_mock.called)
-        self.assertEqual(then_mock.called_with, scenario.context)
+        self.assertEqual(then_mock.called_with, mock_context)
 
         self.assertEqual(self.run_order, [given_mock, when_mock, then_mock])
 
@@ -133,24 +128,23 @@ class ScenarioTestCase(TestCase):
             when=[when_mock_one, when_mock_two],
             then=[then_mock_one, then_mock_two]
         )
-        scenario.context = mock_context
         loop = asyncio.get_event_loop()
-        loop.run_until_complete(scenario.run())
+        loop.run_until_complete(scenario.run(mock_context))
 
         self.assertTrue(given_mock_one.called)
         self.assertTrue(given_mock_two.called)
-        self.assertEqual(given_mock_one.called_with, scenario.context)
-        self.assertEqual(given_mock_two.called_with, scenario.context)
+        self.assertEqual(given_mock_one.called_with, mock_context)
+        self.assertEqual(given_mock_two.called_with, mock_context)
 
         self.assertTrue(when_mock_one.called)
         self.assertTrue(when_mock_two.called)
-        self.assertEqual(when_mock_one.called_with, scenario.context)
-        self.assertEqual(when_mock_two.called_with, scenario.context)
+        self.assertEqual(when_mock_one.called_with, mock_context)
+        self.assertEqual(when_mock_two.called_with, mock_context)
 
         self.assertTrue(then_mock_one.called)
         self.assertTrue(then_mock_two.called)
-        self.assertEqual(then_mock_one.called_with, scenario.context)
-        self.assertEqual(then_mock_two.called_with, scenario.context)
+        self.assertEqual(then_mock_one.called_with, mock_context)
+        self.assertEqual(then_mock_two.called_with, mock_context)
 
         self.assertEqual(self.run_order, [
             given_mock_one, given_mock_two,

@@ -6,39 +6,30 @@ import asyncio
 class TestFeatureArithmetic(TestCase):
 
     def setUp(self):
+
         @given
         def an_adding_function(context):
             context.function = lambda a, b: a + b
-            context.called_given = True
 
         @given
         def a_multiplication_function(context):
             context.function = lambda a, b: a * b
-            context.called_given = True
 
         @when
         def we_call_it_with_two_negative_numbers(context):
-            context.result = {
-                'called_when': True,
-                'return_val': context.function(-5, -5)
-            }
+            context.result = context.function(-5, -5)
 
         @when
         def we_call_it_with_two_positive_numbers(context):
-            context.result = {
-                'called_when': True,
-                'return_val': context.function(5, 5)
-            }
+            context.result = context.function(5, 5)
 
         @then
         def we_will_get_a_negative_number(context):
-            context.result['called_then'] = True
-            Expect(context.result['return_val']).to_be.less_than(0)
+            Expect(context.result).to_be.less_than(0)
 
         @then
         def we_will_get_a_positive_number(context):
-            context.result['called_then'] = True
-            Expect(context.result['return_val']).to_be.greater_than(0)
+            Expect(context.result).to_be.greater_than(0)
 
         self.scenarios = [
             Scenario(
@@ -70,13 +61,9 @@ class TestFeatureArithmetic(TestCase):
     def test_run(self):
         loop = asyncio.get_event_loop()
         for scenario in self.scenarios:
-            self.assertFalse(scenario.passed)
-
             scenario.context = Context()
-            loop.run_until_complete(scenario.run())
+            loop.run_until_complete(scenario.run(Context()))
 
-            self.assertTrue(scenario.context.called_given)
-            self.assertTrue(scenario.context.result['called_when'])
-            self.assertTrue(scenario.context.result['called_then'])
-
+            self.assertTrue(scenario.ran)
+            self.assertIsNone(scenario.exception)
             self.assertTrue(scenario.passed)

@@ -2,6 +2,7 @@ import asyncio
 import os
 import importlib.util
 from jasper import Suite, Feature
+import time
 
 
 class Runner(object):
@@ -17,6 +18,7 @@ class Runner(object):
         loop = asyncio.get_event_loop()
         loop.run_until_complete(self.suite.run())
         loop.close()
+        time.sleep(0.5)
         return self.suite
 
     def discover(self):

@@ -6,11 +6,12 @@ from jasper.display import Display
 @click.command()
 @click.argument('test_directory', type=click.Path(exists=True, file_okay=False, dir_okay=True, resolve_path=True))
 @click.option('--ansi', is_flag=True, default=False, help="Flag to force display to use ansi escape sequences for coloring.")
-def jasper(test_directory, ansi):
+@click.option('-v', type=click.IntRange(0, 1), default=0, help="Verbosity level from 0 to 1. default is 0.")
+def jasper(test_directory, ansi, v):
     runner = Runner(test_directory)
     completed_suite = runner.run()
 
-    display = Display(force_ansi=ansi)
+    display = Display(force_ansi=ansi, verbosity_level=v)
     display.prepare_suite(completed_suite)
     display.display()
 

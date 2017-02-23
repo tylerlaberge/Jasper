@@ -30,25 +30,30 @@ class Feature(object):
     async def run(self):
         context = Context()
         try:
-            await self.__run_before_all(context)
-            await asyncio.wait([self.__run_scenario(scenario, context.copy()) for scenario in self.scenarios])
-            await self.__run_after_all(context)
+            await self.__run_scenarios(context)
         except Exception as e:
             self.exception = e
             self.passed = False
 
         return self
 
+    async def __run_scenarios(self, context):
+        await self.__run_before_all(context)
+        try:
+            await asyncio.gather(*[self.__run_scenario(scenario, context.copy()) for scenario in self.scenarios])
+        except Exception:
+            raise
+        finally:
+            await self.__run_after_all(context)
+
     async def __run_scenario(self, scenario, context):
         await self.__run_before_each(context)
-
         await scenario.run(context)
         if scenario.passed:
             self.successes.append(scenario)
         else:
             self.failures.append(scenario)
             self.passed = False
-
         await self.__run_after_each(context)
 
     async def __run_before_all(self, context):

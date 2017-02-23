@@ -16,8 +16,8 @@ class Step(object):
                 await self.function(context, **self.kwargs)
             else:
                 self.function(context, **self.kwargs)
-        except Exception as e:
-            raise e
+        except Exception:
+            raise
         else:
             self.passed = True
         finally:

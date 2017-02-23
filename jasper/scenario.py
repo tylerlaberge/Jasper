@@ -34,8 +34,12 @@ class Scenario(object):
 
     async def __run_step(self, step, context):
         await self.__run_before_each(context)
-        await step.run(context)
-        await self.__run_after_each(context)
+        try:
+            await step.run(context)
+        except Exception:
+            raise
+        finally:
+            await self.__run_after_each(context)
 
     async def __run_before_each(self, context):
         for before in self.before_each:

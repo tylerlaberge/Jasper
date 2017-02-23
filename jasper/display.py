@@ -67,14 +67,15 @@ class Display(object):
             self.__push_to_display(color(f'Feature: {feature.description}'))
 
             self.indentation_level += 4
-            for before in feature.before_all:
-                self.prepare_step(before, 'BeforeAll')
-            for after in feature.after_all:
-                self.prepare_step(after, 'AfterAll')
-            for before in feature.before_each:
-                self.prepare_step(before, 'BeforeEach')
-            for after in feature.after_each:
-                self.prepare_step(after, 'AfterEach')
+            if not feature.passed or self.verbosity_level > 1:
+                for before in feature.before_all:
+                    self.prepare_step(before, 'BeforeAll')
+                for after in feature.after_all:
+                    self.prepare_step(after, 'AfterAll')
+                for before in feature.before_each:
+                    self.prepare_step(before, 'BeforeEach')
+                for after in feature.after_each:
+                    self.prepare_step(after, 'AfterEach')
             for scenario in feature.scenarios:
                 self.prepare_scenario(scenario)
             if feature.exception is not None:
@@ -93,20 +94,21 @@ class Display(object):
                 color = self.red
 
             self.__push_to_display(color(f'Scenario: {scenario.description}'))
-            self.indentation_level += 4
-            for before in scenario.before_each:
-                self.prepare_step(before, 'BeforeEach')
-            for after in scenario.after_each:
-                self.prepare_step(after, 'AfterEach')
-            for index, given in enumerate(scenario.given):
-                self.prepare_step(given, 'Given') if index == 0 else self.prepare_step(given, 'And')
-            for index, when in enumerate(scenario.when):
-                self.prepare_step(when, 'When') if index == 0 else self.prepare_step(when, 'And')
-            for index, then in enumerate(scenario.then):
-                self.prepare_step(then, 'Then') if index == 0 else self.prepare_step(then, 'And')
-            if scenario.exception is not None:
-                self.prepare_exception(scenario.exception)
-            self.indentation_level -= 4
+            if not scenario.passed or self.verbosity_level > 1:
+                self.indentation_level += 4
+                for before in scenario.before_each:
+                    self.prepare_step(before, 'BeforeEach')
+                for after in scenario.after_each:
+                    self.prepare_step(after, 'AfterEach')
+                for index, given in enumerate(scenario.given):
+                    self.prepare_step(given, 'Given') if index == 0 else self.prepare_step(given, 'And')
+                for index, when in enumerate(scenario.when):
+                    self.prepare_step(when, 'When') if index == 0 else self.prepare_step(when, 'And')
+                for index, then in enumerate(scenario.then):
+                    self.prepare_step(then, 'Then') if index == 0 else self.prepare_step(then, 'And')
+                if scenario.exception is not None:
+                    self.prepare_exception(scenario.exception)
+                self.indentation_level -= 4
 
     def prepare_step(self, step, step_name):
         if not step.ran:

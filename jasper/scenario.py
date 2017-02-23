@@ -1,6 +1,7 @@
 class Scenario(object):
 
-    def __init__(self, description, given, when, then, before_each=list(), after_each=list()):
+    def __init__(self, description, given, when, then,
+                 before_each=list(), before_all=list(), after_each=list(), after_all=list()):
         self.description = description
 
         self.given = given if type(given) == list else [given]
@@ -8,16 +9,27 @@ class Scenario(object):
         self.then = then if type(then) == list else [then]
 
         self.before_each = before_each if type(before_each) == list else [before_each]
+        self.before_all = before_all if type(before_all) == list else [before_all]
+
         self.after_each = after_each if type(after_each) == list else [after_each]
+        self.after_all = after_all if type(after_all) == list else [after_all]
 
         self.exception = None
         self.ran = False
         self.passed = False
 
     async def run(self, context):
-        await self.__run_steps(context)
+        try:
+            await self.__run_steps(context)
+        except Exception as e:
+            self.exception = e
+        else:
+            self.passed = True
+        finally:
+            self.ran = True
 
     async def __run_steps(self, context):
+        await self.__run_before_all(context)
         try:
             for given in self.given:
                 await self.__run_step(given, context)
@@ -25,12 +37,10 @@ class Scenario(object):
                 await self.__run_step(when, context)
             for then in self.then:
                 await self.__run_step(then, context)
-        except Exception as e:
-            self.exception = e
-        else:
-            self.passed = True
+        except Exception:
+            raise
         finally:
-            self.ran = True
+            await self.__run_after_all(context)
 
     async def __run_step(self, step, context):
         await self.__run_before_each(context)
@@ -45,6 +55,14 @@ class Scenario(object):
         for before in self.before_each:
             await before.run(context)
 
+    async def __run_before_all(self, context):
+        for before in self.before_all:
+            await before.run(context)
+
     async def __run_after_each(self, context):
         for after in self.after_each:
+            await after.run(context)
+
+    async def __run_after_all(self, context):
+        for after in self.after_all:
             await after.run(context)

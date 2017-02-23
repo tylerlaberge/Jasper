@@ -96,6 +96,10 @@ class Display(object):
             self.__push_to_display(color(f'Scenario: {scenario.description}'))
             if not scenario.passed or self.verbosity_level > 1:
                 self.indentation_level += 4
+                for before in scenario.before_all:
+                    self.prepare_step(before, 'BeforeAll')
+                for after in scenario.after_all:
+                    self.prepare_step(after, 'AfterAll')
                 for before in scenario.before_each:
                     self.prepare_step(before, 'BeforeEach')
                 for after in scenario.after_each:

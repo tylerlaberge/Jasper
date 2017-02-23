@@ -15,8 +15,10 @@ feature = Feature(
     scenarios=[
         Scenario(
             'Decorating a function',
+            before_all=setup_some_foo_data(),
             before_each=setup_some_foo_data(),
             after_each=teardown_some_foo_data(),
+            after_all=teardown_some_foo_data(),
             given=[
                 some_function(),
                 some_kwargs(kwargs={'foo': 'bar'})

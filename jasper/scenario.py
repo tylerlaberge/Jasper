@@ -1,3 +1,7 @@
+from jasper.steps import Step
+from jasper.exceptions import StepValidationException
+
+
 class Scenario(object):
 
     def __init__(self, description, given, when, then,
@@ -17,6 +21,24 @@ class Scenario(object):
         self.exception = None
         self.ran = False
         self.passed = False
+
+        self.__validate()
+
+    def __validate(self):
+        self.__validate_steps(self.given, 'Given')
+        self.__validate_steps(self.when, 'When')
+        self.__validate_steps(self.then, 'Then')
+        self.__validate_steps(self.before_each, 'BeforeEach')
+        self.__validate_steps(self.after_each, 'AfterEach')
+        self.__validate_steps(self.before_all, 'BeforeAll')
+        self.__validate_steps(self.after_all, 'AfterAll')
+
+    def __validate_steps(self, steps, step_type):
+        for step in steps:
+            if not isinstance(step, Step):
+                raise StepValidationException(f'\n\nScenario \'{self.description}\'. '
+                                              f'{step_type}: \'{step}\' must be an initialized Step. '
+                                              f'Did you call a decorated step function?')
 
     async def run(self, context):
         try:

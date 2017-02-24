@@ -1,4 +1,7 @@
 from jasper.context import Context
+from jasper.steps import Step
+from jasper.scenario import Scenario
+from jasper.exceptions import ValidationException
 import asyncio
 
 
@@ -18,6 +21,27 @@ class Feature(object):
         self.failures = []
         self.passed = True
         self.exception = None
+        self.__validate()
+
+    def __validate(self):
+        for scenario in self.scenarios:
+            if not isinstance(scenario, Scenario):
+                raise ValidationException(f'\n\nFeature \'{self.description}\'. '
+                                          f'Scenario: \'{scenario}\' must be an initialized Scenario object. '
+                                          f'Instead got \'{type(scenario)}\'.')
+
+        self.__validate_steps(self.before_each, 'BeforeEach')
+        self.__validate_steps(self.after_each, 'AfterEach')
+        self.__validate_steps(self.before_all, 'BeforeAll')
+        self.__validate_steps(self.after_all, 'AfterAll')
+
+    def __validate_steps(self, steps, step_type):
+        for step in steps:
+            if not isinstance(step, Step):
+                raise ValidationException(f'\n\nFeature \'{self.description}\'. '
+                                          f'{step_type}: \'{step}\' must be an initialized Step object. '
+                                          f'Instead got \'{type(step)}\'. '
+                                          f'Did you call the decorated step function?')
 
     @property
     def num_scenarios_passed(self):

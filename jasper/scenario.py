@@ -1,5 +1,5 @@
 from jasper.steps import Step
-from jasper.exceptions import StepValidationException
+from jasper.exceptions import ValidationException
 
 
 class Scenario(object):
@@ -36,9 +36,10 @@ class Scenario(object):
     def __validate_steps(self, steps, step_type):
         for step in steps:
             if not isinstance(step, Step):
-                raise StepValidationException(f'\n\nScenario \'{self.description}\'. '
-                                              f'{step_type}: \'{step}\' must be an initialized Step. '
-                                              f'Did you call a decorated step function?')
+                raise ValidationException(f'\n\nScenario \'{self.description}\'. '
+                                          f'{step_type}: \'{step}\' must be an initialized Step object. '
+                                          f'Instead got \'{type(step)}\'. '
+                                          f'Did you call the decorated step function?')
 
     async def run(self, context):
         try:

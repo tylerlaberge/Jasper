@@ -10,6 +10,6 @@ class ExpectationException(Exception):
         return f'FAILURE: Expected {self.actual} {self.operator} {self.expected}'
 
 
-class StepValidationException(Exception):
+class ValidationException(Exception):
     pass
 

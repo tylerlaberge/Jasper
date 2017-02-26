@@ -2,11 +2,7 @@ from setuptools import setup
 setup(
     name="Jasper",
     version="0.1",
-    packages=['jasper',
-              'features',
-              'features.expect', 'features.expect.steps',
-              'features.given', 'features.given.steps'
-              ],
+    packages=['jasper'],
     entry_points={
         'console_scripts': [
             'jasper = jasper.entrypoints:jasper'

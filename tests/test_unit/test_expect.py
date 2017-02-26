@@ -126,7 +126,7 @@ class ExpectTestCase(TestCase):
         expect_object.negate = False
 
         with self.assertRaises(ExpectationException):
-            expect_object(5)
+            expect_object.less_than(5)
 
     def test_successful_not_to_be_less_than(self):
         expect_object = Expect(10)

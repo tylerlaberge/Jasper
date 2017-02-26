@@ -33,7 +33,7 @@ class Suite(object):
         await self.wait_with_progress([self.__run_feature(feature) for feature in self.features])
 
     async def __run_feature(self, feature):
-        feature = await feature.run()
+        await feature.run()
         if feature.passed:
             self.successes.append(feature)
         else:

@@ -59,8 +59,6 @@ class Feature(object):
             self.exception = e
             self.passed = False
 
-        return self
-
     async def __run_scenarios(self, context):
         await self.__run_before_all(context)
         try:

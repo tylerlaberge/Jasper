@@ -1,7 +1,4 @@
-from pypattyrn.behavioral.memento import Originator
-
-
-class Context(Originator):
+class Context(object):
 
     def __init__(self, **kwargs):
         self.__dict__['_items'] = dict(**kwargs)

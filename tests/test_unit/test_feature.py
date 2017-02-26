@@ -3,10 +3,11 @@ from unittest.mock import MagicMock, patch
 from jasper.feature import Feature
 from jasper.scenario import Scenario
 from jasper.step import Step
+from jasper.exceptions import ValidationException
 import asyncio
 
 
-class ScenarioTestCase(TestCase):
+class FeatureTestCase(TestCase):
 
     def setUp(self):
         call_order = []
@@ -71,6 +72,34 @@ class ScenarioTestCase(TestCase):
         self.assertTrue(feature.passed)
         self.assertEqual(feature.successes, [])
         self.assertEqual(feature.failures, [])
+
+    def test_init_with_invalid_scenarios(self):
+        try:
+            feature = Feature('foobar', scenarios=['foo', 'bar'])
+        except ValidationException as e:
+            self.assertEqual(str(e), "\n\nFeature 'foobar'. Scenario: 'foo' must be an initialized Scenario object. "
+                                     "Instead got '<class 'str'>'.")
+        else:
+            raise AssertionError()
+
+    def test_init_with_invalid_steps(self):
+        try:
+            feature = Feature('foobar', scenarios=[self.scenario_mock_one], after_each=['foobar'])
+        except ValidationException as e:
+            self.assertEqual(str(e), "\n\nFeature 'foobar'. AfterEach: 'foobar' must be an initialized Step object. "
+                                     "Instead got '<class 'str'>'. Did you call the decorated step function?")
+
+    def test_num_scenarios_passed_property(self):
+        feature = Feature('foobar', scenarios=[self.scenario_mock_one, self.scenario_mock_two])
+        feature.successes = feature.scenarios
+
+        self.assertEqual(feature.num_scenarios_passed, 2)
+
+    def test_num_scenarios_failed_property(self):
+        feature = Feature('foobar', scenarios=[self.scenario_mock_one, self.scenario_mock_two])
+        feature.failures = feature.scenarios
+
+        self.assertEqual(feature.num_scenarios_failed, 2)
 
     @patch('jasper.feature.Context')
     def test_successful_run(self, mock_context):

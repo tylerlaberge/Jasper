@@ -2,6 +2,7 @@ from unittest import TestCase
 from unittest.mock import MagicMock
 from jasper.scenario import Scenario
 from jasper.step import Step
+from jasper.exceptions import ValidationException
 import asyncio
 
 
@@ -57,6 +58,15 @@ class ScenarioTestCase(TestCase):
         self.assertIsNone(scenario.exception)
         self.assertFalse(scenario.ran)
         self.assertFalse(scenario.passed)
+
+    def test_init_validation_error(self):
+        try:
+            scenario = Scenario('foobar', given='some_given', when='some_when', then=lambda: 'some_then')
+        except ValidationException as e:
+            self.assertEqual(str(e), "\n\nScenario 'foobar'. Given: 'some_given' must be an initialized Step object. "
+                                     "Instead got '<class 'str'>'. Did you call the decorated step function?")
+        else:
+            raise AssertionError()
 
     def test_successful_run(self):
         mock_context = MagicMock()

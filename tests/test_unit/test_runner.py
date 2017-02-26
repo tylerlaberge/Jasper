@@ -1,11 +1,12 @@
 from unittest import TestCase, mock
 from jasper.runner import Runner
+import os
 
 
 class RunnerTestCase(TestCase):
 
     def setUp(self):
-        self.test_directory = '.\mock_features'
+        self.test_directory = os.path.abspath('.\mock_features')
 
     @mock.patch('jasper.runner.Suite')
     def test_init(self, mock_suite):
@@ -21,8 +22,8 @@ class RunnerTestCase(TestCase):
         runner.discover()
 
         self.assertEqual(runner.test_file_paths, [
-            ".\\mock_features\\runner\\runner_feature.py",
-            ".\\mock_features\\runner_two\\runner_two_feature.py"
+            os.path.abspath(".\\mock_features\\runner\\runner_feature.py"),
+            os.path.abspath(".\\mock_features\\runner_two\\runner_two_feature.py")
         ])
 
     @mock.patch('jasper.runner.Suite')

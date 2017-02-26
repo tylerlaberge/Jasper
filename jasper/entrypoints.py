@@ -10,7 +10,6 @@ from jasper.display import Display
 def jasper(test_directory, ansi, v):
     runner = Runner(test_directory)
     completed_suite = runner.run()
-
     display = Display(force_ansi=ansi, verbosity_level=v)
     display.prepare_suite(completed_suite)
     display.display()

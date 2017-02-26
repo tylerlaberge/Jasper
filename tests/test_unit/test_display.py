@@ -2,6 +2,7 @@ from unittest import TestCase, mock
 from jasper.display import Display
 from jasper.utility import extract_traceback
 import colorama
+from termcolor import colored
 
 
 class DisplayTestCase(TestCase):
@@ -16,6 +17,66 @@ class DisplayTestCase(TestCase):
         self.assertEqual(display.colored, True)
         self.assertEqual(display.force_ansi, True)
         mock_deinit.assert_called_once()
+
+    def test_cyan_with_colored_on(self):
+        display = Display()
+        display.colored = True
+
+        self.assertEqual(display.cyan('foobar'), colored('foobar', 'cyan'))
+
+    def test_cyan_without_colored_on(self):
+        display = Display()
+        display.colored = False
+
+        self.assertEqual(display.cyan('foobar'), 'foobar')
+
+    def test_magenta_with_colored_on(self):
+        display = Display()
+        display.colored = True
+
+        self.assertEqual(display.magenta('foobar'), colored('foobar', 'magenta'))
+
+    def test_magenta_without_colored_on(self):
+        display = Display()
+        display.colored = False
+
+        self.assertEqual(display.magenta('foobar'), 'foobar')
+
+    def test_yellow_with_colored_on(self):
+        display = Display()
+        display.colored = True
+
+        self.assertEqual(display.yellow('foobar'), colored('foobar', 'yellow'))
+
+    def test_yellow_without_colored_on(self):
+        display = Display()
+        display.colored = False
+
+        self.assertEqual(display.yellow('foobar'), 'foobar')
+
+    def test_red_with_colored_on(self):
+        display = Display()
+        display.colored = True
+
+        self.assertEqual(display.red('foobar'), colored('foobar', 'red'))
+
+    def test_red_without_colored_on(self):
+        display = Display()
+        display.colored = False
+
+        self.assertEqual(display.red('foobar'), 'foobar')
+
+    def test_grey_with_colored_on(self):
+        display = Display()
+        display.colored = True
+
+        self.assertEqual(display.grey('foobar'), colored('foobar', 'white'))
+
+    def test_grey_without_colored_on(self):
+        display = Display()
+        display.colored = False
+
+        self.assertEqual(display.grey('foobar'), 'foobar')
 
     def test_disable_color(self):
         display = Display()
@@ -156,6 +217,23 @@ class DisplayTestCase(TestCase):
         try:
             raise Exception('FooBarException')
         except Exception as e:
+            display = Display()
+            display.prepare_exception(e)
+
+            self.assertEqual(display.indentation_level, 0)
+            self.assertEqual(display.display_string, "FooBarException\n" + extract_traceback(e))
+            display.yellow.assert_called_once_with(("FooBarException\n" + extract_traceback(e)).rstrip())
+
+    @mock.patch.object(Display, 'yellow', side_effect=lambda text: text)
+    def test_prepare_exception_without_str_representation(self, yellow_mock):
+        try:
+            class FooBarException(Exception):
+
+                def __str__(self):
+                    return ''
+
+            raise FooBarException
+        except FooBarException as e:
             display = Display()
             display.prepare_exception(e)
 

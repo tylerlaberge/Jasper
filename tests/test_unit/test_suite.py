@@ -13,6 +13,8 @@ class SuiteTestCase(TestCase):
                 self.ran = False
                 self.passed = False
                 self.scenarios = ['foo', 'bar']
+                self.num_scenarios_passed = 2
+                self.num_scenarios_failed = 0
 
             async def run(self):
                 self.ran = True
@@ -24,6 +26,8 @@ class SuiteTestCase(TestCase):
                 self.ran = False
                 self.passed = False
                 self.scenarios = ['foobar', 'barfoo']
+                self.num_scenarios_passed = 1
+                self.num_scenarios_failed = 1
 
             async def run(self):
                 self.ran = True
@@ -43,6 +47,30 @@ class SuiteTestCase(TestCase):
         self.assertEqual(suite.successes, [])
         self.assertEqual(suite.failures, [])
         self.assertTrue(suite.passed)
+
+    def test_num_features_passed_property(self):
+        suite = Suite()
+        suite.successes = ['foo', 'bar']
+
+        self.assertEqual(suite.num_features_passed, 2)
+
+    def test_num_features_failed_property(self):
+        suite = Suite()
+        suite.failures = ['foo', 'bar']
+
+        self.assertEqual(suite.num_features_failed, 2)
+
+    def test_num_scenarios_passed(self):
+        suite = Suite()
+        suite.features = [self.passing_feature_mock(), self.failing_feature_mock()]
+
+        self.assertEqual(suite.num_scenarios_passed, 3)
+
+    def test_num_scenarios_failed(self):
+        suite = Suite()
+        suite.features = [self.passing_feature_mock(), self.failing_feature_mock()]
+
+        self.assertEqual(suite.num_scenarios_failed, 1)
 
     def test_add_feature(self):
         suite = Suite()

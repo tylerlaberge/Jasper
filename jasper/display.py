@@ -144,6 +144,6 @@ class Display(object):
         self.__push_to_display(
             color(
                 f'{suite.num_features_passed} Features passed, {suite.num_features_failed} failed.\n'
-                f'{suite.num_scenarios_passed} Scenarios passed, {suite.num_scenarios_failed} failed'
+                f'{suite.num_scenarios_passed} Scenarios passed, {suite.num_scenarios_failed} failed.'
             )
         )

@@ -265,3 +265,49 @@ The ansi flag forces Jasper to use ansi escape sequences during coloring. By def
 At this point you should understand the basics of Jasper. You can define as many features as you want in as many files as you want so long as their filenames end in feature.py and you should be good to go.
 
 More detail on Features, Scenarios, and Steps as well as on additional topics like asynchronous testing, before_each/all and after_each/all steps are explained in detail below.
+
+## Steps in detail
+
+### Passing arguments to your steps
+
+Add additional arguments after 'context' to your step function.
+
+```python
+from jasper import step
+
+@step
+def two_numbers(context, a, b):
+    context.a = a
+    context.b = b
+```
+And pass in the the parameters as **keyword** arguments. You cannot use positional arguments.
+
+```python
+from jasper import Feature, Scenario
+from features.addition.steps.given import two_numbers
+
+feature = Feature(
+    'Steps Example',
+    scenarios=[
+        Scenario(
+            'Keyword arguments',
+            given=two_numbers(a=5, b=17), #here we call the step with the keyword arguments.
+            when=..., 
+            then=...
+        )
+    ]
+)
+```
+You can use default values like normal if you wish.
+
+```python
+from jasper import step
+
+@step
+def two_numbers(context, a=5, b=10):
+    context.a = a
+    context.b = b
+```
+
+
+

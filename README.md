@@ -268,6 +268,29 @@ More detail on Features, Scenarios, and Steps as well as on additional topics li
 
 ## Steps in detail
 
+### Context
+
+The context variable is passed into your steps by Jasper. It is a way of communicating and passing data between your steps. It supports simple getting and setting attribute operations using the '.' notation.
+
+```python
+from jasper import step
+
+@step
+def first_step(context):
+    context.foobar = 'foobar'  # Set an attribute
+    
+
+@step
+def later_step(context):
+    assert context.foober == 'foobar'  # Get an attribute
+```
+
+Every feature gets its own context, and every scenario gets its own copy of the features context. This simple diagram shows how each scenario has its own context, which is a copy of its features context.
+
+![alt text](https://github.com/tylerlaberge/Jasper/blob/master/img/ContextDiagram.jpg)
+
+The order in which steps are called, and thus the order in which the context is passed around, is described further in a later section. 
+
 ### Passing arguments to your steps
 
 Add additional arguments after 'context' to your step function.
@@ -309,5 +332,39 @@ def two_numbers(context, a=5, b=10):
     context.b = b
 ```
 
+### Defining asynchronous tests
+
+Jasper makes testing asynchronous code a breeze. Simply define your step as async function like normal and you are good to go.
+
+```python
+from jasper import step
+import asyncio
+
+
+@step
+async def we_call_an_async_function(context):
+    await asyncio.sleep(1)  # this is just an example async function, you dont need to use asyncio.
+```
+
+And then use the step like normal.
+
+```python
+from jasper import Feature, Scenario
+from features.addition.steps.when import we_call_an_async_function
+
+feature = Feature(
+    'Steps Example',
+    scenarios=[
+        Scenario(
+            'Keyword arguments',
+            given=...,
+            when=we_call_an_async_function(), 
+            then=...
+        )
+    ]
+)
+```
+
+The step you defined allows you test an async function easily and will also safely run asynchronously along side your other tests within Jasper. More information on the way Jasper runs your tests asynchronously comes later.
 
 

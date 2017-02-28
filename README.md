@@ -385,11 +385,11 @@ Any step you define using the step decorator can be used in any of the following
 In actual code you can access these hooks with keyword arguments.
 
 ```python
-from jasper import steps
+from jasper import Feature, Scenario
 from features.example.all_example_steps import *
 
 feature = Feature(
-    'Hooks Example',
+    'Example',
     scenarios=[
         Scenario(
             'All hooks',
@@ -405,7 +405,32 @@ feature = Feature(
 )
 ```
 
+### Defining multiple steps for the same hooks
 
+If you want to pass multiple steps into a single hook for a scenario, such as multiple given or then steps, just pass in a list of steps.
+
+```python
+from jasper import Feature, Scenario
+from features.example.all_example_steps import *
+
+feature = Feature(
+    'Example',
+    scenarios=[
+        Scenario(
+            'Multiple steps',
+            given=[something_to_test(), something_else_to_test()],
+            when=we_test_it(), 
+            then=[something_should_happen(), something_else_should_happen()]
+        )
+    ]
+)
+```
+
+You can pass in a list of steps into any of the hooks. 
+
+When you run a feature with multiple steps for a single hook the the additional steps will be prepend by an 'And' within the report.
+
+![alt text](https://github.com/tylerlaberge/Jasper/blob/master/img/MultipleStepsScenario.jpg)
 
 
 

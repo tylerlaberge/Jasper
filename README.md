@@ -307,7 +307,7 @@ And pass in the the parameters as **keyword** arguments. You cannot use position
 
 ```python
 from jasper import Feature, Scenario
-from features.addition.steps.given import two_numbers
+from features.example.steps.given import two_numbers
 
 feature = Feature(
     'Steps Example',
@@ -350,7 +350,7 @@ And then use the step like normal.
 
 ```python
 from jasper import Feature, Scenario
-from features.addition.steps.when import we_call_an_async_function
+from features.example.steps.when import we_call_an_async_function
 
 feature = Feature(
     'Steps Example',
@@ -366,5 +366,48 @@ feature = Feature(
 ```
 
 The step you defined allows you test an async function easily and will also safely run asynchronously along side your other tests within Jasper. More information on the way Jasper runs your tests asynchronously comes later.
+
+## Scenarios in detail
+
+### Types of steps
+
+Any step you define using the step decorator can be used in any of the following hooks. The hook that you assign to a step decides when a step will get run during a scenario.
+
+####*given:* steps that should supply a scenario with something to test with.
+####*when:* steps that should run whatever it is we are testing.
+####*then:* steps that should make assertions upon the results of the 'when' step.
+
+####*before_all:* steps that run exactly once before every other step in the scenario.
+####*before_each:* steps that run before each of the 'given', 'when', and 'then' steps.
+####*after_each:* steps that run after each of the 'given', 'when', and 'then' steps.
+####*after_all:* steps that run exactly once after every other step in the scenario.
+
+In actual code you can access these hooks with keyword arguments.
+
+```python
+from jasper import steps
+from features.example.all_example_steps import *
+
+feature = Feature(
+    'Hooks Example',
+    scenarios=[
+        Scenario(
+            'All hooks',
+            before_all=do_something_before_all_other_steps(),
+            before_each=do_something_before_each_step(),
+            after_each=do_something_after_each_step(),
+            after_all=do_something_after_all_other_steps(),
+            given=something_to_test(),
+            when=we_test_it(), 
+            then=something_should_happen()
+        )
+    ]
+)
+```
+
+
+
+
+
 
 

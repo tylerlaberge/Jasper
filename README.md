@@ -577,3 +577,111 @@ And Steps are guarenteed to always run in this order with a scenario.
 
 To take full advantage of the way Jasper runs your tests, you should try to write any slow steps as async functions. This way Jasper can await your slow step and run another scenario or feature which can work more on their steps in the meantime.
 
+### Async demonstration
+
+To show how much of an effect asynchronous steps can have on your tests, lets do a comparison.
+
+First we'll write normal, non-asynchonous steps.
+
+```python
+from jasper import step
+import time
+
+
+@step
+def a_slow_function(context):
+    context.function = lambda: time.sleep(2)
+
+
+@step
+def we_call_it(context):
+    context.function()
+
+
+@step
+def we_do_nothing(context):
+    pass
+```
+
+and our features
+
+```python
+from jasper import Feature, Scenario
+from features.example.all_example_steps import *
+
+slow_feature_one = Feature(
+    'Slow Feature One',
+    scenarios=[
+        Scenario(
+            'Slow scenario',
+            given=a_slow_function(),
+            when=we_call_it(),
+            then=we_do_nothing()
+        ),
+        Scenario(
+            'Slow scenario two',
+            given=a_slow_function(),
+            when=we_call_it(),
+            then=we_do_nothing()
+        )
+    ]
+)
+
+slow_feature_two = Feature(
+    'Slow Feature Two',
+    scenarios=[
+        Scenario(
+            'Slow scenario',
+            given=a_slow_function(),
+            when=we_call_it(),
+            then=we_do_nothing()
+        ),
+        Scenario(
+            'Slow scenario two',
+            given=a_slow_function(),
+            when=we_call_it(),
+            then=we_do_nothing()
+        )
+    ]
+)
+```
+
+Basically, we have 2 features, each of which has 2 scenarios, each of which calls one slow function which takes 2 seconds to complete.
+
+We can expect this to take 8 seconds. 2 seconds per scenario, 4 scenarios.
+
+    $ jasper features
+    
+![alt text](https://github.com/tylerlaberge/Jasper/blob/master/img/NonAsyncDemo.jpg)
+
+As expected, it toook 8 seconds. Now lets change our steps to take advantage of async.
+
+```python
+from jasper import step
+import asyncio
+
+
+@step
+def a_slow_function(context):
+    context.function = lambda: asyncio.sleep(2)
+
+
+@step
+async def we_call_it(context):
+    await context.function()
+
+
+@step
+def we_do_nothing(context):
+    pass
+```
+
+The only changes are that the slow function now uses asyncio's sleep function, and that we await it when we call it. No changes to our feature or scenarios are needed.
+
+Now that we are using async, we can expect all of our scenarios to run along side each other. Each scenario takes 2 seconds to complete, if they run at the same time we can expect the tests to take 2 seconds total.
+
+    $ jasper features
+    
+![alt text](https://github.com/tylerlaberge/Jasper/blob/master/img/AsyncDemo.jpg)
+
+And as suspected, it took 2 seconds. Async is awesome!

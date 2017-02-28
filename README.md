@@ -268,9 +268,9 @@ More detail on Features, Scenarios, and Steps as well as on additional topics li
 
 ## Steps in detail
 
-### Context
+### Passing data between steps
 
-The context variable is passed into your steps by Jasper. It is a way of communicating and passing data between your steps. It supports simple getting and setting attribute operations using the '.' notation.
+A context object is passed into each of your steps automatically by Jasper. It is a way of communicating and passing data between your steps. It supports simple getting and setting attribute operations using the '.' notation.
 
 ```python
 from jasper import step

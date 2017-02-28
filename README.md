@@ -34,7 +34,7 @@ Lastly, Scenarios are composed of Steps, which are the parts that actually imple
 
 This is the essence of BDD and writing behavioural tests in Jasper.
 
-### Steps
+### Defining Steps
 
 As was stated above, steps are the actual implementations of our behavioural tests. Writing steps is very easy, simply use the step decorator provided by Jasper. 
 
@@ -81,4 +81,31 @@ One thing you might have noticed is that all these steps use the same @step deco
 
 With that said, now that we have our steps defined lets create a Scenario.
 
+### Creating a Scenario
+
+Scenarios are essentailly the test cases of our features. They are composed of 'given', 'when', and 'then' steps which desribe the behaviours we expect.
+
+With our three scenario's we defined above we can define a scenario using Jasper's Scenario object.
+
+```python
+  from jasper import Scenario
+  
+  scenario = Scenario(
+      'Adding two positive numbers',
+      given=an_adding_function(),
+      when=we_call_it_with_two_positive_numbers(),
+      then=the_result_should_be_positive()
+  )
+```
+
+Assuming our steps were defined in the same file, we can define a scenario as easy as that. 
+
+The first argument to the Scenario object is a description of the scenario. This will be displayed in the report after runner your tests.
+
+The given, when, and then arguments refer to the steps we defined above. Notice that we are *calling* the functions. This is an important detail. The reason you call the functions is because the @step decorator actually wraps you function into a Step object that Jasper uses internally, and when you call a function decorated with @step, it returns a new instance of that Step object. You will see some nice functionality we get from this later on when we pass arguments into our steps, but for now just remember to call your step functions and don't worry about passing in a 'context' argument, Jasper will pass that in on its own.
+
+So we have a scenario, lets finally create feature that contains this scenario.
+
+
+  
 

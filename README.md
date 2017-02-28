@@ -171,3 +171,97 @@ However you organize your files just make sure that your feature.py file can suc
 
 Okay, we have succesfully written a feature. Lets run it.
 
+### Running a Feature
+
+Using the directory structure I showed above, my final feature.py, which I called 'addition_feature.py', looks like this.
+
+```python
+from jasper import Feature, Scenario
+from features.addition.steps.given import an_adding_function
+from features.addition.steps.when import we_call_it_with_two_positive_numbers
+from features.addition.steps.then import the_result_should_be_positive
+
+feature = Feature(
+    'Addition',
+    scenarios=[
+        Scenario(
+            'Adding two positive numbers',
+            given=an_adding_function(),
+            when=we_call_it_with_two_positive_numbers(),
+            then=the_result_should_be_positive()
+        )
+    ]
+)
+```
+
+You may think all these imports are a bit overkill, but as you create more and more scenarios the number of steps you define increases quickly and its quite handy to seperate the steps into their own modules.
+
+**IMPORTANT:** The single contraint on how your features are defined is that your files which contain your features, like the one above, must be given a filename *which ends with feature.py*, so addition_feature.py is fine, feature_addition.py or foobar.py are not. They need to end with feature.py because these are the files Jasper's runner searches for.
+
+Okay, with our feature defined lets run it. Open up a terminal and navigate to the directory containing you feature files. Using the directory structure above this directory is called 'features'.
+
+The jasper command has the following signature
+
+    jasper [OPTIONS] TEST_DIRECTORY
+
+Don't worry about options for now.
+
+So with that command to run the tests in the 'features' directory, simply type
+
+    jasper features
+    
+You should see the following output
+
+![alt text](https://github.com/tylerlaberge/Jasper/blob/master/img/PassingRunV0.jpg)
+
+That's pretty good, but maybe we want to see more detail. We can up the verbosity level using the '-v' option.
+
+    jasper -v1 features
+    
+![alt text](https://github.com/tylerlaberge/Jasper/blob/master/img/PassingRunV1.jpg)
+
+And even more detail.
+
+    jasper -v2 features
+    
+![alt_text](https://github.com/tylerlaberge/Jasper/blob/master/img/PassingRunV2.jpg)
+
+Verbosity level can range from 0 to 2. 
+
+Level 0 verbosity only shows you the statistics of running your features.
+
+Level 1 verbosity also shows the descriptions of each feature as well as the descriptions of each scenario.
+
+Level 2 verbosity also shows the names of each of your steps. (These are derived from the function names of your steps)
+
+If any errors occur they will show the full detail of the feature that failed regardless of verbosity level. For example lets say I change the 'then' step so that it throws an exception.
+
+```python
+#feature.addition.steps.then
+  
+from jasper import step, Expect
+  
+@step
+def the_result_should_be_positive(context):
+    Expect(context.result).to_be.less_than(0) # So we can see an example exception we use 'less_than', this should fail.
+```
+
+Lets save everything and run again.
+
+    jasper features
+    
+![alt text](https://github.com/tylerlaberge/Jasper/blob/master/img/FailingRun.jpg)
+
+As you can see an exception occured. Jasper highlights in red the failing features, scenarios, and steps. All exceptions are display in yellow.
+
+The 'FAILURE: Expected 55 to be less than 0' description is the message of the exception that occured. It is easy to read because it comes from Jasper's 'Expect' assertion library which will throw clean exception when an assertion is thrown. You can see the exact line the exception occured is at the point in the 'then' step when we say 'Expect(context.result).to_be.less_than(0).
+
+**Note: If you are not seeing colored output try using the '--ansi' flag in your jasper command.**
+
+    jasper --ansi features
+    
+The ansi flag forces Jasper to use ansi escape sequences during coloring. By default if you are on Window's Jasper does not use ansi escape sequences. Some terminals support ansi though even if you are on windows, such as git bash or the pycharm terminal, and in those cases you would want to use the --ansi flag even if you are on windows so that you get colored output. Linux and mac will use ansi sequences no matter what.
+
+At this point you should understand the basics of Jasper. You can define as many features as you want in as many files as you want so long as their filenames end in feature.py and you should be good to go.
+
+More detail on Features, Scenarios, and Steps as well as on additional topics like asynchronous testing, before_each/all and after_each/all steps are explained in detail below.

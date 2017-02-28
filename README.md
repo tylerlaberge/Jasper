@@ -90,7 +90,7 @@ With our three scenario's we defined above we can define a scenario using Jasper
 ```python
   from jasper import Scenario
   
-  scenario = Scenario(
+  adding_two_positive_numbers_scenario = Scenario(
       'Adding two positive numbers',
       given=an_adding_function(),
       when=we_call_it_with_two_positive_numbers(),
@@ -106,6 +106,68 @@ The given, when, and then arguments refer to the steps we defined above. Notice 
 
 So we have a scenario, lets finally create feature that contains this scenario.
 
+### Creating a Feature
 
-  
+Features are the features of our application that we are testing. They are made up of scenarios which test the behaviours of a feature.
+
+With our scenario we defined above, we can create a feature for our applications addition functionality like so.
+
+```python
+from jasper import Feature
+
+feature = Feature(
+  'Addition',
+  scenarios=[
+      adding_two_positive_numbers_scenario
+  ]
+)
+```
+
+You can see its fairly self explanatory. The Feature object has a description, which we said is 'Addition' since its the addition feature, and it also a list of scenarios, and we just passed our scenario we defined above into this list. An important not is that your feature object must be stored in a variable, above we called it 'feature'. You cannot just call the Feature object and be done with it. This is because Jasper's test runner searches through your test files for references to Feature objects. If you don't store your features in a variable then it will be lost and Jasper won't know they are there. Jasper does it this way so that it can collect all you features up, put them into an internal Suite object, and then run all your tests asynchronously (more on async later).
+
+
+One thing I'd like to do is rewrite this feature a little bit to make it a bit cleaner. Typically the way I like to write my features and scenarios is to just create my scenarios as I'm constructing a feature. So if we did that we could instead write this as follows.
+
+```python
+from jasper import Feature, Scenario
+
+feature = Feature(
+    'Addition',
+    scenarios=[
+        Scenario(
+            'Adding two positive numbers',
+            given=an_adding_function(),
+            when=we_call_it_with_two_positive_numbers(),
+            then=the_result_should_be_positive()
+        )
+    ]
+)
+```
+
+Writing it this way is how I like to do it, however you are free to organize you steps, features, and scenarios however you like. You may wish to put all your scenarios into their own module, or all the steps into their own module, or seperate steps into given, when, and then modules. Here's an example of how I typically organize my features.
+
+```
+| - my_app   # Your application code
+
+|     |- ...
+
+| - features  # your Jasper features
+
+|     |- addition  # The addition feature directory
+
+|        |- steps  # The steps involved with the addition feature
+
+|            |- given.py  # The given steps
+
+|            |- when.py   # The when steps
+
+|            |- then.py   # The then steps
+
+|        |- feature.py  # The actual feature that was defined above
+```
+
+
+However you organize your files just make sure that your feature.py file can successfully import steps or scenarios from wherever you choose to define them, and that your steps can import code from your actual application (we want to test an actual app after all!).
+
+Okay, we have succesfully written a feature. Lets run it.
 

@@ -493,3 +493,47 @@ feature = Feature(
 )
 ```
 
+## The Test Runner
+
+Required setup for running tests:
+
+* Your files which define your features must have filenames which end with 'feature.py'. i.e 'some_feature.py'
+* Your feature files must contain a reference to a jasper 'Feature' object. i.e 
+
+```python
+    feature = Feature(
+        '...', 
+        scenarios=[
+            ..
+        ]
+    )
+```
+
+### jasper command line tool
+ 
+The jasper command line tool is what you will use to run your tests. The signature of the tool is as follows.
+
+    Usage: jasper [OPTIONS] TEST_DIRECTORY
+
+    Options:
+      --ansi            Flag to force display to use ansi escape sequences for
+                        coloring.
+      -v INTEGER RANGE  Verbosity level from 0 to 2. default is 0.
+      --help            Show this message and exit.
+
+Where TEST_DIRECTORY is the direcotry containing the feature.py files you wish to run.
+
+The --ansi flag is for coloring purposes if you are on a window machine using a terminal that actually supports ansi escape sequences.
+
+####Example Usage 
+
+With a directory called 'features' containg your feature.py files, if you wish to run the features with verbosity level 2 type the following command in the same directory that the 'features' directory is lcoated in.
+
+    $ jasper -v2 features
+    
+And you should see the output of your tests running.
+
+ 
+ 
+
+

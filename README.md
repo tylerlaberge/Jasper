@@ -525,7 +525,7 @@ Where TEST_DIRECTORY is the direcotry containing the feature.py files you wish t
 
 The --ansi flag is for coloring purposes if you are on a window machine using a terminal that actually supports ansi escape sequences.
 
-####Example Usage 
+#### Example Usage 
 
 With a directory called 'features' containg your feature.py files, if you wish to run the features with verbosity level 2 type the following command in the same directory that the 'features' directory is lcoated in.
 
@@ -533,7 +533,47 @@ With a directory called 'features' containg your feature.py files, if you wish t
     
 And you should see the output of your tests running.
 
+ ### How your features are ran asynchronously
  
+ In Jasper everything is run asynchronously. With that said there are certain caveats to that to ensure saftey, for example we would never want our 'then' steps running before our 'given' steps in a given scenario. Here is a (somewhat crude) diagram of how your tests are run. 
  
+ ![alt text](https://github.com/tylerlaberge/Jasper/blob/master/img/RunOrderDiagram.jpg)
+ 
+ The arrows show the order that steps/scenarios are run in, they do not represent a caller -> callee relationship. 
+ 
+ The blue bars represent something that is being run asynchronously. If multiple blocks are covered by the same blue bar, then they can be run next to each using async, meaning theres either can finish before the other, etc. 
+ 
+ The green bars are essentially just groups of asynchronous functions. Blocks covered by the same green bar will run in order, but also asynchronously. So before each steps run asynchronously, but they will awlays run before a scenario. Not after, and not during.
 
+Basically, 
+
+All features run asynchronouusly next to each other.
+
+All scenarios run asynchronously next to each other.
+
+All steps are run in order, but are still awaitable. This way other scenarios can run while a step of another scenario is awaiting.
+
+Steps are guarenteed to always run in this order within a feature.
+
+1. BeforeAll
+2. BeforeEach (ran for each scenario)
+3. Scenario(s)
+4. AfterEach (ran for each scenario)
+5. AfterAll
+
+And Steps are guarenteed to always run in this order with a scenario.
+
+1. BeforeAll
+2. BeforeEach
+3. Given
+4. AfterEach
+5. BeforeEach
+6. When
+7. AfterEach
+8. BeforeEach
+9. Then
+10. AfterEach
+11. AfterAll
+
+To take full advantage of the way Jasper runs your tests, you should try to write any slow steps as async functions. This way Jasper can await your slow step and run another scenario or feature which can work more on their steps in the meantime.
 

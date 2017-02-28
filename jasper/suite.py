@@ -47,7 +47,7 @@ class Suite(object):
                 total=sum([len(feature.scenarios) for feature in self.features]),
                 desc=f'Running {len(self.features)} features and '
                      f'{sum([len(feature.scenarios) for feature in self.features])} scenarios',
-                ncols=100, bar_format='{desc}{percentage:3.0f}%|{bar}|'
+                ncols=100, bar_format='{desc}{percentage:3.0f}%|{bar}| {elapsed}'
         ) as progress_bar:
             for future in asyncio.as_completed(coros):
                 completed_feature = await future

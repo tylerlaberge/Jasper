@@ -539,6 +539,24 @@ from jasper import Expect
 Expect(True).not_.to_be(False) # not (True == False)
 ```
 
+## The Display
+
+While your tests are running a progress bar will show the test progres. Once Jasper finishes your tests a color coded report will display the results and the elapsed time will be shown to the right of the progress bar. 
+
+The different colors that are used in the display are:
+
+**blue:** The feature/scenario/step was ran and it passed.
+
+**red:** The feature/scenario/step was ran and it did not pass.
+
+**grey:** The step was skipped. (because a previous step failed)
+
+**yellow:** An exception that occured and its traceback.
+
+### Example Display
+
+![alt text](https://github.com/tylerlaberge/Jasper/blob/master/img/DisplayExample.jpg)
+
 ## The Test Runner
 
 Required setup for running tests:

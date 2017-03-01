@@ -493,6 +493,52 @@ feature = Feature(
 )
 ```
 
+## The Expect Object
+
+The expect object comes built-in with Jasper. It allows for easy to read and understand assertions.
+
+### Identity Comparison
+
+```python
+from jasper import Expect
+
+some_dict = {'foo':'bar'}
+
+Expect(some_dict).to_be(some_dict) # some_dict 'is' some_dict
+```
+
+### Equality Comparison
+
+```python
+from jasper import Expect
+
+Expect({'foo':'bar'}).to_equal({'foo':'bar'}) # {'foo':'bar'} == {'foo':'bar'}
+```
+
+### Less than Comparison
+
+```python
+from jasper import Expect
+
+Expect(5).to_be.less_than(10) # 5 < 10
+```
+
+### Greater than Comparison
+
+```python
+from jasper import Expect
+
+Expect(10).to_be.greater_than(5) # 10 > 5
+```
+
+### Negation Operator
+
+```python
+from jasper import Expect
+
+Expect(True).not_.to_be(False) # not (True == False)
+```
+
 ## The Test Runner
 
 Required setup for running tests:

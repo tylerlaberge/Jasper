@@ -101,6 +101,12 @@ Jasper's main points that seperate it from other BDD frameworks suchs as lettuce
   - [How your features are ran asynchronously](https://github.com/tylerlaberge/Jasper#how-your-features-a-ran-asynchronously)
 - [Async Demonstration](https://github.com/tylerlaberge/Jasper#async-demonstration)
   
+## Installation
+
+Supports Python 3.6+
+
+    pip install jasper
+
 ## Getting Started
 
 ### Breif Overview
@@ -830,3 +836,7 @@ Now that we are using async, we can expect all of our scenarios to run along sid
 ![alt text](https://github.com/tylerlaberge/Jasper/blob/master/img/AsyncDemo.jpg)
 
 And as suspected, it took 2 seconds. Async is awesome!
+
+## Contributing
+
+TODO

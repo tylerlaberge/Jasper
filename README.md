@@ -70,6 +70,15 @@ Jasper's main points that seperate it from other BDD frameworks suchs as lettuce
 
 * Very easy to read testing reports of various verbosity levels. It is very clear which features, scenarios, and steps failed, along with a clear traceback of where a failure occured.
 
+## Contents
+
+- [Getting Started](https://github.com/tylerlaberge/Jasper#getting-started)
+  - [Brief Overview](https://github.com/tylerlaberge/Jasper#breif-overview) 
+  - [Defining Steps](https://github.com/tylerlaberge/Jasper#defining-steps)
+  - [Creating a Scenario](https://github.com/tylerlaberge/Jasper#creating-a-scenario)
+  - [Creating a Feature](https://github.com/tylerlaberge/Jasper#creating-a-feature)
+  - [Running a Feature](https://github.com/tylerlaberge/Jasper#running-a-feature)
+  
 ## Getting Started
 
 ### Breif Overview
@@ -316,7 +325,7 @@ At this point you should understand the basics of Jasper. You can define as many
 
 More detail on Features, Scenarios, and Steps as well as on additional topics like asynchronous testing, before_each/all and after_each/all steps are explained in detail below.
 
-## Steps in detail
+## Steps
 
 ### Passing data between steps
 
@@ -382,7 +391,7 @@ def two_numbers(context, a=5, b=10):
     context.b = b
 ```
 
-### Defining asynchronous tests
+### Defining asynchronous steps
 
 Jasper makes testing asynchronous code a breeze. Simply define your step as async function like normal and you are good to go.
 
@@ -417,7 +426,7 @@ feature = Feature(
 
 The step you defined allows you test an async function easily and will also safely run asynchronously along side your other tests within Jasper. More information on the way Jasper runs your tests asynchronously comes later.
 
-## Scenarios in detail
+## Scenarios
 
 ### Hooks
 
@@ -487,7 +496,7 @@ When you run a feature with multiple steps for a single hook the the additional 
 ![alt text](https://github.com/tylerlaberge/Jasper/blob/master/img/MultipleStepsScenario.jpg)
 
 
-## Features in detail
+## Features
 
 ### Hooks
 

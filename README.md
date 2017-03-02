@@ -913,4 +913,7 @@ And as suspected, it took 2 seconds. Async is awesome!
 
 ## Contributing
 
-TODO
+All pull requests are welcome.
+
+Feel free to open an issue if you found a bug or have thoughts on any missing features you think should be added.
+

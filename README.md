@@ -56,19 +56,17 @@ And run your features and see the results
 
 ## Motivation
 
-Jasper is a behaviour-driven development(BDD) framework. BDD is a form of test-driven development where the tests descibe the behaviours of an application, typically behaviours are described in plain English sentences. BDD allows tests to be written in a highly composible, and easy to read way.
+Behavior-Driven Development(BDD) is a form of test-driven development where the tests descibe the behaviours of an application, and typically these behaviours are described in plain English sentences. BDD allows tests to be written in a highly composible, understandable, and easy to read way.
 
-Jasper's main points that seperate it from other BDD frameworks suchs as lettuce, and behave are that:
+Jasper's main points that seperate it from other BDD frameworks suchs as [lettuce](https://github.com/gabrielfalcao/lettuce), and [behave](https://github.com/behave/behave) are that:
 
 * Test's are run *asynchronously*, making it very easy and intuitave to write tests for asynchonous code.
 
-* Features are described within .py files, exactly how you would write normal python code. No need to learn the syntax of a domain-specific language (DSL) in order to define your features like other frameworks require.
+* Features are described within .py files, exactly how you would write normal python code. No need to learn the syntax of a domain-specific language in order to define your features like other frameworks require.
 
 * Small and simple built-in *optional* assertion library allows for easy to write and easy to read assertions.
 
 * The structure of your features, scenarios, and steps is very unrestrictive. No requirements for any specific directory structures in order for Jasper to run you tests.
-
-* Very easy to read testing reports of various verbosity levels. It is very clear which features, scenarios, and steps failed, along with a clear traceback of where a failure occured.
 
 ## Contents
 
@@ -115,7 +113,7 @@ Supports Python 3.6+
 
 Jasper tests are composed of 3 main parts. Features, Scenarios, and Steps. 
 
-Features are exactly what they are described as, the features of your applications that you are testing. A calculator application might have an addition feature, subtraction feature, and so on.
+Features are exactly what they sound like, the features of your applications that you are testing. A calculator application might have an addition feature, subtraction feature, and so on.
 
 Features are composed of scenarios, which are essentially the cases that you are testing on a particular feature. An addition feature might have scenario's for adding two positive numbers or two negative numbers. Likewise for a multiplication feature. Maybe for a division feature you might also have a scenario for the case of dividing by 0.
 
@@ -125,22 +123,29 @@ This is the essence of BDD and writing behavioural tests in Jasper.
 
 ### Defining Steps
 
-As was stated above, steps are the actual implementations of our behavioural tests. Writing steps is very easy, simply use the step decorator provided by Jasper. 
+As was stated above, steps are the actual implementation of our behavioural tests. Writing steps is very easy, simply use the step decorator provided by Jasper. 
 
 Following our calculator application example, lets implement some steps.
 
 We'll start with a 'given' step, which will provide us with something to test. We are going to want to test an addition feature to begin, so we will need an addition function.  
 
 ```python
+#calculator.py
+
+def add(a, b):
+    return a + b
+```
+
+```python
   from jasper import step
+  from calculator import add
   
   @step
   def an_adding_function(context):
-      context.function = lambda a, b: a + b
-      
+      context.function = add
 ```
 
-The main thing to note here is the mysterious 'context' parameter. Context is the way you can pass data between steps, it is a dictionary-like object so you can get and set attributes on it and it will be passed along to each of your steps in a scenario to use. Here we are setting a 'function' attribute on the context, so any steps in the same scenario which are ran after this step will have access to this 'function' attribute.
+The main thing to note here is the mysterious 'context' parameter. Context is the way you can pass data between steps. It is a dictionary-like object so you can get and set attributes on it and it will be passed along to each of your steps in a scenario to use. Here we are setting a 'function' attribute on the context equal to our addition function. Any steps in the same scenario which are ran after this step will have access to this 'function' attribute.
 
 Let's now write a 'when' step, where we will actually run something against the given function. We are going to want to test that adding two positive numbers results in a positive number, so lets write a step for calling our function with two positive numbers.
 
@@ -164,11 +169,13 @@ Let's finally write a 'then' step, where we will actually assert that the result
       Expect(context.result).to_be.greater_than(0)
 ```
 
-Here we are initializing an 'Expect' object with our actual data, the result of the function call in the previous step, and we are asserting that the actual data is greater than 0. It reads like english, "Expect 'the result' to be greater than 0". Further details on the 'Expect' object will be discussed later.
+Here we are initializing an 'Expect' object with our actual data, the result of the function call in the previous step, and we are asserting that the actual data is greater than 0. It reads like english, "Expect 'the result' to be greater than 0". You can read more about the Expect object [here](https://github.com/tylerlaberge/Jasper#the-expect-object).
 
-One thing you might have noticed is that all these steps use the same @step decorator. You might wonder what seperates a 'given' step from a 'when' step or a 'then' step? The only difference between these steps is the way in which you use them. When you supply a scenario with a 'given' step, it simply means that step will be ran before the 'when' step. It is up to the User to define steps that do what they are meant to do (provide something (given), run something (when), check something (then)), and to use those steps accordingly in your scenarios.
+One thing you might have noticed is that all these steps use the same @step decorator. You might wonder, what seperates a 'given' step from a 'when' step or a 'then' step? The only difference between these steps is the way in which you use them. When you supply a scenario with a 'given' step, it simply means that step will be ran before the 'when' step. It is up to the User to define steps that do what they are meant to do (provide something (given), run something (when), check something (then)), and to use those steps accordingly in your scenarios.
 
-With that said, now that we have our steps defined lets create a Scenario.
+With that said, now that we have our steps defined lets create a Scenario. 
+
+More information on steps can be found in the [Steps](https://github.com/tylerlaberge/Jasper#steps) section.
 
 ### Creating a Scenario
 
@@ -189,11 +196,13 @@ With our three scenario's we defined above we can define a scenario using Jasper
 
 Assuming our steps were defined in the same file, we can define a scenario as easy as that. 
 
-The first argument to the Scenario object is a description of the scenario. This will be displayed in the report after runner your tests.
+The first argument to the Scenario object is a description of the scenario. This will be displayed in the report after running your tests.
 
 The given, when, and then arguments refer to the steps we defined above. Notice that we are *calling* the functions. This is an important detail. The reason you call the functions is because the @step decorator actually wraps you function into a Step object that Jasper uses internally, and when you call a function decorated with @step, it returns a new instance of that Step object. You will see some nice functionality we get from this later on when we pass arguments into our steps, but for now just remember to call your step functions and don't worry about passing in a 'context' argument, Jasper will pass that in on its own.
 
 So we have a scenario, lets finally create feature that contains this scenario.
+
+More information on Scenarios can be found in the [Scenarios](https://github.com/tylerlaberge/Jasper#scenarios) section.
 
 ### Creating a Feature
 
@@ -212,10 +221,11 @@ feature = Feature(
 )
 ```
 
-You can see its fairly self explanatory. The Feature object has a description, which we said is 'Addition' since its the addition feature, and it also a list of scenarios, and we just passed our scenario we defined above into this list. An important not is that your feature object must be stored in a variable, above we called it 'feature'. You cannot just call the Feature object and be done with it. This is because Jasper's test runner searches through your test files for references to Feature objects. If you don't store your features in a variable then it will be lost and Jasper won't know they are there. Jasper does it this way so that it can collect all you features up, put them into an internal Suite object, and then run all your tests asynchronously (more on async later).
+You can see its fairly self explanatory. The Feature object has a description, which we said is 'Addition' since its the addition feature, and it also has a list of scenarios and we just passed our scenario we defined above into this list. An important thing to note is that your feature object must be stored in a variable, above we called it 'feature'. You cannot just call the Feature object and be done with it. This is because Jasper's test runner searches through your test files for references to Feature objects. If you don't store your features in a variable then it will be lost and Jasper won't know they are there. Jasper does it this way so that it can collect all you features up, put them into an internal Suite object, and then run all your tests asynchronously.
 
+#### Organizing Features
 
-One thing I'd like to do is rewrite this feature a little bit to make it a bit cleaner. Typically the way I like to write my features and scenarios is to just create my scenarios as I'm constructing a feature. So if we did that we could instead write this as follows.
+One thing I'd like to do is rewrite this feature a little bit to make it a bit cleaner. Typically the way I like to write my features and scenarios is to just create my scenarios as I'm constructing a feature.
 
 ```python
 from jasper import Feature, Scenario
@@ -260,6 +270,8 @@ However you organize your files just make sure that your feature.py file can suc
 
 Okay, we have succesfully written a feature. Lets run it.
 
+More information on Features can be found in the [Features](https://github.com/tylerlaberge/Jasper#features) section.
+
 ### Running a Feature
 
 Using the directory structure I showed above, my final feature.py, which I called 'addition_feature.py', looks like this.
@@ -297,7 +309,7 @@ Don't worry about options for now.
 
 So with that command to run the tests in the 'features' directory, simply type
 
-    jasper features
+    $ jasper features
     
 You should see the following output
 
@@ -305,25 +317,21 @@ You should see the following output
 
 That's pretty good, but maybe we want to see more detail. We can up the verbosity level using the '-v' option.
 
-    jasper -v1 features
+    $ jasper -v1 features
     
 ![alt text](https://github.com/tylerlaberge/Jasper/blob/master/img/PassingRunV1.jpg)
 
 And even more detail.
 
-    jasper -v2 features
+    $ jasper -v2 features
     
 ![alt_text](https://github.com/tylerlaberge/Jasper/blob/master/img/PassingRunV2.jpg)
 
 Verbosity level can range from 0 to 2. 
 
-Level 0 verbosity only shows you the statistics of running your features.
+More information on the jasper command-line tool can be found [here](https://github.com/tylerlaberge/Jasper#jasper-command-line-tool)
 
-Level 1 verbosity also shows the descriptions of each feature as well as the descriptions of each scenario.
-
-Level 2 verbosity also shows the names of each of your steps. (These are derived from the function names of your steps)
-
-If any errors occur they will show the full detail of the feature that failed regardless of verbosity level. For example lets say I change the 'then' step so that it throws an exception.
+If any errors occur the display will show the full detail of the feature that failed regardless of verbosity level. For example lets say I change the 'then' step so that it throws an exception.
 
 ```python
 #feature.addition.steps.then
@@ -345,17 +353,33 @@ As you can see an exception occured. Jasper highlights in red the failing featur
 
 The 'FAILURE: Expected 55 to be less than 0' description is the message of the exception that occured. It is easy to read because it comes from Jasper's 'Expect' assertion library which will throw clean exception when an assertion is thrown. You can see the exact line the exception occured is at the point in the 'then' step when we say 'Expect(context.result).to_be.less_than(0).
 
+More information about the display can be found [here](https://github.com/tylerlaberge/Jasper#the-display)
+
 **Note: If you are not seeing colored output try using the '--ansi' flag in your jasper command.**
 
     jasper --ansi features
     
-The ansi flag forces Jasper to use ansi escape sequences during coloring. By default if you are on Window's Jasper does not use ansi escape sequences. Some terminals support ansi though even if you are on windows, such as git bash or the pycharm terminal, and in those cases you would want to use the --ansi flag even if you are on windows so that you get colored output. Linux and mac will use ansi sequences no matter what.
+The ansi flag forces Jasper to use ansi escape sequences during coloring. By default if you are on Window's Jasper does not use ansi escape sequences. Some terminals however support ansi even if you are on windows, such as git bash, and in those cases you would want to use the --ansi flag even if you are on windows so that you get colored output. Linux and mac will use ansi sequences no matter what.
 
 At this point you should understand the basics of Jasper. You can define as many features as you want in as many files as you want so long as their filenames end in feature.py and you should be good to go.
 
-More detail on Features, Scenarios, and Steps as well as on additional topics like asynchronous testing, before_each/all and after_each/all steps are explained in detail below.
+More detail on Features, Scenarios, and Steps as well as on additional topics like asynchronous testing are explained in additional sections of this README.
 
 ## Steps
+
+Steps are one of the most important part of our behavioural tests. They define the actual implementation of our tests and are used by scenarios and feaures to define expected behaviours.
+
+### Creating a simple step
+
+To create a step simpy use jaspers @step decorator.
+
+```python
+from jasper import step
+
+@step
+def some_example_step(context):
+    pass
+```
 
 ### Passing data between steps
 
@@ -378,11 +402,11 @@ Every feature gets its own context, and every scenario gets its own copy of the 
 
 ![alt text](https://github.com/tylerlaberge/Jasper/blob/master/img/ContextDiagram.jpg)
 
-The order in which steps are called, and thus the order in which the context is passed around, is described further in a later section. 
+The order in which steps are called, and thus the order in which the context is passed around, is described further in the [Test Runner](https://github.com/tylerlaberge/Jasper#how-your-features-a-ran-asynchronously) section. 
 
 ### Passing arguments to your steps
 
-Add additional arguments after 'context' to your step function.
+To pass arguments to you steps, simply add additional arguments after 'context' to your step function.
 
 ```python
 from jasper import step
@@ -454,16 +478,38 @@ feature = Feature(
 )
 ```
 
-The step you defined allows you test an async function easily and will also safely run asynchronously along side your other tests within Jasper. More information on the way Jasper runs your tests asynchronously comes later.
+The step you defined allows you to test an async function easily and will also safely run asynchronously along side your other tests within Jasper. 
+
+More information on the way Jasper runs your tests asynchronously can be found [here](https://github.com/tylerlaberge/Jasper#how-your-features-a-ran-asynchronously).
 
 ## Scenarios
 
+Scenarios are the aspects of our features that we are testing. They are made up of steps which are passed into the various hooks of a Scenario.
+
+### Creating a simple Scenario
+
+To create a Scenario use jaspers Scenario object.
+
+```python
+from jasper import Scenario
+from example_steps import *
+
+scenario = Scenario(
+    'Example Scenario',
+    given=some_example_function(),
+    when=we_run_it(),
+    then=something_should_happen()
+)
+```
+
 ### Hooks
 
-Any step you define using the step decorator can be used in any of the following hooks. The hook that you assign to a step decides when a step will get run during a scenario.
+Hooks are used to define the order in which your steps are run.
+
+Any step you define using the step decorator can be used in any of the following hooks.
 
 ####*given:* steps that should supply a scenario with something to test with.
-####*when:* steps that should run whatever it is we are testing.
+####*when:* steps that should run whatever it is we are testing, ran after the 'given' step.
 ####*then:* steps that should make assertions upon the results of the 'when' step.
 
 ####*before_all:* steps that run exactly once before every other step in the scenario.
@@ -474,23 +520,18 @@ Any step you define using the step decorator can be used in any of the following
 In actual code you can access these hooks with keyword arguments.
 
 ```python
-from jasper import Feature, Scenario
-from features.example.all_example_steps import *
+from jasper import Scenario
+from example_steps import *
 
-feature = Feature(
-    'Example',
-    scenarios=[
-        Scenario(
-            'All hooks',
-            before_all=do_something_before_all_other_steps(),
-            before_each=do_something_before_each_step(),
-            after_each=do_something_after_each_step(),
-            after_all=do_something_after_all_other_steps(),
-            given=something_to_test(),
-            when=we_test_it(), 
-            then=something_should_happen()
-        )
-    ]
+scenario = Scenario(
+    'All hooks',
+    before_all=do_something_before_all_other_steps(),
+    before_each=do_something_before_each_step(),
+    after_each=do_something_after_each_step(),
+    after_all=do_something_after_all_other_steps(),
+    given=something_to_test(),
+    when=we_test_it(), 
+    then=something_should_happen()
 )
 ```
 
@@ -504,29 +545,47 @@ If you want to pass multiple steps into a single hook for a scenario, such as mu
 
 ```python
 from jasper import Feature, Scenario
-from features.example.all_example_steps import *
+from example_steps import *
 
-feature = Feature(
-    'Example',
-    scenarios=[
-        Scenario(
-            'Multiple steps',
-            given=[something_to_test(), something_else_to_test()],
-            when=we_test_it(), 
-            then=[something_should_happen(), something_else_should_happen()]
-        )
-    ]
+scenario = Scenario(
+    'Multiple steps',
+    given=[something_to_test(), something_else_to_test()],
+    when=we_test_it(), 
+    then=[something_should_happen(), something_else_should_happen()]
 )
 ```
 
 You can pass in a list of steps into any of the hooks. 
 
-When you run a feature with multiple steps for a single hook the the additional steps will be prepend by an 'And' within the report.
+When you run a feature with multiple steps for a single hook the the additional steps will be prepended by an 'And' within the report.
 
 ![alt text](https://github.com/tylerlaberge/Jasper/blob/master/img/MultipleStepsScenario.jpg)
 
 
 ## Features
+
+Features describe the parts of an application we are testing. They are made up of scenarios which test different parts of the same feature.
+
+### Creating a simple Feature
+
+To create a Feature use jasper's Feature object.
+
+```python
+from jasper import Feature, Scenario
+from example_steps import *
+
+feature = Feature(
+    'Example Feature'
+    scenarios = [
+        Scenario(
+            'Example Scenario',
+            given=something_to_test(),
+            when=we_test_it(), 
+            then=something_should_happen()
+        )
+    ]
+)
+```
 
 ### Hooks
 
@@ -541,7 +600,7 @@ Again just like with scenarios, to access these hooks just use keyword arguments
 
 ```python
 from jasper import Feature, Scenario
-from features.example.all_example_steps import *
+from example_steps import *
 
 feature = Feature(
     'Example',
@@ -561,7 +620,7 @@ Most features will have more than one scenario which tests it's behaviour. Simpl
 
 ```python
 from jasper import Feature, Scenario
-from features.example.all_example_steps import *
+from example_steps import *
 
 feature = Feature(
     'Example',
@@ -630,7 +689,7 @@ Expect(True).not_.to_be(False) # not (True == False)
 
 ## The Display
 
-While your tests are running a progress bar will show the test progres. Once Jasper finishes your tests a color coded report will display the results and the elapsed time will be shown to the right of the progress bar. 
+While your tests are running a progress bar and elapsed time will show the progress of the tests. Once Jasper finishes your tests a color coded report will display the results.
 
 The different colors that are used in the display are:
 
@@ -676,11 +735,17 @@ The jasper command line tool is what you will use to run your tests. The signatu
 
 Where TEST_DIRECTORY is the direcotry containing the feature.py files you wish to run.
 
-The --ansi flag is for coloring purposes if you are on a window machine using a terminal that actually supports ansi escape sequences.
+The --ansi flag is for coloring purposes if you are on a windows machine using a terminal that actually supports ansi escape sequences.
+
+Level 0 verbosity only shows you the statistics of running your features.
+
+Level 1 verbosity also shows the descriptions of each feature as well as the descriptions of each scenario.
+
+Level 2 verbosity also shows the names of each of your steps. (These are derived from the function names of your steps)
 
 #### Example Usage 
 
-With a directory called 'features' containg your feature.py files, if you wish to run the features with verbosity level 2 type the following command in the same directory that the 'features' directory is lcoated in.
+With a directory called 'features' containg your feature.py files, if you wish to run the features with verbosity level 2 type the following command in the same directory that the 'features' directory is located in.
 
     $ jasper -v2 features
     
@@ -688,13 +753,13 @@ And you should see the output of your tests running.
 
 ### How your Features a ran asynchronously.
  
- In Jasper everything is run asynchronously. With that said there are certain caveats to that to ensure saftey, for example we would never want our 'then' steps running before our 'given' steps in a given scenario. Here is a (somewhat crude) diagram of how your tests are run. 
+ In Jasper everything is run asynchronously. With that said there are certain caveats to that to ensure saftey, for example we would never want our 'then' steps running before our 'given' steps in some scenario. Here is a (somewhat crude) diagram of how your tests are run. 
  
  ![alt text](https://github.com/tylerlaberge/Jasper/blob/master/img/RunOrderDiagram.jpg)
  
  The arrows show the order that steps/scenarios are run in, they do not represent a caller -> callee relationship. 
  
- The blue bars represent something that is being run asynchronously. If multiple blocks are covered by the same blue bar, then they can be run next to each using async, meaning theres either can finish before the other, etc. 
+ The blue bars represent something that is being run asynchronously. If multiple blocks are covered by the same blue bar, then they can be run next to each using async, meaning either can finish before the other, etc. 
  
  The green bars are essentially just groups of asynchronous functions. Blocks covered by the same green bar will run in order, but also asynchronously. So before each steps run asynchronously, but they will awlays run before a scenario. Not after, and not during.
 
@@ -704,7 +769,7 @@ All features run asynchronouusly next to each other.
 
 All scenarios run asynchronously next to each other.
 
-All steps are run in order, but are still awaitable. This way other scenarios can run while a step of another scenario is awaiting.
+All steps are run in order, but are still awaitable if you defined an async step. This way other scenarios can run while a step of another scenario is awaiting.
 
 Steps are guarenteed to always run in this order within a feature.
 
@@ -734,7 +799,7 @@ To take full advantage of the way Jasper runs your tests, you should try to writ
 
 To show how much of an effect asynchronous steps can have on your tests, lets do a comparison.
 
-First we'll write normal, non-asynchonous steps.
+First we'll write normal, non-asynchronous steps.
 
 ```python
 from jasper import step
@@ -760,7 +825,7 @@ and our features
 
 ```python
 from jasper import Feature, Scenario
-from features.example.all_example_steps import *
+from example_steps import *
 
 slow_feature_one = Feature(
     'Slow Feature One',

@@ -72,6 +72,7 @@ Jasper's main points that seperate it from other BDD frameworks suchs as lettuce
 
 ## Contents
 
+- [Installation](https://github.com/tylerlaberge/Jasper#installation)
 - [Getting Started](https://github.com/tylerlaberge/Jasper#getting-started)
   - [Brief Overview](https://github.com/tylerlaberge/Jasper#breif-overview) 
   - [Defining Steps](https://github.com/tylerlaberge/Jasper#defining-steps)
@@ -100,12 +101,13 @@ Jasper's main points that seperate it from other BDD frameworks suchs as lettuce
   - [jasper command-line tool](https://github.com/tylerlaberge/Jasper#jasper-command-line-tool)
   - [How your features are ran asynchronously](https://github.com/tylerlaberge/Jasper#how-your-features-a-ran-asynchronously)
 - [Async Demonstration](https://github.com/tylerlaberge/Jasper#async-demonstration)
+- [Contributing](https://github.com/tylerlaberge/Jasper#contributing)
   
 ## Installation
 
-Supports Python 3.6+
-
     pip install jasper
+    
+Supports Python 3.6+
 
 ## Getting Started
 

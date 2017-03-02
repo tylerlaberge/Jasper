@@ -2,7 +2,51 @@
 
 An async friendly behavior-driven development framework.
 
-![alt text](https://github.com/tylerlaberge/Jasper/blob/master/img/PassingExample.jpg)
+```python
+from jasper import step, Expect
+import asyncio
+
+
+@step
+def an_async_function(context):
+    context.function = asyncio.sleep
+    
+    
+@step
+async def we_call_the_function(context):
+    try:
+        await context.function(1)
+    except Exception as e:
+        context.exception = e
+    else:
+        context.exception = None
+    
+@step
+def nothing_should_go_wrong(context):
+    Expect(context.exception).to_be(None)
+```
+
+```python
+from jasper import Feature, Scenario
+from example_steps import *
+
+
+feature = Feature(
+    'Example Feature',
+    scenarios=[
+        Scenario(
+            'Example Scenario',
+            given=an_async_function(),
+            when=we_call_the_function(),
+            then=nothing_should_go_wrong()
+        )
+    ]
+)
+```
+
+![alt text](https://github.com/tylerlaberge/Jasper/blob/master/img/ExampleFeature.jpg)
+
+
 
 ## Motivation
 

@@ -78,6 +78,28 @@ Jasper's main points that seperate it from other BDD frameworks suchs as lettuce
   - [Creating a Scenario](https://github.com/tylerlaberge/Jasper#creating-a-scenario)
   - [Creating a Feature](https://github.com/tylerlaberge/Jasper#creating-a-feature)
   - [Running a Feature](https://github.com/tylerlaberge/Jasper#running-a-feature)
+- [Steps](https://github.com/tylerlaberge/Jasper#steps)
+  - [Passing data between steps](https://github.com/tylerlaberge/Jasper#passing-data-between-steps)
+  - [Passing arguments to your steps](https://github.com/tylerlaberge/Jasper#passing-arguments-to-your-steps)
+  - [Defining asynchronous steps](https://github.com/tylerlaberge/Jasper#defining-asynchronous-steps)
+- [Scenarios](https://github.com/tylerlaberge/Jasper#scenarios)
+  - [Hooks](https://github.com/tylerlaberge/Jasper#hooks)
+  - [Defining multiple steps for the same hooks](https://github.com/tylerlaberge/Jasper#defining-multiple-steps-for-the-same-hooks)
+- [Features](https://github.com/tylerlaberge/Jasper#features)
+  - [Hooks](https://github.com/tylerlaberge/Jasper#hooks-1)
+  - [Multiple Scenarios](https://github.com/tylerlaberge/Jasper#multiple-scenarios)
+- [The Expect Object](https://github.com/tylerlaberge/Jasper#the-expect-object)
+  - [Identity Comparison](https://github.com/tylerlaberge/Jasper#identity-comparison)
+  - [Equality Comparison](https://github.com/tylerlaberge/Jasper#equality-comparison)
+  - [Less than Comparison](https://github.com/tylerlaberge/Jasper#less-than-comparison)
+  - [Greater than Comparison](https://github.com/tylerlaberge/Jasper#greater-than-comparison)
+  - [Negation Operator](https://github.com/tylerlaberge/Jasper#negation-operator)
+- [The Display](https://github.com/tylerlaberge/Jasper#the-display)
+  - [Example Display](https://github.com/tylerlaberge/Jasper#example-display)
+- [The Test Runner](https://github.com/tylerlaberge/Jasper#the-test-runner)
+  - [jasper command-line tool](https://github.com/tylerlaberge/Jasper#jasper-command-line-tool)
+  
+  
   
 ## Getting Started
 
@@ -656,7 +678,7 @@ With a directory called 'features' containg your feature.py files, if you wish t
     
 And you should see the output of your tests running.
 
- ### How your features are ran asynchronously
+### How your Features a ran asynchronously.
  
  In Jasper everything is run asynchronously. With that said there are certain caveats to that to ensure saftey, for example we would never want our 'then' steps running before our 'given' steps in a given scenario. Here is a (somewhat crude) diagram of how your tests are run. 
  

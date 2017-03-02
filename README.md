@@ -1,6 +1,8 @@
 # Jasper
 
-An async friendly behavior-driven development framework.
+An asynchronous behavior-driven development framework.
+
+Simply define some steps
 
 ```python
 from jasper import step, Expect
@@ -13,7 +15,7 @@ def an_async_function(context):
     
     
 @step
-async def we_call_the_function(context):
+async def we_call_the_function(context):  # Can easily test async calls and run your steps asynchronously
     try:
         await context.function(1)
     except Exception as e:
@@ -25,6 +27,8 @@ async def we_call_the_function(context):
 def nothing_should_go_wrong(context):
     Expect(context.exception).to_be(None)
 ```
+
+Create Features and Scenarios
 
 ```python
 from jasper import Feature, Scenario
@@ -43,6 +47,8 @@ feature = Feature(
     ]
 )
 ```
+
+And run your features and see the results
 
 ![alt text](https://github.com/tylerlaberge/Jasper/blob/master/img/ExampleFeature.jpg)
 

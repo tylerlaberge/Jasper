@@ -174,7 +174,7 @@ Let's finally write a 'then' step, where we will actually assert that the result
   
   @step
   def the_result_should_be_positive(context):
-      Expect(context.result).to_be.greater_than(0)
+      Expect(context.result).to_be_greater_than(0)
 ```
 
 Here we are initializing an 'Expect' object with our actual data, the result of the function call in the previous step, and we are asserting that the actual data is greater than 0. It reads like english, "Expect 'the result' to be greater than 0". You can read more about the Expect object [here](https://github.com/tylerlaberge/Jasper#the-expect-object).
@@ -214,7 +214,7 @@ More information on Scenarios can be found in the [Scenarios](https://github.com
 
 ### Creating a Feature
 
-Features are the high level peices of our application that we are testing. They are made up of scenarios which test the behaviours of a feature.
+Features are the high level peices of our application that we are testing. They are made up of scenarios which test the behaviors of a feature.
 
 With our scenario we defined above, we can create a feature for our applications addition functionality like so.
 
@@ -337,6 +337,8 @@ And even more detail.
 
 Verbosity level can range from 0 to 2. 
 
+***NOTE:*** You will probably need to use a setup.py file or something to install all your modules onto you PYTHONPATH, otherwise jasper won't be able to import your modules in your tests. If you see a ModuleNotFoundError when you run your jasper tests than it means your modules are not properly installed.
+
 More information on the jasper command-line tool can be found [here](https://github.com/tylerlaberge/Jasper#jasper-command-line-tool)
 
 If any errors occur the display will show the full detail of the feature that failed regardless of verbosity level. For example lets say I change the 'then' step so that it throws an exception.
@@ -348,7 +350,7 @@ from jasper import step, Expect
   
 @step
 def the_result_should_be_positive(context):
-    Expect(context.result).to_be.less_than(0) # So we can see an example exception we use 'less_than', this should fail.
+    Expect(context.result).to_be_less_than(0) # So we can see an example exception we use 'less_than', this should fail.
 ```
 
 Lets save everything and run again.
@@ -375,7 +377,7 @@ More detail on Features, Scenarios, and Steps as well as on additional topics li
 
 ## Steps
 
-Steps are one of the most important part of our behavioural tests. They define the actual implementation of our tests and are used by scenarios and feaures to define expected behaviours.
+Steps are one of the most important part of our behavioral tests. They define the actual implementation of our tests and are used by scenarios and features to define expected behaviours.
 
 ### Creating a simple step
 

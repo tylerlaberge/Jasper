@@ -106,6 +106,7 @@ Jasper's main points that seperate it from other BDD frameworks suchs as [lettuc
   - [jasper command-line tool](https://github.com/tylerlaberge/Jasper#jasper-command-line-tool)
   - [How your features are ran asynchronously](https://github.com/tylerlaberge/Jasper#how-your-features-a-ran-asynchronously)
 - [Async Demonstration](https://github.com/tylerlaberge/Jasper#async-demonstration)
+- [API Documentation](https://github.com/tylerlaberge/Jasper#api-documentation)
 - [Contributing](https://github.com/tylerlaberge/Jasper#contributing)
   
 ## Installation
@@ -910,6 +911,10 @@ Now that we are using async, we can expect all of our scenarios to run along sid
 ![alt text](https://github.com/tylerlaberge/Jasper/blob/master/img/AsyncDemo.jpg)
 
 And as suspected, it took 2 seconds. Async is awesome!
+
+## API Documentation
+
+API documentation can be found [here](https://tylerlaberge.github.io/Jasper/api/build/html/index.html)
 
 ## Contributing
 

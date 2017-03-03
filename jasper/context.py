@@ -1,3 +1,6 @@
+from copy import deepcopy
+
+
 class Context(object):
     """
     A dictionary-like object where attributes can be accessed using the '.' operator.
@@ -40,11 +43,10 @@ class Context(object):
         """
         return f"{self.__dict__['_items']}"
 
-    # TODO: Make this a deepcopy
     def copy(self):
         """
-        Get a copy of this Context.
+        Get a deep copy of this Context.
 
         :return: A new Context object which is a copy of this Context.
         """
-        return Context(**self.__dict__['_items'])
+        return Context(**deepcopy(self.__dict__['_items']))

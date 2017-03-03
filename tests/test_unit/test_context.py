@@ -45,9 +45,10 @@ class ContextTestCase(TestCase):
 
     def test_copy(self):
         context = Context()
-        context.__dict__['_items'] = {'foo': 'bar', 'foobar': 'barfoo'}
+        context.__dict__['_items'] = {'foo': 'bar', 'foobar': 'barfoo', 'some_dict': {'some_foo': 'some_bar'}}
 
         context_copy = context.copy()
 
         self.assertIsNot(context, context_copy)
         self.assertEqual(context.__dict__, context_copy.__dict__)
+        self.assertIsNot(context.__dict__['_items']['some_dict'], context_copy.__dict__['_items']['some_dict'])

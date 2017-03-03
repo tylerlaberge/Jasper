@@ -1,0 +1,787 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>jasper package &#8212; Jasper 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="jasper-package">
+<h1>jasper package<a class="headerlink" href="#jasper-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-jasper.context">
+<span id="jasper-context-module"></span><h2>jasper.context module<a class="headerlink" href="#module-jasper.context" title="Permalink to this headline">¶</a></h2>
+<p>The context module.</p>
+<dl class="class">
+<dt id="jasper.context.Context">
+<em class="property">class </em><code class="descclassname">jasper.context.</code><code class="descname">Context</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.context.Context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>A dictionary-like object where attributes can be accessed using the &#8216;.&#8217; operator.</p>
+<p>Initialize a new Context object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>kwargs</strong> &#8211; Keys and values to store into this Context on creation.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="jasper.context.Context.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jasper.context.Context.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a deep copy of this Context.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A new Context object which is a copy of this Context.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-jasper.display">
+<span id="jasper-display-module"></span><h2>jasper.display module<a class="headerlink" href="#module-jasper.display" title="Permalink to this headline">¶</a></h2>
+<p>The display module.</p>
+<dl class="class">
+<dt id="jasper.display.Display">
+<em class="property">class </em><code class="descclassname">jasper.display.</code><code class="descname">Display</code><span class="sig-paren">(</span><em>force_ansi=True</em>, <em>verbosity_level=0</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.display.Display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The class responsible for displaying the results of a suites, features, scenarios, and steps.</p>
+<p>Initialize a new Display object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>force_ansi</strong> &#8211; Flag for whether or not to force the display to use ansi escape sequences. default is True.</li>
+<li><strong>verbosity_level</strong> &#8211; The verbosity level for the display to use. default is 0, maxes out at 2.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="jasper.display.Display.cyan">
+<code class="descname">cyan</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.display.Display.cyan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color some text cyan.</p>
+<p>If the displays color is disabled the text will not be colorized.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> &#8211; The text to color.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The colored text</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="jasper.display.Display.display">
+<code class="descname">display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jasper.display.Display.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the prepared data to the screen.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="jasper.display.Display.grey">
+<code class="descname">grey</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.display.Display.grey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color some text grey.</p>
+<p>If the displays color is disabled the text will not be colorized.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> &#8211; The text to color.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The colored text</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="jasper.display.Display.indent">
+<em class="property">static </em><code class="descname">indent</code><span class="sig-paren">(</span><em>text</em>, <em>amount</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.display.Display.indent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indent some text by the given amount.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>text</strong> &#8211; The text to indent.</li>
+<li><strong>amount</strong> &#8211; The amount of spaces to indent the text with.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The indented text.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="jasper.display.Display.prepare_border">
+<code class="descname">prepare_border</code><span class="sig-paren">(</span><em>color</em>, <em>length</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.display.Display.prepare_border" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare a border to be displayed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>color</strong> &#8211; The color to give the border.</li>
+<li><strong>length</strong> &#8211; The length of the border.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="jasper.display.Display.prepare_exception">
+<code class="descname">prepare_exception</code><span class="sig-paren">(</span><em>exception</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.display.Display.prepare_exception" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare an exception to be displayed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>exception</strong> &#8211; The exception to prepare.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="jasper.display.Display.prepare_feature">
+<code class="descname">prepare_feature</code><span class="sig-paren">(</span><em>feature</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.display.Display.prepare_feature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare a Feature object to be displayed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>feature</strong> &#8211; The Feature to prepare.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="jasper.display.Display.prepare_scenario">
+<code class="descname">prepare_scenario</code><span class="sig-paren">(</span><em>scenario</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.display.Display.prepare_scenario" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare a Scenario object to be displayed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scenario</strong> &#8211; The Scenario to prepare.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="jasper.display.Display.prepare_statistics">
+<code class="descname">prepare_statistics</code><span class="sig-paren">(</span><em>suite</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.display.Display.prepare_statistics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare the statistics of a Suite object to be displayed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>suite</strong> &#8211; The Suite object to prepare the statistics for.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="jasper.display.Display.prepare_step">
+<code class="descname">prepare_step</code><span class="sig-paren">(</span><em>step</em>, <em>step_name</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.display.Display.prepare_step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare a Step object to be displayed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>step</strong> &#8211; The Step to prepare.</li>
+<li><strong>step_name</strong> &#8211; A name to represent the step with.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="jasper.display.Display.prepare_suite">
+<code class="descname">prepare_suite</code><span class="sig-paren">(</span><em>suite</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.display.Display.prepare_suite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare a Suite object to be displayed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>suite</strong> &#8211; The Suite to prepare.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="jasper.display.Display.red">
+<code class="descname">red</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.display.Display.red" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color some text red.</p>
+<p>If the displays color is disabled the text will not be colorized.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> &#8211; The text to color.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The colored text</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="jasper.display.Display.yellow">
+<code class="descname">yellow</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.display.Display.yellow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color some text yellow.</p>
+<p>If the displays color is disabled the text will not be colorized.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> &#8211; The text to color.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The colored text</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-jasper.entrypoints">
+<span id="jasper-entrypoints-module"></span><h2>jasper.entrypoints module<a class="headerlink" href="#module-jasper.entrypoints" title="Permalink to this headline">¶</a></h2>
+<p>The entrypoints module.</p>
+</div>
+<div class="section" id="module-jasper.exceptions">
+<span id="jasper-exceptions-module"></span><h2>jasper.exceptions module<a class="headerlink" href="#module-jasper.exceptions" title="Permalink to this headline">¶</a></h2>
+<p>The exceptions module.</p>
+<dl class="exception">
+<dt id="jasper.exceptions.ExpectationException">
+<em class="property">exception </em><code class="descclassname">jasper.exceptions.</code><code class="descname">ExpectationException</code><span class="sig-paren">(</span><em>actual</em>, <em>expected</em>, <em>operator</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.exceptions.ExpectationException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">Exception</span></code></p>
+<p>An Exception that is thrown when an expectation fails in the Expect class.</p>
+<p>Initialize this Expect object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>actual</strong> &#8211; The actual data used during the expectation.</li>
+<li><strong>expected</strong> &#8211; The expected data used during the expectation.</li>
+<li><strong>operator</strong> &#8211; The operator used during the expectation.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="exception">
+<dt id="jasper.exceptions.ValidationException">
+<em class="property">exception </em><code class="descclassname">jasper.exceptions.</code><code class="descname">ValidationException</code><a class="headerlink" href="#jasper.exceptions.ValidationException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">Exception</span></code></p>
+<p>An Exception that is thrown when an object fails validation during construction.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-jasper.expect">
+<span id="jasper-expect-module"></span><h2>jasper.expect module<a class="headerlink" href="#module-jasper.expect" title="Permalink to this headline">¶</a></h2>
+<p>The expect module.</p>
+<dl class="class">
+<dt id="jasper.expect.Expect">
+<em class="property">class </em><code class="descclassname">jasper.expect.</code><code class="descname">Expect</code><span class="sig-paren">(</span><em>actual_data</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.expect.Expect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>A class for making assertions on data.</p>
+<p>Initialize a new Expect object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>actual_data</strong> &#8211; The actual data to make assertions against.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="jasper.expect.Expect.greater_than">
+<code class="descname">greater_than</code><span class="sig-paren">(</span><em>expected_data</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.expect.Expect.greater_than" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make an assertion that this objects actual data is greater than the expected data.</p>
+<p>The to_be operator must be set in order to use this assertion.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>expected_data</strong> &#8211; The data to expect the actual data to be less than.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">This Expect object.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#jasper.exceptions.ExpectationException" title="jasper.exceptions.ExpectationException"><strong>ExpectationException</strong></a> &#8211; If the expectation fails.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="jasper.expect.Expect.less_than">
+<code class="descname">less_than</code><span class="sig-paren">(</span><em>expected_data</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.expect.Expect.less_than" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make an assertion that this objects actual data is less than the expected data.</p>
+<p>The to_be operator must be set in order to use this assertion.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>expected_data</strong> &#8211; The data to expect the actual data to be less than.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">This Expect object.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#jasper.exceptions.ExpectationException" title="jasper.exceptions.ExpectationException"><strong>ExpectationException</strong></a> &#8211; If the expectation fails.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="jasper.expect.Expect.not_">
+<code class="descname">not_</code><a class="headerlink" href="#jasper.expect.Expect.not_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Negate any operator that is set.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">This Expect object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="jasper.expect.Expect.to_be">
+<code class="descname">to_be</code><a class="headerlink" href="#jasper.expect.Expect.to_be" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the operator of this Expect object to the identity operator.</p>
+<p>Can also be used to chain into the less_than or greater_than assertions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">This Expect object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="jasper.expect.Expect.to_equal">
+<code class="descname">to_equal</code><a class="headerlink" href="#jasper.expect.Expect.to_equal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the operator of this Expect object to the equality operator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">This Expect object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-jasper.feature">
+<span id="jasper-feature-module"></span><h2>jasper.feature module<a class="headerlink" href="#module-jasper.feature" title="Permalink to this headline">¶</a></h2>
+<p>The feature module.</p>
+<dl class="class">
+<dt id="jasper.feature.Feature">
+<em class="property">class </em><code class="descclassname">jasper.feature.</code><code class="descname">Feature</code><span class="sig-paren">(</span><em>description</em>, <em>scenarios</em>, <em>before_each=[]</em>, <em>before_all=[]</em>, <em>after_each=[]</em>, <em>after_all=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.feature.Feature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>A class used for testing the high level features of an application.</p>
+<p>Initialize a new Feature object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>description</strong> &#8211; A description of this Feature.</li>
+<li><strong>scenarios</strong> &#8211; A list of scenarios for testing various parts of the feature this object represents.</li>
+<li><strong>before_each</strong> &#8211; Steps that will run before each of the scenarios.</li>
+<li><strong>before_all</strong> &#8211; Steps that will run before all other steps.</li>
+<li><strong>after_each</strong> &#8211; Steps that will run after each of the scenarios.</li>
+<li><strong>after_all</strong> &#8211; Steps that will run after all other steps.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="jasper.feature.Feature.num_scenarios_failed">
+<code class="descname">num_scenarios_failed</code><a class="headerlink" href="#jasper.feature.Feature.num_scenarios_failed" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of scenarios that failed after running this feature.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="jasper.feature.Feature.num_scenarios_passed">
+<code class="descname">num_scenarios_passed</code><a class="headerlink" href="#jasper.feature.Feature.num_scenarios_passed" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of scenarios that passed after running this feature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="jasper.feature.Feature.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jasper.feature.Feature.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run all the steps and scenarios of this Feature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-jasper.runner">
+<span id="jasper-runner-module"></span><h2>jasper.runner module<a class="headerlink" href="#module-jasper.runner" title="Permalink to this headline">¶</a></h2>
+<p>The runner module.</p>
+<dl class="class">
+<dt id="jasper.runner.Runner">
+<em class="property">class </em><code class="descclassname">jasper.runner.</code><code class="descname">Runner</code><span class="sig-paren">(</span><em>test_directory</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.runner.Runner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The class responsible for finding, building, and running features.</p>
+<p>Initialize a new Runner object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>test_directory</strong> &#8211; The directory to search for feature files in.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="jasper.runner.Runner.build_suite">
+<code class="descname">build_suite</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jasper.runner.Runner.build_suite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a Suite object out of the Features contained within the found feature files.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="jasper.runner.Runner.discover">
+<code class="descname">discover</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jasper.runner.Runner.discover" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find any feature files within the given test directory.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="jasper.runner.Runner.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jasper.runner.Runner.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Discover the feature files, build the suite, and run the tests.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The Suite that has been built and run.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-jasper.scenario">
+<span id="jasper-scenario-module"></span><h2>jasper.scenario module<a class="headerlink" href="#module-jasper.scenario" title="Permalink to this headline">¶</a></h2>
+<p>The scenario module.</p>
+<dl class="class">
+<dt id="jasper.scenario.Scenario">
+<em class="property">class </em><code class="descclassname">jasper.scenario.</code><code class="descname">Scenario</code><span class="sig-paren">(</span><em>description</em>, <em>given</em>, <em>when</em>, <em>then</em>, <em>before_each=[]</em>, <em>before_all=[]</em>, <em>after_each=[]</em>, <em>after_all=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.scenario.Scenario" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>A class used for testing different parts of an applications features.</p>
+<p>Initialize a new Scenario object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>description</strong> &#8211; A description of this scenario.</li>
+<li><strong>given</strong> &#8211; Steps for supplying this scenario with something to test with.</li>
+<li><strong>when</strong> &#8211; Steps that should run whatever it is this scenario is testing.</li>
+<li><strong>then</strong> &#8211; Steps that should make assertions against the results of the test.</li>
+<li><strong>before_each</strong> &#8211; Steps that will run before each of the given, when, and then steps.</li>
+<li><strong>before_all</strong> &#8211; Steps that will run before all other steps.</li>
+<li><strong>after_each</strong> &#8211; Steps that will run after each of the given, when, and then steps.</li>
+<li><strong>after_all</strong> &#8211; Steps that will run after all other steps.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="jasper.scenario.Scenario.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.scenario.Scenario.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run all the steps of this Scenario.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>context</strong> &#8211; A Context object to pass into each step of this Scenario.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-jasper.steps">
+<span id="jasper-steps-module"></span><h2>jasper.steps module<a class="headerlink" href="#module-jasper.steps" title="Permalink to this headline">¶</a></h2>
+<p>The steps module.</p>
+<dl class="class">
+<dt id="jasper.steps.Step">
+<em class="property">class </em><code class="descclassname">jasper.steps.</code><code class="descname">Step</code><span class="sig-paren">(</span><em>function</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.steps.Step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The Step class is used as a wrapper around functions for testing behaviours.</p>
+<p>Initialize a new Step object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>function</strong> &#8211; The function this step will call when this step is run.</li>
+<li><strong>kwargs</strong> &#8211; Kwargs to call the given function with.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="jasper.steps.Step.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.steps.Step.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run this step and record the results.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>context</strong> &#8211; A context object too pass into this steps function.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="jasper.steps.step">
+<code class="descclassname">jasper.steps.</code><code class="descname">step</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.steps.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>A decorator for wrapping a function into a Step object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func</strong> &#8211; The function to create a step out of.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A function which when called will return a new instance of a Step object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-jasper.suite">
+<span id="jasper-suite-module"></span><h2>jasper.suite module<a class="headerlink" href="#module-jasper.suite" title="Permalink to this headline">¶</a></h2>
+<p>The suite module.</p>
+<dl class="class">
+<dt id="jasper.suite.Suite">
+<em class="property">class </em><code class="descclassname">jasper.suite.</code><code class="descname">Suite</code><a class="headerlink" href="#jasper.suite.Suite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>An internal class for running a collection of Feature of objects and collecting results.</p>
+<p>Initialize a new Suite object.</p>
+<dl class="method">
+<dt id="jasper.suite.Suite.add_feature">
+<code class="descname">add_feature</code><span class="sig-paren">(</span><em>feature</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.suite.Suite.add_feature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a feature to this suite.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>feature</strong> &#8211; The Feature object to add to this suite.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="jasper.suite.Suite.num_features_failed">
+<code class="descname">num_features_failed</code><a class="headerlink" href="#jasper.suite.Suite.num_features_failed" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of features that failed after running this suite.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="jasper.suite.Suite.num_features_passed">
+<code class="descname">num_features_passed</code><a class="headerlink" href="#jasper.suite.Suite.num_features_passed" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of features that passed after running this suite.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="jasper.suite.Suite.num_scenarios_failed">
+<code class="descname">num_scenarios_failed</code><a class="headerlink" href="#jasper.suite.Suite.num_scenarios_failed" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of scenarios that failed after running this suite.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="jasper.suite.Suite.num_scenarios_passed">
+<code class="descname">num_scenarios_passed</code><a class="headerlink" href="#jasper.suite.Suite.num_scenarios_passed" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of scenarios that passed running this suite.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="jasper.suite.Suite.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jasper.suite.Suite.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run all the features of this suite.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-jasper.utility">
+<span id="jasper-utility-module"></span><h2>jasper.utility module<a class="headerlink" href="#module-jasper.utility" title="Permalink to this headline">¶</a></h2>
+<p>The utility module.</p>
+<dl class="function">
+<dt id="jasper.utility.extract_traceback">
+<code class="descclassname">jasper.utility.</code><code class="descname">extract_traceback</code><span class="sig-paren">(</span><em>exception</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.utility.extract_traceback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility function for extracting the traceback from an exception.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>exception</strong> &#8211; The exception to extract the traceback from.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The extracted traceback.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-jasper">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-jasper" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">jasper package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-jasper.context">jasper.context module</a></li>
+<li><a class="reference internal" href="#module-jasper.display">jasper.display module</a></li>
+<li><a class="reference internal" href="#module-jasper.entrypoints">jasper.entrypoints module</a></li>
+<li><a class="reference internal" href="#module-jasper.exceptions">jasper.exceptions module</a></li>
+<li><a class="reference internal" href="#module-jasper.expect">jasper.expect module</a></li>
+<li><a class="reference internal" href="#module-jasper.feature">jasper.feature module</a></li>
+<li><a class="reference internal" href="#module-jasper.runner">jasper.runner module</a></li>
+<li><a class="reference internal" href="#module-jasper.scenario">jasper.scenario module</a></li>
+<li><a class="reference internal" href="#module-jasper.steps">jasper.steps module</a></li>
+<li><a class="reference internal" href="#module-jasper.suite">jasper.suite module</a></li>
+<li><a class="reference internal" href="#module-jasper.utility">jasper.utility module</a></li>
+<li><a class="reference internal" href="#module-jasper">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/jasper.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Tyler LaBerge.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/jasper.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

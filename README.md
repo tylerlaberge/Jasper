@@ -125,9 +125,9 @@ Features are exactly what they sound like, the features of your applications tha
 
 Features are composed of scenarios, which are essentially the cases that you are testing on a particular feature. An addition feature might have scenario's for adding two positive numbers or two negative numbers. Likewise for a multiplication feature. Maybe for a division feature you might also have a scenario for the case of dividing by 0.
 
-Lastly, Scenarios are composed of Steps, which are the parts that actually implement the behavioural tests. A Scenario is made up of given, when, and then steps. First the 'given' steps are ran, which supply us with something to test. Next the 'when' steps are ran, which actually run the thing we are testing. And finally the 'then' steps are ran, which make assertions against the results of what we ran in the when steps and either pass or fail based on those results.
+Lastly, Scenarios are composed of Steps, which are the parts that actually implement the behavioral tests. A Scenario is made up of given, when, and then steps. First the 'given' steps are ran, which supply us with something to test. Next the 'when' steps are ran, which actually run the thing we are testing. And finally the 'then' steps are ran, which make assertions against the results of what we ran in the when steps and either pass or fail based on those results.
 
-This is the essence of BDD and writing behavioural tests in Jasper.
+This is the essence of BDD and writing behavioral tests in Jasper.
 
 ### Defining Steps
 

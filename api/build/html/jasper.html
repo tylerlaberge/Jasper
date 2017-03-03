@@ -359,81 +359,110 @@
 </tbody>
 </table>
 <dl class="method">
-<dt id="jasper.expect.Expect.greater_than">
-<code class="descname">greater_than</code><span class="sig-paren">(</span><em>expected_data</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.expect.Expect.greater_than" title="Permalink to this definition">¶</a></dt>
-<dd><p>Make an assertion that this objects actual data is greater than the expected data.</p>
-<p>The to_be operator must be set in order to use this assertion.</p>
+<dt id="jasper.expect.Expect.not_">
+<code class="descname">not_</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jasper.expect.Expect.not_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Negate any future expectations.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>expected_data</strong> &#8211; The data to expect the actual data to be less than.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">This Expect object.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#jasper.exceptions.ExpectationException" title="jasper.exceptions.ExpectationException"><strong>ExpectationException</strong></a> &#8211; If the expectation fails.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">This Expect object.</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="jasper.expect.Expect.less_than">
-<code class="descname">less_than</code><span class="sig-paren">(</span><em>expected_data</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.expect.Expect.less_than" title="Permalink to this definition">¶</a></dt>
-<dd><p>Make an assertion that this objects actual data is less than the expected data.</p>
-<p>The to_be operator must be set in order to use this assertion.</p>
+<dt id="jasper.expect.Expect.to_be">
+<code class="descname">to_be</code><span class="sig-paren">(</span><em>expected_data</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.expect.Expect.to_be" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make an assertion that this objects actual data is the expected data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>expected_data</strong> &#8211; The data to expect the actual data to be.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#jasper.exceptions.ExpectationException" title="jasper.exceptions.ExpectationException"><strong>ExpectationException</strong></a> &#8211; If the expectation fails.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="jasper.expect.Expect.to_be_greater_than">
+<code class="descname">to_be_greater_than</code><span class="sig-paren">(</span><em>expected_data</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.expect.Expect.to_be_greater_than" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make an assertion that this objects actual data is greater than the expected data.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>expected_data</strong> &#8211; The data to expect the actual data to be less than.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">This Expect object.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#jasper.exceptions.ExpectationException" title="jasper.exceptions.ExpectationException"><strong>ExpectationException</strong></a> &#8211; If the expectation fails.</td>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#jasper.exceptions.ExpectationException" title="jasper.exceptions.ExpectationException"><strong>ExpectationException</strong></a> &#8211; If the expectation fails.</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="jasper.expect.Expect.not_">
-<code class="descname">not_</code><a class="headerlink" href="#jasper.expect.Expect.not_" title="Permalink to this definition">¶</a></dt>
-<dd><p>Negate any operator that is set.</p>
+<dl class="method">
+<dt id="jasper.expect.Expect.to_be_greater_than_or_equal_to">
+<code class="descname">to_be_greater_than_or_equal_to</code><span class="sig-paren">(</span><em>expected_data</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.expect.Expect.to_be_greater_than_or_equal_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make an assertion that this objects actual data is greater than or equal to the expected data</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">This Expect object.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>expected_data</strong> &#8211; The data to expect the actual data to be greater than or equal to.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#jasper.exceptions.ExpectationException" title="jasper.exceptions.ExpectationException"><strong>ExpectationException</strong></a> &#8211; If the expectation fails.</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="jasper.expect.Expect.to_be">
-<code class="descname">to_be</code><a class="headerlink" href="#jasper.expect.Expect.to_be" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the operator of this Expect object to the identity operator.</p>
-<p>Can also be used to chain into the less_than or greater_than assertions.</p>
+<dl class="method">
+<dt id="jasper.expect.Expect.to_be_less_than">
+<code class="descname">to_be_less_than</code><span class="sig-paren">(</span><em>expected_data</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.expect.Expect.to_be_less_than" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make an assertion that this objects actual data is less than the expected data.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">This Expect object.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>expected_data</strong> &#8211; The data to expect the actual data to be less than.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#jasper.exceptions.ExpectationException" title="jasper.exceptions.ExpectationException"><strong>ExpectationException</strong></a> &#8211; If the expectation fails.</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
+<dt id="jasper.expect.Expect.to_be_less_than_or_equal_to">
+<code class="descname">to_be_less_than_or_equal_to</code><span class="sig-paren">(</span><em>expected_data</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.expect.Expect.to_be_less_than_or_equal_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make an assertion that this objects actual data is less than or equal to the expected data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>expected_data</strong> &#8211; The data to expect the actual data to be less than or equal to.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#jasper.exceptions.ExpectationException" title="jasper.exceptions.ExpectationException"><strong>ExpectationException</strong></a> &#8211; If the expectation fails.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="jasper.expect.Expect.to_equal">
-<code class="descname">to_equal</code><a class="headerlink" href="#jasper.expect.Expect.to_equal" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the operator of this Expect object to the equality operator.</p>
+<code class="descname">to_equal</code><span class="sig-paren">(</span><em>expected_data</em><span class="sig-paren">)</span><a class="headerlink" href="#jasper.expect.Expect.to_equal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make an assertion that this objects actual data is equal to the expected data.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">This Expect object.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>expected_data</strong> &#8211; The data to expect the actual data to be equal to.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="#jasper.exceptions.ExpectationException" title="jasper.exceptions.ExpectationException"><strong>ExpectationException</strong></a> &#8211; If the expectation fails.</td>
 </tr>
 </tbody>
 </table>

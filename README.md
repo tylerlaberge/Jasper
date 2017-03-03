@@ -911,6 +911,10 @@ Now that we are using async, we can expect all of our scenarios to run along sid
 
 And as suspected, it took 2 seconds. Async is awesome!
 
+## API Documentation
+
+API documentation can be found [here](https://tylerlaberge.github.io/Jasper/api/build/html/index.html)
+
 ## Contributing
 
 All pull requests are welcome.

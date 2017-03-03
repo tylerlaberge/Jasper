@@ -30,18 +30,6 @@ class DisplayTestCase(TestCase):
 
         self.assertEqual(display.cyan('foobar'), 'foobar')
 
-    def test_magenta_with_colored_on(self):
-        display = Display()
-        display.colored = True
-
-        self.assertEqual(display.magenta('foobar'), colored('foobar', 'magenta'))
-
-    def test_magenta_without_colored_on(self):
-        display = Display()
-        display.colored = False
-
-        self.assertEqual(display.magenta('foobar'), 'foobar')
-
     def test_yellow_with_colored_on(self):
         display = Display()
         display.colored = True
@@ -77,20 +65,6 @@ class DisplayTestCase(TestCase):
         display.colored = False
 
         self.assertEqual(display.grey('foobar'), 'foobar')
-
-    def test_disable_color(self):
-        display = Display()
-        display.colored = True
-        display.disable_color()
-
-        self.assertFalse(display.colored)
-
-    def test_enable_color(self):
-        display = Display()
-        display.colored = False
-        display.enable_color()
-
-        self.assertTrue(display.colored)
 
     @mock.patch.object(colorama, 'deinit')
     @mock.patch.object(colorama, 'init')

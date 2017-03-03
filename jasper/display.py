@@ -6,8 +6,16 @@ import sys
 
 
 class Display(object):
-
+    """
+    The class responsible for displaying the results of a suites, features, scenarios, and steps.
+    """
     def __init__(self, force_ansi=True, verbosity_level=0):
+        """
+        Initialize a new Display object.
+
+        :param force_ansi: Flag for whether or not to force the display to use ansi escape sequences. default is True.
+        :param verbosity_level:  The verbosity level for the display to use. default is 0, maxes out at 2.
+        """
         self.display_string = ''
         self.indentation_level = 0
         self.verbosity_level = verbosity_level
@@ -15,41 +23,79 @@ class Display(object):
         self.force_ansi = force_ansi
         colorama.deinit()
 
-    def disable_color(self):
-        self.colored = False
-
-    def enable_color(self):
-        self.colored = True
-
     def display(self):
+        """
+        Print the prepared data to the screen.
+        """
         if sys.platform == 'win32' and not self.force_ansi:
             colorama.init()
         print(self.display_string)
         colorama.deinit()
 
     def cyan(self, text):
+        """
+        Color some text cyan.
+
+        If the displays color is disabled the text will not be colorized.
+
+        :param text: The text to color.
+        :return: The colored text
+        """
         return colored(text, 'cyan') if self.colored else text
 
-    def magenta(self, text):
-        return colored(text, 'magenta') if self.colored else text
-
     def yellow(self, text):
+        """
+        Color some text yellow.
+
+        If the displays color is disabled the text will not be colorized.
+
+        :param text: The text to color.
+        :return: The colored text
+        """
         return colored(text, 'yellow') if self.colored else text
 
     def red(self, text):
+        """
+        Color some text red.
+
+        If the displays color is disabled the text will not be colorized.
+
+        :param text: The text to color.
+        :return: The colored text
+        """
         return colored(text, 'red') if self.colored else text
 
     def grey(self, text):
+        """
+        Color some text grey.
+
+        If the displays color is disabled the text will not be colorized.
+
+        :param text: The text to color.
+        :return: The colored text
+        """
         return colored(text, 'white') if self.colored else text
 
     @staticmethod
     def indent(text, amount):
+        """
+        Indent some text by the given amount.
+
+        :param text: The text to indent.
+        :param amount: The amount of spaces to indent the text with.
+        :return: The indented text.
+        """
         return textwrap.indent(text, ' ' * amount)
 
     def __push_to_display(self, display_string):
         self.display_string += self.indent(display_string + '\n', self.indentation_level)
 
     def prepare_suite(self, suite):
+        """
+        Prepare a Suite object to be displayed.
+
+        :param suite: The Suite to prepare.
+        """
         color = self.cyan if suite.passed else self.red
 
         if not suite.passed or self.verbosity_level > 0:
@@ -60,6 +106,11 @@ class Display(object):
         self.__push_to_display(self.prepare_border(color, 150))
 
     def prepare_feature(self, feature):
+        """
+        Prepare a Feature object to be displayed.
+
+        :param feature: The Feature to prepare.
+        """
         if not feature.passed or self.verbosity_level > 0:
             color = self.cyan if feature.passed else self.red
 
@@ -85,6 +136,11 @@ class Display(object):
             self.__push_to_display(self.prepare_border(color, 150))
 
     def prepare_scenario(self, scenario):
+        """
+        Prepare a Scenario object to be displayed.
+
+        :param scenario: The Scenario to prepare.
+        """
         if not scenario.passed or self.verbosity_level > 0:
             if not scenario.ran:
                 color = self.grey
@@ -115,6 +171,12 @@ class Display(object):
                 self.indentation_level -= 4
 
     def prepare_step(self, step, step_name):
+        """
+        Prepare a Step object to be displayed.
+
+        :param step: The Step to prepare.
+        :param step_name: A name to represent the step with.
+        """
         if not step.ran:
             color = self.grey
         elif step.passed:
@@ -126,6 +188,11 @@ class Display(object):
                                      f"{step.function.__name__} {step.kwargs if step.kwargs else ''}"))
 
     def prepare_exception(self, exception):
+        """
+        Prepare an exception to be displayed.
+
+        :param exception: The exception to prepare.
+        """
         if str(exception):
             exception_string = f'{str(exception)}\n'
         else:
@@ -136,9 +203,20 @@ class Display(object):
         self.__push_to_display(self.yellow((exception_string + traceback_string).rstrip()))
 
     def prepare_border(self, color, length):
+        """
+        Prepare a border to be displayed.
+
+        :param color: The color to give the border.
+        :param length: The length of the border.
+        """
         return color('=' * length)
 
     def prepare_statistics(self, suite):
+        """
+        Prepare the statistics of a Suite object to be displayed.
+
+        :param suite: The Suite object to prepare the statistics for.
+        """
         color = self.cyan if suite.passed else self.red
 
         self.__push_to_display(

@@ -6,8 +6,20 @@ import asyncio
 
 
 class Feature(object):
-
+    """
+    A class used for testing the high level features of an application.
+    """
     def __init__(self, description, scenarios, before_each=list(), before_all=list(), after_each=list(), after_all=list()):
+        """
+        Initialize a new Feature object.
+
+        :param description: A description of this Feature.
+        :param scenarios: A list of scenarios for testing various parts of the feature this object represents.
+        :param before_each: Steps that will run before each of the scenarios.
+        :param before_all: Steps that will run before all other steps.
+        :param after_each: Steps that will run after each of the scenarios.
+        :param after_all: Steps that will run after all other steps.
+        """
         self.description = description
         self.scenarios = scenarios
 
@@ -45,13 +57,22 @@ class Feature(object):
 
     @property
     def num_scenarios_passed(self):
+        """
+        The number of scenarios that passed after running this feature.
+        """
         return len(self.successes)
 
     @property
     def num_scenarios_failed(self):
+        """
+        The number of scenarios that failed after running this feature.
+        """
         return len(self.failures)
 
     async def run(self):
+        """
+        Run all the steps and scenarios of this Feature.
+        """
         context = Context()
         try:
             await self.__run_scenarios(context)

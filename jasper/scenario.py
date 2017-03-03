@@ -3,9 +3,23 @@ from jasper.exceptions import ValidationException
 
 
 class Scenario(object):
-
+    """
+    A class used for testing different parts of an applications features.
+    """
     def __init__(self, description, given, when, then,
                  before_each=list(), before_all=list(), after_each=list(), after_all=list()):
+        """
+        Initialize a new Scenario object.
+
+        :param description: A description of this scenario.
+        :param given: Steps for supplying this scenario with something to test with.
+        :param when: Steps that should run whatever it is this scenario is testing.
+        :param then: Steps that should make assertions against the results of the test.
+        :param before_each: Steps that will run before each of the given, when, and then steps.
+        :param before_all: Steps that will run before all other steps.
+        :param after_each: Steps that will run after each of the given, when, and then steps.
+        :param after_all: Steps that will run after all other steps.
+        """
         self.description = description
 
         self.given = given if type(given) == list else [given]
@@ -42,6 +56,12 @@ class Scenario(object):
                                           f'Did you call the decorated step function?')
 
     async def run(self, context):
+        """
+        Run all the steps of this Scenario.
+
+        :param context: A Context object to pass into each step of this Scenario.
+        :return:
+        """
         try:
             await self.__run_steps(context)
         except Exception as e:

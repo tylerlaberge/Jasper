@@ -761,15 +761,7 @@ And you should see the output of your tests running.
 
 ### How your Features a ran asynchronously.
  
- In Jasper everything is run asynchronously. With that said there are certain caveats to that to ensure saftey, for example we would never want our 'then' steps running before our 'given' steps in some scenario. Here is a (somewhat crude) diagram of how your tests are run. 
- 
- ![alt text](https://github.com/tylerlaberge/Jasper/blob/master/img/RunOrderDiagram.jpg)
- 
- The arrows show the order that steps/scenarios are run in, they do not represent a caller -> callee relationship. 
- 
- The blue bars represent something that is being run asynchronously. If multiple blocks are covered by the same blue bar, then they can be run next to each using async, meaning either can finish before the other, etc. 
- 
- The green bars are essentially just groups of asynchronous functions. Blocks covered by the same green bar will run in order, but also asynchronously. So before each steps run asynchronously, but they will awlays run before a scenario. Not after, and not during.
+ In Jasper everything is run asynchronously. With that said there are certain caveats to that to ensure saftey, for example we would never want our 'then' steps running before our 'given' steps in some scenario. 
 
 Basically, 
 

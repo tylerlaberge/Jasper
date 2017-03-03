@@ -111,7 +111,7 @@ Jasper's main points that seperate it from other BDD frameworks suchs as [lettuc
   
 ## Installation
 
-    pip install jasper
+    pip install Jasper
     
 Supports Python 3.6+
 

@@ -1,5 +1,5 @@
 from jasper.context import Context
-from jasper.step import Step
+from jasper.steps import Step
 from jasper.scenario import Scenario
 from jasper.exceptions import ValidationException
 import asyncio

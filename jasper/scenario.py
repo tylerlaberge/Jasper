@@ -1,4 +1,4 @@
-from jasper.step import Step
+from jasper.steps import Step
 from jasper.exceptions import ValidationException
 
 

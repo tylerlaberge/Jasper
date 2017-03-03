@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import MagicMock
 from jasper.scenario import Scenario
-from jasper.step import Step
+from jasper.steps import Step
 from jasper.exceptions import ValidationException
 import asyncio
 

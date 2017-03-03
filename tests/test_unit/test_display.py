@@ -120,7 +120,7 @@ class DisplayTestCase(TestCase):
     @mock.patch.object(Display, 'grey')
     @mock.patch.object(Display, 'red')
     @mock.patch.object(Display, 'cyan', side_effect=lambda text: text)
-    @mock.patch('jasper.Step')
+    @mock.patch('jasper.steps.Step')
     def test_prepare_passing_step(self, step_mock, cyan_mock, red_mock, grey_mock):
         step_mock.ran = True
         step_mock.passed = True
@@ -143,7 +143,7 @@ class DisplayTestCase(TestCase):
     @mock.patch.object(Display, 'grey')
     @mock.patch.object(Display, 'red', side_effect=lambda text: text)
     @mock.patch.object(Display, 'cyan')
-    @mock.patch('jasper.Step')
+    @mock.patch('jasper.steps.Step')
     def test_prepare_failing_step(self, step_mock, cyan_mock, red_mock, grey_mock):
         step_mock.ran = True
         step_mock.passed = False
@@ -166,7 +166,7 @@ class DisplayTestCase(TestCase):
     @mock.patch.object(Display, 'grey', side_effect=lambda text: text)
     @mock.patch.object(Display, 'red')
     @mock.patch.object(Display, 'cyan')
-    @mock.patch('jasper.Step')
+    @mock.patch('jasper.steps.Step')
     def test_prepare_skipped_step(self, step_mock, cyan_mock, red_mock, grey_mock):
         step_mock.ran = False
         step_mock.passed = False

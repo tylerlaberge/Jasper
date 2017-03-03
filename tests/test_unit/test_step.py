@@ -1,5 +1,5 @@
 from unittest import TestCase, mock
-from jasper.step import Step, step
+from jasper.steps import Step, step
 import time
 import asyncio
 

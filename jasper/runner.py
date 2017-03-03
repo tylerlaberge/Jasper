@@ -1,7 +1,8 @@
 import asyncio
 import os
 import importlib.util
-from jasper import Suite, Feature
+from jasper.suite import Suite
+from jasper.feature import Feature
 import time
 
 

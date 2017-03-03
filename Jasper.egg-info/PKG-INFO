@@ -1,10 +1,11 @@
 Metadata-Version: 1.0
 Name: Jasper
 Version: 0.1
-Summary: UNKNOWN
-Home-page: UNKNOWN
-Author: UNKNOWN
-Author-email: UNKNOWN
-License: UNKNOWN
+Summary: An asynchronous behaviour-driven development framework
+Home-page: https://github.com/tylerlaberge/Jasper
+Author: Tyler LaBerge
+Author-email: tyler.laberge@maine.edu
+License: MIT
 Description: UNKNOWN
+Keywords: python async asynchronous test-driven behaviour-driven development framework unittest testing assertion library bdd tdd tests test behaviour
 Platform: UNKNOWN

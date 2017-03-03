@@ -9,7 +9,7 @@ class ExpectationException(Exception):
     """
     def __init__(self, actual, expected, operator):
         """
-        Initialize this Expect object.
+        Initialize this ExpectationException object.
 
         :param actual: The actual data used during the expectation.
         :param expected: The expected data used during the expectation.

@@ -106,6 +106,7 @@ Jasper's main points that seperate it from other BDD frameworks suchs as [lettuc
   - [jasper command-line tool](https://github.com/tylerlaberge/Jasper#jasper-command-line-tool)
   - [How your features are ran asynchronously](https://github.com/tylerlaberge/Jasper#how-your-features-a-ran-asynchronously)
 - [Async Demonstration](https://github.com/tylerlaberge/Jasper#async-demonstration)
+- [API Documentation](https://github.com/tylerlaberge/Jasper#api-documentation)
 - [Contributing](https://github.com/tylerlaberge/Jasper#contributing)
   
 ## Installation

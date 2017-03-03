@@ -1,3 +1,7 @@
+"""
+The entrypoints module.
+"""
+
 import click
 from jasper.runner import Runner
 from jasper.display import Display

@@ -1,3 +1,7 @@
+"""
+The expect module.
+"""
+
 from jasper.exceptions import ExpectationException
 
 

@@ -1,3 +1,7 @@
+"""
+The context module.
+"""
+
 from copy import deepcopy
 
 

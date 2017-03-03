@@ -1,3 +1,7 @@
+"""
+The display module.
+"""
+
 from jasper.utility import extract_traceback
 from termcolor import colored
 import textwrap

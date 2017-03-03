@@ -1,3 +1,7 @@
+"""
+The steps module.
+"""
+
 from functools import wraps
 import asyncio
 

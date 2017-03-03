@@ -1,3 +1,7 @@
+"""
+The suite module.
+"""
+
 import asyncio
 import tqdm
 

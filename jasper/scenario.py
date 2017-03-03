@@ -1,3 +1,7 @@
+"""
+The scenario module.
+"""
+
 from jasper.steps import Step
 from jasper.exceptions import ValidationException
 

@@ -1,3 +1,7 @@
+"""
+The feature module.
+"""
+
 from jasper.context import Context
 from jasper.steps import Step
 from jasper.scenario import Scenario

@@ -1,3 +1,8 @@
+"""
+The exceptions module.
+"""
+
+
 class ExpectationException(Exception):
     """
     An Exception that is thrown when an expectation fails in the Expect class.

@@ -1,3 +1,7 @@
+"""
+The utility module.
+"""
+
 import traceback
 
 

@@ -676,7 +676,16 @@ Expect({'foo':'bar'}).to_equal({'foo':'bar'}) # {'foo':'bar'} == {'foo':'bar'}
 ```python
 from jasper import Expect
 
-Expect(5).to_be.less_than(10) # 5 < 10
+Expect(5).to_be_less_than(10) # 5 < 10
+```
+
+### Less than or Equal to Comparison
+
+```python
+from jasper import Expect
+
+Expect(10).to_be_less_than_or_equal_to(10) # 10 <= 10
+Expect(10).to_be_less_than_or_equal_to(15) # 10 <= 15
 ```
 
 ### Greater than Comparison
@@ -684,7 +693,16 @@ Expect(5).to_be.less_than(10) # 5 < 10
 ```python
 from jasper import Expect
 
-Expect(10).to_be.greater_than(5) # 10 > 5
+Expect(10).to_be_greater_than(5) # 10 > 5
+```
+
+### Greater than or Equal to Comparison
+
+```python
+from jasper import Expect
+
+Expect(10).to_be_greater_than_or_equal_to(10) # 10 >= 10
+Expect(10).to_be_greater_than_or_equal_to(5) # 10 <= 5
 ```
 
 ### Negation Operator

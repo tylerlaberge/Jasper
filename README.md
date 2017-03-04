@@ -712,7 +712,7 @@ Expect(10).to_be_greater_than_or_equal_to(5) # 10 <= 5
 ```python
 from jasper import Expect
 
-Expect(True).not_.to_be(False) # not (True == False)
+Expect(True).not_().to_be(False) # not (True == False)
 ```
 
 ## The Display

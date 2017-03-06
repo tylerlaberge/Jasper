@@ -63,7 +63,7 @@ Behavior-Driven Development (BDD) is a form of test-driven development where the
 
 Jasper's main points that seperate it from other BDD frameworks suchs as [lettuce](https://github.com/gabrielfalcao/lettuce), and [behave](https://github.com/behave/behave) are that:
 
-* Test's are run *asynchronously*, making it very easy and intuitave to write tests for asynchonous code.
+* Tests are run *asynchronously*, making it very easy and intuitive to write tests for asynchronous code.
 
 * Features are described within .py files, exactly how you would write normal python code. No need to learn the syntax of a domain-specific language in order to define your features like other frameworks require.
 

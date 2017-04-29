@@ -518,14 +518,14 @@ Hooks are used to define the order in which your steps are run.
 
 Any step you define using the step decorator can be used in any of the following hooks.
 
-####*given:* steps that should supply a scenario with something to test with.
-####*when:* steps that should run whatever it is we are testing, ran after the 'given' step.
-####*then:* steps that should make assertions upon the results of the 'when' step.
+#### *given:* steps that should supply a scenario with something to test with.
+#### *when:* steps that should run whatever it is we are testing, ran after the 'given' step.
+#### *then:* steps that should make assertions upon the results of the 'when' step.
 
-####*before_all:* steps that run exactly once before every other step in the scenario.
-####*before_each:* steps that run before each of the 'given', 'when', and 'then' steps.
-####*after_each:* steps that run after each of the 'given', 'when', and 'then' steps.
-####*after_all:* steps that run exactly once after every other step in the scenario.
+#### *before_all:* steps that run exactly once before every other step in the scenario.
+#### *before_each:* steps that run before each of the 'given', 'when', and 'then' steps.
+#### *after_each:* steps that run after each of the 'given', 'when', and 'then' steps.
+#### *after_all:* steps that run exactly once after every other step in the scenario.
 
 In actual code you can access these hooks with keyword arguments.
 
@@ -601,10 +601,10 @@ feature = Feature(
 
 Just like scenarios, features have various hooks that you can pass steps into.
 
-####*before_all:* steps that run exactly once before every other step in the feature.
-####*before_each:* steps that run before each scenario in the feature.
-####*after_each:* steps that run after each scenario in the feature.
-####*after_all:* steps that run exactly once after every other step in the feature.
+#### *before_all:* steps that run exactly once before every other step in the feature.
+#### *before_each:* steps that run before each scenario in the feature.
+#### *after_each:* steps that run after each scenario in the feature.
+#### *after_all:* steps that run exactly once after every other step in the feature.
 
 Again just like with scenarios, to access these hooks just use keyword arguments.
 

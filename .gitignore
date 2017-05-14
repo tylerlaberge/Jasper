@@ -1,5 +1,5 @@
 .idea
 venv
-#build
-#dist
-#Jasper.egg-info
+/build
+/dist
+Jasper.egg-info
